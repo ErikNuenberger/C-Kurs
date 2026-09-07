@@ -1,16 +1,16 @@
 # C++ Course
 
-This repository contains a structured, modern C++ learning platform. The course guides beginners step-by-step through C++ programming and helps software professionals from other languages to master C++ syntax and paradigms.
+This repository is more than just code—it is a modern, radically intuitive learning platform for C++. Designed from the ground up to guide beginners step-by-step, and crafted to help professionals from other languages master the power and paradigms of modern C++ with absolute precision.
 
-The goal of this project was to create a web interface that is highly accessible, visually appealing, and clearly structured for an optimal learning experience.
+The goal of this project was to create a web interface that is highly accessible, visually appealing, and clearly structured for a learning experience that feels entirely natural.
 
 ---
 
 ## Features & Design Philosophy
 
-- **Infoteam Corporate Design:** The user interface strictly follows the Infoteam design philosophy for a clean and professional look.
-- **Intuitive Navigation:** A clear, persistent sidebar allows users to seamlessly jump between topics.
-- **Beautiful UI:** Designed with modern web standards, featuring dark mode support and a distraction-free layout.
+- **Infoteam Corporate Design:** The interface adheres strictly to the Infoteam design philosophy, delivering a clean, professional, and unmistakable visual identity.
+- **Intuitive Navigation:** A persistent sidebar keeps you oriented. Seamlessly jump between topics without ever losing your flow.
+- **Beautiful UI:** Engineered with modern web standards, featuring native dark mode support and a distraction-free layout. Everything disappears, so you can focus entirely on what matters: your code.
 - **Consistent Content Structure:** Every topic is structured identically:
   1. **Topic Title:** Clear identification of the current subject.
   2. **Core Paragraph:** A concise explanation of the concepts.
@@ -20,22 +20,22 @@ The goal of this project was to create a web interface that is highly accessible
 
 ## Course Structure
 
-The course is divided into three comprehensive main modules:
+The course is divided into three comprehensive modules:
 
 ### 1. Basics
-Covers the fundamental building blocks of C++
+The fundamental building blocks of C++. The foundation for everything that follows.
 
 ### 2. Memory Manipulation (Speichermanipulation)
-A deep dive into hardware-near programming and memory management.
+A deep dive into hardware-level programming. Total control over memory management.
 
 ### 3. Object-Oriented Programming (OOP)
-used to master classes, inheritance, polymorphism, and modern C++ architectures
+Master classes, inheritance, and polymorphism. Built for modern, scalable software architecture.
 
 ---
 
-## Tech Stack & Local Setup
+## Tech Stack
 
-This project is built using standard web technologies (**HTML, CSS, JavaScript**).
+Built using the core technologies of the web: HTML, CSS, and JavaScript. Lightweight as well as performant.
 
 ---
 
