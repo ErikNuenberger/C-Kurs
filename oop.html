@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OOP</title>
+    <link rel="stylesheet" href="kategorystyle.css">
+</head>
+<body>
+    <div id="header" class="header">
+        <img class="logo1" src="Images/infoteam_4x_4c_rgb_Logo.png">
+        <h1 class="title1">C++ Kurs - Objektorientierung</h1>
+        <div class="toggle-container">
+            <span>Darkmode</span>
+            <label class="switch">
+                <input type="checkbox" id="myToggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </div>
+
+     <div class="main-wrapper">
+        <aside class="glass-sidebar">
+            <a href="#class" class="sidebar-item active">
+                Klassen
+            </a>
+            
+            <a href="#object" class="sidebar-item">
+                Objekt / Instanz
+            </a>
+
+            <a href="#Construktor" class="sidebar-item">
+                Konstruktor / Destruktuor
+            </a>
+
+            <a href="#abstract" class="sidebar-item">
+                Abstrakte Klassen und Interfaces
+            </a>
+            
+            <a href="#inheritance" class="sidebar-item">
+                Vererbung
+            </a>
+
+            <a href="#static" class="sidebar-item">
+                Static
+            </a>
+        </aside>
+    
+
+     <main class="content-area">
+            <section class="section" id="class">
+                
+            </section>
+            
+            <section class="section" id="object">
+                
+            </section>
+
+            <section class="section" id="Construktor">
+                
+            </section>
+
+            <section class="section" id="abstract">
+                
+            </section>
+            
+            <section class="section" id="static">
+                
+            </section>
+    </main>
+    </div>
+
+     <a href="index.html" class="back-button">&#8592; Zurück</a>
+     <footer class="site-footer">
+        Autor: Erik Nürnberger - Datum: 07.09.2026
+    </footer>
+
+    <script>
+        const sidebarItems = document.querySelectorAll('.sidebar-item');
+        const sections = document.querySelectorAll('.section');
+        const contentArea = document.querySelector('.content-area');
+
+        sidebarItems.forEach(item =>
+        {
+            item.addEventListener('click', function(e)
+            {
+                e.preventDefault(); 
+                const targetId = this.getAttribute('href').substring(1);
+                
+                const targetSection = document.getElementById(targetId);
+
+                if(targetSection)
+                {
+                    targetSection.scrollIntoView(
+                    {
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        const observerOptions = 
+        {
+            root: contentArea,
+            rootMargin: '-10% 0px -80% 0px', 
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) =>
+        {
+            entries.forEach(entry =>
+            {
+                if(entry.isIntersecting)
+                {
+                    const currentId = entry.target.getAttribute('id');
+                    
+                    sidebarItems.forEach(item =>
+                    {
+                        item.classList.remove('active');
+                        if(item.getAttribute('href') === '#' + currentId)
+                        {
+                            item.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        const toggleSwitch = document.getElementById('myToggle');
+
+        const currentTheme = localStorage.getItem('theme');
+        if(currentTheme)
+        {
+            document.body.classList.add(currentTheme);
+            if(currentTheme === 'dark-mode')
+            {
+                toggleSwitch.checked = true;
+            }
+        }
+
+        toggleSwitch.addEventListener('change', function(e)
+        {
+            if(e.target.checked)
+            {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark-mode');
+            }
+            else
+            {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light-mode');
+            }
+        });
+    </script>
+</body>
+</html>

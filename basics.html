@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basics</title>
+    <link rel="stylesheet" href="kategorystyle.css">
+</head>
+<body>
+    <div id="header" class="header">
+        <img class="logo1" src="Images/infoteam_4x_4c_rgb_Logo.png">
+        <h1 class="title1">C++ Kurs - Basics</h1>
+        <div class="toggle-container">
+            <span>Darkmode</span>
+            <label class="switch">
+                <input type="checkbox" id="myToggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </div>
+
+    <div class="main-wrapper">
+        <aside class="glass-sidebar">
+            <a href="#entr" class="sidebar-item active">
+                Einführung in C++
+            </a>
+
+            <a href="#visualstudiocode" class="sidebar-item">
+                VS Code & Compiler
+            </a>
+            
+            <a href="#erstes-programm" class="sidebar-item">
+                Mein erstes Programm
+            </a>
+
+            <a href="#Variablen" class="sidebar-item">
+                Variablen & Datentypen
+            </a>
+
+            <a href="#IO" class="sidebar-item">
+                Input & Output mit cin und cout
+            </a>
+            
+            <a href="#Expressions" class="sidebar-item">
+                Expressions (Ausdrücke)
+            </a>
+
+            <a href="#if-elseif-else" class="sidebar-item">
+                if - else if - else
+            </a>
+
+            <a href="#weitere-Operatoren" class="sidebar-item">
+                Weitere Operatoren
+            </a>
+
+            <a href="#switch" class="sidebar-item">
+                switch
+            </a>
+
+            <a href="#loop" class="sidebar-item">
+                while, do-while, for Schleifen
+            </a>
+
+            <a href="#array" class="sidebar-item">
+                Arrays
+            </a>
+
+            <a href="#Strings" class="sidebar-item">
+                Strings und String-Methoden
+            </a>
+
+            <a href="#function" class="sidebar-item">
+                Funktionen
+            </a>
+
+            <a href="#overload" class="sidebar-item">
+                Überladung
+            </a>
+
+            <a href="#file" class="sidebar-item">
+                Dateien lesen und schreiben
+            </a>
+
+            <a href="#exception" class="sidebar-item">
+                Exception Handling
+            </a>
+
+
+
+
+        </aside>
+
+        <main class="content-area">
+
+            <section class="section" id="entr">
+                <h1>Einführung in C++</h1>
+                <p>
+                    C++ ist eine mächtige, weit verbreitete und von der ISO genormte Programmiersprache, die von Bjarne Stroustrup als Erweiterung der Sprache C entwickelt wurde und sowohl die effiziente, maschinennahe Programmierung als auch die objektorientierte Programmierung auf hohem Abstraktionsniveau ermöglicht. Sie wird für die Entwicklung von Systemsoftware wie Betriebssystemen, Hochleistungsanwendungen wie Spielen oder Bildbearbeitungsprogrammen und eingebetteten Systemen eingesetzt. Ihre Stärke liegt in der Kombination von Geschwindigkeitskontrolle und Flexibilität, wobei die Standardbibliothek eine breite Palette an Funktionen bereitstellt.
+                </p>
+            </section>
+
+            <section class="section" id="visualstudiocode">
+                <h1>Visual Studio Code & C++</h1>
+
+                <p>Um ein C++ Programm auszuführen, benötigt man zwei Dinge:</p>
+
+                <h2>Unter Windows:</h2>
+                <ol>
+                    <li>einen Texteditor, in dem man sogenannten .cpp-Programmcode (oder auch Quellcode) schreiben kann. Programme wie Word etc. sind dafür nicht geeignet. Es empfiehlt sich eine Entwicklungsumgebung wie Visual Studio Code:</li>
+                    <a href="https://code.visualstudio.com/">Download</a>
+                    <li>Einen sogenannten Compiler. Das ist ein Programm, das den Quellcode aus der .cpp-Datei in einen für den Computer verständlichen Maschinencode umwandelt. So entsteht aus dem Quellcode eine ausführbare Datei (.exe). Compiler:</li>
+                    <a href="https://code.visualstudio.com/docs/cpp/config-mingw">Download</a>
+                </ol>
+
+                <h2>Unter macOS:</h2>
+                <ol>
+                    <li>einen Texteditor, in dem man sogenannten .cpp-Programmcode (oder auch Quellcode) schreiben kann. Programme wie Word etc. sind dafür nicht geeignet. Es empfiehlt sich eine Entwicklungsumgebung wie Visual Studio Code:</li>
+                    <a href="https://code.visualstudio.com/">Download</a>
+                    <li>Einen sogenannten Compiler. Das ist ein Programm, das den Quellcode aus der .cpp-Datei in einen für den Computer verständlichen Maschinencode umwandelt. So entsteht aus dem Quellcode eine ausführbare Datei (.exe). Compiler:</li>
+                    <a href="https://code.visualstudio.com/docs/cpp/config-clang-mac">Download</a>
+                </ol>
+
+                <h2>Unter Linux:</h2>
+                <ol>
+                    <li>einen Texteditor, in dem man sogenannten .cpp-Programmcode (oder auch Quellcode) schreiben kann. Programme wie Word etc. sind dafür nicht geeignet. Es empfiehlt sich eine Entwicklungsumgebung wie Visual Studio Code:</li>
+                    <a href="https://code.visualstudio.com/">Download</a>
+                    <li>Einen sogenannten Compiler. Das ist ein Programm, das den Quellcode aus der .cpp-Datei in einen für den Computer verständlichen Maschinencode umwandelt. So entsteht aus dem Quellcode eine ausführbare Datei (.exe). Compiler:</li>
+                    <a href="https://code.visualstudio.com/docs/cpp/config-linux">Download</a>
+                </ol>
+                
+                <p>
+                    Empfohlen wird der MinGW Compiler. Weitere Informationen zu Compilern:
+                </p>
+                <a href="PDF/Compiler.pdf">Compiler.pdf</a>
+                <br>
+                <a href="https://code.visualstudio.com/docs/languages/cpp">Setup & Install</a>
+
+                <h2>Wichtig:</h2>
+                <ul>
+                    <li>C++ arbeitet systemnah, d. h. Programme können sich in ihrer Funktionsweise leicht zwischen verschiedenen Betriebssystemen unterscheiden.</li>
+                    <li>Ein Programm, das für Windows kompiliert wurde, funktioniert nicht automatisch auf Linux oder macOS.</li>
+                    <li>Auch unterschiedliche Compiler (z. B. GCC, Clang, MSVC) können leicht verschiedene binäre Ergebnisse erzeugen.</li>
+                    <li>Kompilierte Programme sind binäre Dateien - sie enthalten Maschinencode, der direkt auf der Prozessorarchitektur ausgeführt wird (z. B. x86, ARM).</li>
+                    <li>Wenn Sie Ihr Programm jedoch auf demselben Computer kompilieren und ausführen, funktioniert es immer zuverlässig.</li>
+                </ul>
+
+            </section>
+            
+            <section class="section" id="erstes-programm">
+                <h1>Mein erstes C++ Programm</h1>
+                <p>
+                    Das erste Programm in jeder Programmiersprache sollte "Hallo Welt" sein. Ein solches Programm gibt einfach "Hallo Welt" in der Konsole aus.
+                    Es hilft dabei, die Grundstruktur jedes Programms in einer bestimmten Programmiersprache zu verstehen und eignet sich zudem perfekt als Einstieg.
+                </p>
+                <ul>
+                    <li>Das Hello World Programm wird in eine Datei namens main.cpp geschrieben. Das ist die Quelldatei, diese enthält den C++ Quellcode, der durch das Kompilieren zu einer .exe (einer ausführbaren Datei) wird.</li>
+                </ul>
+                <p>
+                    Hier ist der Code für das Hello World Programm in C++:
+                </p>
+
+                <pre class="code-block"><span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    std::cout &lt;&lt; <span class="string">"Hello World"</span>;
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span></pre>
+                <h2>#include &lt;iostream&gt;:</h2>
+                <ul>
+                    <li>ist ein sogenanntes Präprozessor-Statement</li>
+                    <li>Präprozessor-Statements beginnen immer mit einem #</li>
+                    <li>sie werden vom Compiler bearbeitet, noch bevor die eigentliche Kompilierung stattfindet</li>
+                    <li>im Falle des Hello World Programms ist das Präprozessor statement: #include</li>
+                    <li>#include bedeutet, dass eine Datei (eine library / Bibliothek) eingebunden wird, die bestimmte Funktionen bereitstellt</li>
+                    <li>Die Library, die hier verwendet wird, ist iostream</li>
+                    <li>sie ermöglicht es, Ein- und Ausgaben in der Konsole zu tätigen und stellt dafür Befehle wie std::cout bereit</li>
+                    <li>die library wird in die Quelldatei eingebunden, indem ihr Inhalt in die Quelldatei kopiert wird</li>
+                </ul>
+
+                <h2>int main()</h2>
+                <ul>
+                    <li>ist die main() - Funktion</li>
+                    <li>die main() - Funktion ist die Hauptfunktion des Programmes. Dort startet das Programm</li>
+                    <li>alle Befehle werden innerhalb von main() nacheinander abgearbeitet</li>
+                    <li>die main() - Funktion besitzt einen Rückgabetyp (int)</li>
+                    <li>int steht hierbei für Integer, also eine Ganzzahl, die main() - Funktion gibt also eine Ganzzahl zurück</li>
+                    <li>Der Rückgabewert von main() bestimmt lediglich, ob das Programm ordnungsgemäß ausgeführt wurde oder ob ein Fehler vorlag</li>
+                    <li>wurde main() ordnungsgemäß und ohne Fehler ausgeführt gibt die Funktion den Ganzzahlwert 0 zurück</li>
+                    <li>alle Befehle, die zu main() dazugehören, stehen in geschweiften Klammern {...}</li>
+                    <li>main() beginnt also bei { und endet bei }</li>
+                    <li>{...}: gibt also den Gültigkeitsbereich (Scope) der main()-Funktion an</li>
+                </ul>
+
+                <h2>std::cout</h2>
+                <ul>
+                    <li>die Ausgabe über die Konsole erfolgt in C++ mit dem std::cout - Objekt</li>
+                    <li>std::cout ist das Ausgabeobjekt, der Klasse ostream im Standard-Namespace. Es gibt aus, was sich hinter &lt;&lt; befindet.</li>
+                    <li>&lt;&lt;: ist der left-shift operator, hier der Stream-Insertion-Operator, er legt den Wert oder Text fest, der an cout übergeben wird</li>
+                </ul>
+
+                <h2>"Hello World"</h2>
+                <ul>
+                    <li>ist das String-Literal, das ausgegeben wird</li>
+                </ul>
+
+                <h2>;</h2>
+                <ul>
+                    <li>das Semikolon (;) beendet eine Anweisung</li>
+                </ul>
+
+                <h2>return</h2>
+                <ul>
+                    <li>ist die Anweisung für die Rückgabe, mit der Angabe, was zurückgegeben wird</li>
+                    <li>ein return statement beendet eine Funktion an der Stelle, an der es selbst auftritt</li>
+                    <li>in main() gibt return Null zurück, da das Programm keinen Fehler verursacht</li>
+                </ul>
+
+                <h2>Kommentare</h2>
+                <ul>
+                    <li>Kommentare bieten eine Möglichkeit Text in ein Programm zu schreiben, ohne dass der Text als Befehle ausgewertet wird</li>
+                    <li>Kommentare werden vom Compiler ignoriert und landen somit nicht in der ausführbaren Datei</li>
+                    <li>Kommentare, die nur über eine Zeile gehen, beginnen mit // und gehen bis zum Ende der Zeile</li>
+                    <li>Kommentare über mehrere Zeilen gehen, beginnen mit /* und enden mit */</li>
+                </ul>
+                <pre class="code-block"><span class="comment">// Kommentar über eine Zeile
+
+/*
+Konmmentar
+über
+mehrere
+Zeilen
+*/</span></pre>
+            <p>mit Kommentaren kann man bestimmte Informationen im Code festhalten, man sollte es aber nicht mit Kommentaren übertreiben.</p>
+
+            <h3>1. Übung</h3>
+            <p>Wenn Sie alle Schritte aus der Installation befolgt haben, sollten Sie jetzt vor Ihnen ein Hallo Welt Programm sehen und dieses Ausführen können. Die erste Übungs-Aufgabe soll sein, das Programm so abzuändern, dass es "Hallo " und ihren Namen aus gibt.</p>
+
+            </section>
+
+            <section class="section" id="Variablen">
+                <h1>Variablen & Datentypen</h1>
+                <p>In C++ sind Variablen benannte Speicherbereiche, die verwendet werden, um Daten zu speichern, auf die während der Programmausführung zugegriffen und die verändert werden können. Jede Variable hat einen Datentyp, der die Art der zu speichernden Information festlegt (z.B.: ganze Zahlen mit int, Zeichen mit char), und einen Variablennamen, über den im Programm auf den Speicherort zugegriffen wird.</p>
+                <p>! Hinweis: Die Größe von Variablen kann zwischen Compilern und Plattformen unterschiedlich sein.</p>
+                <p>Hier eine Liste der wichtigsten einfachen Datentypen zu Anfang:</p>
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Keyword</th>
+                            <th>Werte (Values)</th>
+                            <th>Größe in Bytes</th>
+                            <th>Größe in Bits</th>
+                            <th>Wertebereich</th>
+                        </tr>
+                        <tr>
+                            <td>int</td>
+                            <td>Ganzzahl</td>
+                            <td>4</td>
+                            <td>32</td>
+                            <td>-2.147.483.648 bis 2.147.483.647</td>
+                        </tr>
+                        <tr>
+                            <td>char</td>
+                            <td>1 Zeichen</td>
+                            <td>1</td>
+                            <td>8</td>
+                            <td>-128 bis 127</td>
+                        </tr>
+                        <tr>
+                            <td>short int</td>
+                            <td>Ganzzahl</td>
+                            <td>2</td>
+                            <td>16</td>
+                            <td>-32.768 bis +32.767</td>
+                        </tr>
+                        <tr>
+                            <td>long</td>
+                            <td>Ganzzahl</td>
+                            <td>8</td>
+                            <td>64</td>
+                            <td>-9.223.372.036.854.775.808 bis 9.223.372.036.854.775.807</td>
+                        </tr>
+                        <tr>
+                            <td>float</td>
+                            <td>Kommazahlen</td>
+                            <td>4</td>
+                            <td>32</td>
+                            <td>+/-1,18 * 10^-38 bis +/-3,4 * 10^1038</td>
+                        </tr>
+                        <tr>
+                            <td>double</td>
+                            <td>Kommazahlen</td>
+                            <td>8</td>
+                            <td>64</td>
+                            <td>-1.8 * 10^308 bis + 1.8 * 10^308</td>
+                        </tr>
+                        <tr>
+                            <td>bool</td>
+                            <td>Wahrheitswert</td>
+                            <td>1</td>
+                            <td>8</td>
+                            <td>true / false</td>
+                        </tr>
+                    </table>
+                </div>
+                <p>Deklarieren einer Variablen: Datentyp Name;</p>
+                <ul>
+                    <li>Hier wird eine Variable von einem bestimmten Datentyp erstellt und ihr wird ein Name gegeben, aber noch kein Wert. Das sollte tatsächlich in der Praxis vermieden werden, da uninitialisierte lokale Variablen undefinierten Speicherinhalt enthalten. Das Auslesen führt zu undefiniertem Verhalten (Undefined Behavior).</li>
+                </ul>
+<pre class="code-block"><span class="keyword">int</span> alter;</pre>
+                <ul>
+                    <li>Hier wird eine Variable vom Typ int deklariert und sie hat den Namen alter</li>
+                    <li>Sie kann also zum Beispiel das Alter einer Person speichern</li>
+                    <li>Die Namen können frei gewählt werden, dürfen aber keine Leerzeichen enthalten. Sie dürfen nicht mit einer Zahl beginnen (können aber Zahlen enthalten) und dürfen kein C++-Keyword sein.</li>
+                </ul>
+
+                <p>Wert zuweisen:</p>
+                <ul>
+                    <li>Werte einer Variablen können verschieden dargestellt werden: Zahlwerte können dezimal (z.B. 3), hexadezimal mit einem 0x als Präfix (z.B. 0x1F) oder binär mit einem 0b als Präfix (z.B. 0b10011) zugewiesen werden.</li>
+                    <li>Die gerade eben erstellte Variable alter soll nun einen Wert erhalten</li>
+                </ul>
+<pre class="code-block">alter = <span class="number">25</span>;</pre>
+
+                <ul>
+                    <li>Wichtig ist, dass nach jeder Anweisung ein Semikolon (;) folgt</li>
+                    <li>Ebenfalls ist es wichtig, dass die Zuweisung eines Wertes nur nach diesem Schema funktioniert: Variable = Wert</li>
+                    <li>In der Mathematik funktionieren Variablen in 2 Richtungen, z.B.: x = 2 oder 2 = x</li>
+                    <li>in der Programmierung muss allerdings dem Compiler genau mitgeteilt werden, wohin er welchen Wert speichern soll, also geht nur x = 2</li>
+                    <li>eine Variable, die Ganzzahlen speichert, nutzt auch den negativen Bereich der Zahlen, wofür ein Bit für den Wert entfällt, möchte man sicherstellen, dass ein Integer immer positiv ist, kann man ihn mit dem Schlüsselwort unsigned kennzeichnen</li>
+                </ul>
+
+                <p>Variablen initialisieren:</p>
+                <ul>
+                    <li>Hierbei wird bereits beim Deklarieren der Variablen ein Wert zugewiesen:</li>
+                </ul>
+<pre class="code-block"><span class="keyword">int</span> alter2 = <span class="number">28</span>;</pre>
+                <ul>
+                    <li>Hier wird eine Variable vom Typ int mit Namen alter2 erstellt und ihr wird direkt der Wert 28 zugewiesen</li>
+                    <li>Hier wurde die Variable alter2 genannt, da alter schon existiert und eine Variable eindeutig sein muss</li>
+                </ul>
+
+                <p>weitere Beispiele:</p>
+<pre class="code-block">
+<span class="keyword">char</span> Buchstabe = <span class="string">'H'</span>; <span class="comment">//char speichert Zeichen innerhalb von Apostrophen ab</span>
+<span class="keyword">char</span> Ziffer = <span class="string">'2'</span>; <span class="comment">//char kann eine Ziffer als Zeichen speichern, diese ist nicht zum Verrechnen geeignet.</span>
+<span class="keyword">float</span> Kommazahl = <span class="number">0.45f</span>; <span class="comment">//f am Ende der Zahl um float als richtigen float zu nutzen ! Komma wird zu Punkt</span>
+<span class="keyword">double</span> GrosseKommazahl = <span class="number">1614651461.54646</span>;
+<span class="keyword">bool</span> Zustand = <span class="keyword">true</span>;
+</pre>
+                <ul>
+                    <li>Einer Variable sollte immer ein Wert zugewiesen werden, der ihrem Datentyp entspricht, also einem int eine Ganzzahl und keine Kommazahl</li>
+                    <li>Hierbei gibt es aber auch besondere Ausnahmen, beispielsweise:</li>
+                </ul>
+<pre class="code-block">
+<span class="keyword">char</span> EinBuchstabe = <span class="number">65</span>; <span class="comment">//speichert den zugehörigen ASCII-Wert zu 65, also ein 'A'</span>
+</pre>
+
+                <ul>
+                    <li>Variablen können in anderen Variablen gespeichert werden</li>
+                    <li>Variablen können überschrieben werden</li>
+                    <li>Variablen können sich selbst überschreiben</li>
+                </ul>
+<pre class="code-block">
+<span class="keyword">int</span> Zahl1 = <span class="number">5</span>; <span class="comment">//Zahl1 = 5</span>
+<span class="keyword">int</span> Zahl2 = Zahl1; <span class="comment">//Zahl2 = 5, Zahl2 bekommt den Wert von Zahl1</span>
+<span class="keyword">float</span> Kommazahl1 = <span class="number">1.25f</span>; <span class="comment">//Kommazahl1 = 1,25</span>
+Kommazahl1 = <span class="number">10.00f</span>; <span class="comment">//Kommazahl1 = 10,00</span>
+<span class="keyword">char</span> Letter1 = <span class="string">'L'</span>;
+Letter1 = Letter1; <span class="comment">//Letter1 überschreibt sich selbst, das ist nicht ganz sinnvoll im Moment, aber es geht</span>
+</pre>
+
+            <h2>Const</h2>
+            <p>Das Schlüsselwort const in C++ sorgt dafür, dass eine Variable schreibgeschützt ist (read-only) und verhindert deren nachträgliche Wertänderungen. Wird eine normale Variable als const deklariert, muss sie sofort initialisiert werden. Ein späterer Schreibzugriff wirft einen Compiler-Fehler.</p>
+
+<pre class="code-block">
+<span class="keyword">const int</span> MAX_USERS = <span class="number">100</span>;
+</pre>
+
+            <h2>Konvertierung</h2>
+            <p>In C++ können Typumwandlungen (Konvertierungen) explizit und implizit stattfinden</p>
+            <p>Implizite Typumwandlung</p>
+            <ul>
+                <li>Der Compiler führt eine implizite Konvertierung automatisch durch, wenn verschiedene Datentypen in einem Ausdruck oder bei Zuweisungen aufeinandertreffen</li>
+                <li>Kleinere Datentypen werden in größere umgewandelt (z. B. int zu double), um Datenverlust zu vermeiden</li>
+            </ul>
+
+<pre class="code-block">
+<span class="keyword">int</span> a = <span class="number">5</span>;
+<span class="keyword">double</span> b = a; <span class="comment">//Implizite Konvertierung von int zu double</span>
+</pre>
+
+
+                <p>Explizite Typumwandlung (Casting)</p>
+                <ul>
+                    <li>ist die explizite Konvertierung, die vom Programmierer erzwungen wird</li>
+                    <li>static_cast: Für standardmäßige, zur Kompilierzeit geprüfte Umwandlungen</li>
+                    <li>dynamic_cast: Für sichere Typumwandlungen (Downcasting) in Klassenhierarchien zur Laufzeit</li>
+                    <li>const_cast: Zum Hinzufügen oder Entfernen des const-Qualifizierers</li>
+                </ul>
+        
+<pre class="code-block">
+<span class="keyword">double</span> pi = <span class="number">3.14</span>;
+<span class="keyword">int ganzzahl1</span> = (<span class="keyword">int</span>)pi;
+<span class="keyword">int</span> ganzzahl2 = static_cast&lt;<span class="keyword">int</span>&gt;(pi);
+</pre>
+
+                <h2>lokale vs globale Variablen</h2>
+                <p>Wird eine Variable außerhalb eines Code-Blocks, z.B. außerhalb der main()-Funktion deklariert, ist sie überall gültig, man kann von überall auf sie zugreifen.</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="keyword">int</span> a = <span class="number">0</span>; <span class="comment">//globale Variable</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+                <p>Eine Variable, die innerhalb eines Code-Blocks deklariert wird, ist eine lokale Variable, diese ist nur innerhalb dieses Blocks verfügbar und ansprechbar.</p>
+                
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="keyword">int</span> a = <span class="number">0</span>; <span class="comment">//lokale Variable</span>
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+                <p>Man sollte globale Variablen nur dann verwenden, wenn man sie wirklich benötigt, ansonsten sollte man Variablen lokal deklarieren.</p>
+            
+                <h3>2. Übung</h3>
+                <p>Erstellen Sie eine Variable vom Typ int, mit dem Namen Zahl und weisen sie ihr den Wert 15 zu. Erstellen sie dann eine globale Variable namens Letter, vom Typ char und weisen ihr den Buchstaben 'c' zu. Überschreiben sie den Wert von Zahl mit dem Wert von Letter.</p>
+            </section>
+
+            <section class="section" id="IO">
+                <h1>Input & Output mit cin und cout</h1>
+                <p>Mit std::cout&lt;&lt; können Sie nicht nur String-Literale wie "Hello World" ausgeben, sondern die direkten Werte von Variablen:</p>
+<pre class="code-block">
+std::cout &lt;&lt; <span class="string">"Hello World"</span>;
+<span class="keyword">int</span> a = <span class="number">5</span>;
+std::cout &lt;&lt; a; <span class="comment">//gibt die Zahl 5 in der Konsole aus</span>
+</pre>
+                <p>Eine neue Zeile am Ende der Ausgabe kann mit &lt;&lt; std::endl; ermöglicht werden. Eine neue Zeile kann auch mit "\n" ausgegeben werden. Es können ebenfalls mehrere verschiedene Werte mit &lt;&lt; voneinander getrennt ausgegeben werden.</p>
+<pre class="code-block">
+std::cout &lt;&lt; <span class="string">"Hello World"</span>;
+std::cout &lt;&lt; <span class="string">"Hello World"</span> &lt;&lt; std::endl;
+std::cout &lt;&lt; <span class="string">"Hello\nWorld"</span>;
+std::cout &lt;&lt; "M" &lt;&lt; 15;
+</pre>
+                <p>In der Konsole müsste das Ganze so aussehen: </p>
+
+<pre class="consoleOut">
+Hello WorldHello World
+Hello
+WorldM15
+</pre>
+
+                <p>Mit std::cin &gt;&gt; können Sie Eingaben in der Konsole einlesen und in einer Variable speichern. Die Eingabe muss zum Datentyp der Zielvariable passen, ansonsten bricht das Programm ab. Eine Eingabe wird mit der Enter-Taste bestätigt.</p>
+
+<pre class="code-block">
+<span class="keyword">int</span> a;
+std::cout &lt;&lt; <span class="string">"Hier eine Ganzzahl eingeben:"</span>;
+std::cin &gt;&gt; a;
+std::cout &lt;&lt; a;
+</pre>
+                <p>Mit std::cin &gt;&gt; kann allerdings nur eine Reihe von Zeichen ohne Unterbrechung eingelesen werden. Leerzeichen und alles dahinter wird von std::cin &gt;&gt; ignoriert, für den Fall, dass man mehrere Wörter oder Zeichenfolgen mit Leerzeichen einlesen möchte, gibt es std::getline(), das wird allerdings erst später bei Strings interessant.</p>
+
+<pre class="code-block">
+std::<span class="function">getline</span>(std::cin, Variable); 
+</pre>
+
+                <p>Man kann mehrere Sachen hintereinander direkt ausgeben, also Text, Variablen usw.</p>
+
+<pre class="code-block">
+<span class="keyword">int</span> a = <span class="number">2</span>;
+std::cout &lt;&lt; <span class="string">"Der Wert von a ist:"</span> &lt;&lt; a &lt;&lt; <span class="string">"\n"</span>;
+</pre>
+
+                <h3>3. Übung</h3>
+                <p>Lassen sie sich die in der vorherigen Übung erstellten Variablen untereinander ausgeben. Hinweis: der Ausgabebefehl sollte in die Zeile vor return 0, da dort beide Variablen bekannt sind.</p>
+
+            </section>
+            
+            <section class="section" id="Expressions">
+                <h1>Expressions (Ausdrücke)</h1>
+                <h2>Arithmetische Operatoren</h2>
+                <p>Jetzt sollen die Variablen auch verwendet werden. Variablen können, wenn sie vom selben Datentyp sind einfach miteinander verrechnet werden. In C++ kann man folgende Operatoren verwenden:</p>
+                <ul>
+                    <li>+: Addition, rechnet werte zusammen</li>
+                    <li>-: Subtraktion, zieht den rechten Wert vom linken ab</li>
+                    <li>*: Multiplikation, multipliziert Werte</li>
+                    <li>/: Division, teilt Werte</li>
+                    <li>%: Modulo, gibt den ganzzahligen Rest einer Ganzzahldivision zurück</li>
+                    <li>++: Inkrement, erhöht den Wert einer Variablen um 1</li>
+                    <li>- -: Dekrement, verringert den Wert einer Variablen um 1</li>
+                    <li>!: NOT-Operator - negiert einen Wahrheitswert. </li>
+                </ul>
+                <p>Die Ergebnisse können ausgegeben werden oder gespeichert werden. Man kann Zahlen oder Variablen direkt verrechnen.</p>
+
+<pre class="code-block">
+std::cout &lt;&lt; <span class="number">3</span> + <span class="number">4</span>; <span class="comment">//Ausgabe: 7</span>
+<span class="keyword">int</span> a = <span class="number">5</span> - <span class="number">4</span>; <span class="comment">//a = 1</span>
+std::cout &lt;&lt; a; <span class="comment">//Ausgabe: 1</span>
+
+<span class="keyword">int</span> b = <span class="number">8</span>;
+std::cout &lt;&lt; a + b; <span class="comment">//Ausgabe: 9</span>
+
+std::cout &lt;&lt; <span class="number">5.0</span> / <span class="number">2</span>; <span class="comment">//Ausgabe: 2.5 (float) [5/2 würde zwei int teilen und das Ergebnis wäre ein int, der Nachkommateil würde entfallen]</span>
+std::cout &lt;&lt; <span class="number">3</span> * <span class="number">4</span>; <span class="comment">//Ausgabe: 12</span>
+std::cout &lt;&lt; <span class="number">6</span> % <span class="number">5</span>; <span class="comment">//Ausgabe: 1</span>
+
+<span class="keyword">int</span> c = <span class="number">5</span>;
+c = c - <span class="number">1</span>; <span class="comment">//c = 4</span>
+c++; <span class="comment">//c = 5</span>
+
+<span class="keyword">bool</span> lichtIstAn = <span class="keyword">true</span>;
+<span class="keyword">bool</span> lichtIstAus = !lichtIstAn;
+</pre>
+
+                <h2>Ausdruck</h2>
+                <p>Ein Ausdruck ist die Kombination aus Werten, Variablen, Operatoren und Funktionsaufrufen, die zu einem bestimmten Wert mit einem bestimmten Datentyp ausgewertet wird. Ein Ausdruck ist noch keine vollständige Handlungsanweisung für das Programm.</p>
+                <ul>
+                    <li>Anweisung: int x = 5 + 3;</li>
+                    <li>Ausdruck darin: 5 + 3</li>
+                </ul>
+                <p>Für Ausdrücke in C++ gibt es vom Compiler ein fest definiertes Verhalten, ganz nach den Regeln der Mathematik:</p>
+                <ul>
+                    <li>Punktrechnung vor Strichrechnung</li>
+                    <li>Klammern werden zuerst behandelt</li>
+                </ul>
+<pre class="code-block">
+<span class="keyword">int</span class="number"> a = <span class="number">1</span>;
+<span class="keyword">int</span> ergebnis = (<span class="number">5</span> + a) * <span class="number">6</span> + <span class="number">3</span>; <span class="comment">//ergebnis = 39</span>
+</pre>
+                <h3>4. Übung</h3>
+                <p>Erstellen Sie ein Programm, das zwei Variablen besitzt, deren Wert über eine Konsoleneingabe entgegennimmt und das Ergebnis aus der Multiplikation der beiden Variablen ausgibt.</p>
+                
+            </section>
+
+            <section class="section" id="if-elseif-else">
+                <h1>if - else if - else</h1>
+                <p>Bedingungen steuern den Datenfluss eines Programms. Sie erlauben es dem Code, Entscheidungen zu treffen und unterschiedliche Wege einzuschlagen - basierend auf Wahrheitswerten (bool)</p>
+                <h2>if-Statement</h2>
+                <p>Das Wort if kommt aus dem Englischen und bedeutet "Wenn". Es ist die grundlegendste Entscheidung in der Programmierung. Das bedeutet: "Wenn diese Bedingung wahr (true) ist, dann tue das Folgende. Wenn sie falsch (false) ist, ignoriere es einfach."</p>
+
+<pre class="code-block">
+<span class="keyword">bool</span> bedingung = <span class="keyword">true</span>;
+<span class="keyword">if</span>(bedingung)
+<span class="bracket">{</span>
+    <span class="comment">//Dieser Code läuft NUR, wenn die Bedingung wahr (true) ist.</span>
+<span class="bracket">}</span>
+
+<span class="comment">//Eine Zahl überprüfen, ob sie 5 ist.</span>
+<span class="keyword">int</span> number = <span class="number">0</span>;
+
+std::cout &lt;&lt; <span class="string">"Hier eine Ganzzahl eingeben: "</span>;
+std::cin &gt;&gt; number;
+
+<span class="keyword">if</span>(number == <span class="number">5</span>)
+<span class="bracket">{</span>
+    <span class="comment">//Dieser Code läuft NUR, wenn die Nummer 5 ist.</span>
+    std::cout &lt;&lt; <span class="string">"Die eingegebene Nummer war 5."</span>;
+<span class="bracket">}</span>
+</pre>
+                <ul>
+                    <li>Typ-Flexibilität (Truthiness): Anders als beispielsweise Java verlangt C++ im if(...) keinen echten boolean. Jeder numerische Wert ungleich 0 oder gültige Zeiger != nullptr wird implizit zu true konvertiert. Nur 0 und nullptr sind false.</li>
+                    <li>Zuweisungs-Falle: Der klassische Bug if (status = 5) kompiliert in C++ fehlerfrei, weist 5 zu, evaluiert zu true und führt den Block immer aus.</li>
+
+                </ul>
+
+                <h2>else-Statement</h2>
+                <p>Das Wort else bedeutet "ansonsten". Es bildet zusammen mit dem if ein unzertrennliches Paar. Man nutzt es, wenn man für jeden Fall einen Plan braucht. Es gibt dem Computer einen Alternativweg vor, wenn die if-Bedingung falsch war.</p>
+<pre class="code-block">
+<span class="keyword">if</span>(bedingung)
+<span class="bracket">{</span>
+    <span class="comment">//Code läuft, wenn die Bedingung WAHR ist.</span>
+<span class="bracket">}</span>
+<span class="keyword">else</span>
+<span class="bracket">{</span>
+    <span class="comment">//Code läuft, wenn die Bedingung FALSCH war.</span>
+<span class="bracket">}</span>
+</pre>
+
+                    <h2>else if-Statement</h2>
+                    <p>else if bedeutet "Ansonsten wenn". Manchmal reichen zwei Wege (wahr oder falsch) nicht aus, weil es viele verschiedene Möglichkeiten gibt. Mit else if kann man eine Kette von Bedingungen bauen. Das Programm prüft diese Kette von oben nach unten durch.</p>
+
+
+<pre class="code-block">
+<span class="keyword">if</span>(bedingung1)
+<span class="bracket">{</span>
+    <span class="comment">//Code läuft, wenn bedingung1 wahr ist</span>
+<span class="bracket">}</span>
+<span class="keyword">else if</span>(bedingung2)
+<span class="bracket">{</span>
+    <span class="comment">//Code läuft, wenn bedingung2 wahr ist</span>
+<span class="bracket">}</span>
+<span class="keyword">else</span>
+<span class="bracket">{</span>
+    <span class="comment">//Code läuft, wenn alle vorherigen Bedingungen falsch waren</span>
+<span class="bracket">}</span>
+</pre>
+
+                    <ul>
+                        <li>Sobald das Programm von oben nach unten wandert und eine Bedingung findet, die wahr ist, wird deren Code ausgeführt. Danach bricht das Programm die gesamte Kette ab und springt ganz ans Ende. Es wird niemals mehr als ein Block ausgeführt!</li>
+                    </ul>
+                    <p>Will man in C++ Werte miteinander vergleichen, kann man verschiedene Vergleichsoperatoren verwenden. Mit diesen kann man 2 Variablen miteinander vergleichen oder eine Variable mit einem Wert.</p>
+                    <div class="table-container">
+                        <table>
+                            <tr>
+                                <th>Operator</th>
+                                <th>Syntax</th>
+                                <th>Beschreibung</th>
+                                <th>Beispiel</th>
+                            </tr>
+                            <tr>
+                                <td>gleich</td>
+                                <td>==</td>
+                                <td>Prüft, ob beide Werte gleich sind, wenn ja, ist das Ergebnis true, ansonsten false</td>
+                                <td>a == b</td>
+                            </tr>
+                            <tr>
+                                <td>ungleich</td>
+                                <td>!=</td>
+                                <td>Prüft, ob beide Werte verschieden sind, wenn ja, ist das Ergebnis true, ansonsten false</td>
+                                <td>a != b</td>
+                            </tr>
+                            <tr>
+                                <td>kleiner als</td>
+                                <td>&lt;</td>
+                                <td>Prüft, ob der linke Wert kleiner ist als der rechte</td>
+                                <td>a &lt; b</td>
+                            </tr>
+                            <tr>
+                                <td>größer als</td>
+                                <td>&gt;</td>
+                                <td>Prüft, ob der linke Wert größer ist als der rechte</td>
+                                <td>a &gt; b</td>
+                            </tr>
+                            <tr>
+                                <td>kleiner oder gleich</td>
+                                <td>&lt;=</td>
+                                <td>Prüft, ob der linke Wert kleiner oder gleich dem rechten Wert ist</td>
+                                <td>a &lt;= b</td>
+                            </tr>
+                            <tr>
+                                <td>größer oder gleich</td>
+                                <td>&gt;=</td>
+                                <td>Prüft, ob der linke Wert größer oder gleich dem rechten Wert ist</td>
+                                <td>a &gt;= b</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <p>Damit lassen sich alle möglichen Arten von Abfragen erstellen</p>
+                    <ul>
+                        <li>Hier ein kleines Beispielprogramm - Kinoeinlass:</li>
+                    </ul>
+                    
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="comment">//Eine Variable, die das eingegebene Alter einer Person speichert</span>
+    <span class="keyword">int</span> age = <span class="number">0</span>;
+
+    std::cout &lt;&lt; <span class="string">"Bitte hier das Alter eingeben: "</span>;
+    std::cin &gt;&gt; age;
+
+    <span class="keyword">if</span>(age &lt; 16)
+    <span class="bracket">{</span>
+        std::cout &lt;&lt; <span class="string">"Nur Filme fuer Kinder."</span>;
+    <span class="bracket">}</span>
+    <span class="keyword">else if</span>(age &lt; 18)
+    <span class="bracket">{</span>
+        std::cout &lt;&lt; <span class="string">"Nur Filme fuer Kinder und Jugendliche."</span>;
+    <span class="bracket">}</span>
+    <span class="keyword">else</span>
+    <span class="bracket">{</span>
+        std::cout &lt;&lt; <span class="string">"Filme fuer alle, auch fuer Erwachsene."</span>;
+    <span class="bracket">}</span>
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+                <ul>
+                    <li>Man kann auch mehrere if-Abfragen ineinander Verschachteln.</li>
+                </ul>
+
+                <h3>5. Übung</h3>
+                <p>Erstellen Sie ein Programm, das mittels einer if-else-Abfrage herausfindet, ob eine eingegebene Zahl gerade oder ungerade ist. Hinweis nutzen Sie Modulo.</p>
+
+
+            </section>
+
+            <section class="section" id="weitere-Operatoren">
+                <h1>Weitere Operatoren</h1>
+                <h2>Logische Operatoren</h2>
+                <p>Logische Operatoren in C++ verbinden Bedingungen und Aussagen. Sie geben immer einen Wahrheitswert zurück.</p>
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Operator</th>
+                            <th>Syntax</th>
+                            <th>Beschreibung</th>
+                            <th>Beispiel</th>
+                        </tr>
+                        <tr>
+                            <td>Logisches UND</td>
+                            <td>&&</td>
+                            <td>sind beide Bedingungen wahr, wird true zurückgegeben</td>
+                            <td>a &lt; 5 && b &lt; 5</td>
+                        </tr>
+                        <tr>
+                            <td>Logisches ODER</td>
+                            <td>||</td>
+                            <td>Ergibt true, wenn mindestens eine Bedingung wahr ist</td>
+                            <td>a &lt; 5 || b &gt; 2</td>
+                        </tr>
+                        <tr>
+                            <td>Logisches NICHT</td>
+                            <td>!</td>
+                            <td>Kehrt den Wahrheitswert um</td>
+                            <td>!a</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <h2>Bitweise Operatoren</h2>
+                <p>Bitweise Operatoren in C++ arbeiten direkt auf den einzelnen Bits (0 und 1) von Ganzzahlen z.B. int oder char</p>
+
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Operator</th>
+                            <th>Syntax</th>
+                            <th>Beschreibung</th>
+                            <th>Beispiel</th>
+                        </tr>
+                        <tr>
+                            <td>Bitweises UND</td>
+                            <td>&</td>
+                            <td>Setzt das Ergebnis-Bit auf 1, wenn beide korrespondierenden Bits 1 sind</td>
+                            <td>a & b</td>
+                        </tr>
+                        <tr>
+                            <td>Bitweises ODER</td>
+                            <td>|</td>
+                            <td>Setzt das Ergebnis-Bit auf 1, wenn mindestens eines der Bits 1 ist.</td>
+                            <td>a | b</td>
+                        </tr>
+                        <tr>
+                            <td>Bitweises Exklusiv-ODER / XOR</td>
+                            <td>^</td>
+                            <td>Setzt das Ergebnis-Bit auf 1, wenn die Bits unterschiedlich sind.</td>
+                            <td>a ^ b</td>
+                        </tr>
+                        <tr>
+                            <td>Bitweises NICHT / Komplement</td>
+                            <td>~</td>
+                            <td>Invertiert alle Bits (0 wird zu 1, 1 wird zu 0)</td>
+                            <td>~a</td>
+                        </tr>
+                        <tr>
+                            <td>Links-Shift</td>
+                            <td>&lt;&lt;</td>
+                            <td>Verschiebt Bits nach links. Füllt rechts mit Nullen auf. Verdoppelt den Wert pro Stelle</td>
+                            <td>a &lt;&lt; 2</td>
+                        </tr>
+                        <tr>
+                            <td>Rechts-Shift</td>
+                            <td>&gt;&gt;</td>
+                            <td>Verschiebt Bits nach rechts. Halbiert den Wert pro Stelle</td>
+                            <td>a &gt;&gt; 2</td>
+                        </tr>
+                    </table>
+                </div>
+
+<pre class="code-block">
+<span class="keyword">unsigned char</span> a = <span class="number">0b00000101</span>; <span class="comment">//Dezimal 5</span>
+<span class="keyword">unsigned char</span> b = <span class="number">0b00000011</span>; <span class="comment">//Dezimal 3</span>
+
+<span class="comment">// Bitweises UND (&)</span>
+<span class="keyword">unsigned char</span> ergebnis_und = a & b; <span class="comment">//0b00000001 (Dezimal 1)</span>
+
+<span class="comment">// Links-Shift (&lt;&lt;) um 2 Stellen</span>
+<span class="keyword">unsigned char</span> ergebnis_shift = a &lt;&lt; 2; <span class="comment">//0b00010100 (Dezimal 20)</span>
+</pre>
+
+                <h3>6. Übung</h3>
+                <p>Erstellen Sie zwei Programme, die überprüfen, ob eine eingegebene Zahl zwischen 1 und 10 liegt. Das erste Programm soll dafür 2 if-Abfragen verwenden, die ineinander verschachtelt sind. Das zweite Programm soll nur eine if-Abfrage verwenden, die beide Bedingungen mit einem && verknüpft.</p>
+            </section>
+
+            <section class="section" id="switch">
+                <h1>Switch-Statement</h1>
+                <p>Ein switch-Statement in C++ leitet den Kontrollfluss basierend auf dem Wert einer Variablen an verschiedene Code-Blöcke (case) weiter und ist eine performante Alternative zu langen if-else-Ketten. Hier ein Beispielprogramm:</p>
+        
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="keyword">int</span> tag = <span class="number">0</span>;
+    std::cout &lt;&lt; <span class="string">"Gib die Nummer des Wochentages ein: "</span>;
+    std::cin &gt;&gt; tag;
+
+    <span class="keyword">switch</span>(tag) <span class="comment">//1. Der Selektor (Die Variable)</span>
+    <span class="bracket">{</span>
+        <span class="keyword">case</span> <span class="number">1</span>: <span class="comment">//2. Die Sprungmarke (Compile-Zeit-Konstante)</span>
+            std::cout &lt;&lt; <span class="string">"Montag"</span> &lt;&lt; std::endl;
+            <span class="keyword">break</span>; <span class="comment">//3. Die Bremse (Verhindert Fall-Through)</span>
+        <span class="keyword">case</span> <span class="number">2</span>:
+            std::cout &lt;&lt; <span class="string">"Dienstag"</span> &lt;&lt; std::endl;
+            <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="number">3</span>:
+        <span class="bracket">{</span> <span class="comment">//4. Der Scope-Hinweis (Geschweifte Klammern)</span>
+            <span class="keyword">int</span> arbeitsStunden = <span class="number">8</span>; 
+            std::cout &lt;&lt; <span class="string">"Mittwoch ("</span> &lt;&lt; arbeitsStunden &lt;&lt; <span class="string">" h)"</span> &lt;&lt; std::endl;
+            <span class="keyword">break</span>;
+        <span class="bracket">}</span>
+        <span class="keyword">case</span> <span class="number">4</span>:
+            std::cout &lt;&lt; <span class="string">"Donnerstag"</span> &lt;&lt; std::endl;
+            <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="number">5</span>:
+            std::cout &lt;&lt; <span class="string">"Freitag"</span> &lt;&lt; std::endl;
+            <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="number">6</span>:
+            std::cout &lt;&lt; <span class="string">"Samstag"</span> &lt;&lt; std::endl;
+            <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="number">7</span>:
+            std::cout &lt;&lt; <span class="string">"Sonntag"</span> &lt;&lt; std::endl;
+            <span class="keyword">break</span>;
+        <span class="keyword">default</span>: <span class="comment">//5. Das Auffangbecken (Fallback)</span>
+            std::cout &lt;&lt; <span class="string">"Kein Tag in einer Woche"</span> &lt;&lt; std::endl;
+    <span class="bracket">}</span>
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+                <p>1. Der Selektor: switch(tag)</p>
+                <ul>
+                    <li>Dem switch wird die Variable übergeben, deren Wert überprüft werden soll</li>
+                    <li>Der Ausdruck in den Klammern muss strikt in einen integralen Typ (int, char, bool oder enum) konvertierbar sein</li>
+                    <li>Fließkommazahlen (float/double) oder C++ Strings (std::string) sind nativ nicht erlaubt</li>
+                </ul>
+                <p>2. Die Sprungmarke: case 1: bis case 7:</p>
+                <ul>
+                    <li>stimmt der Wert der Variable mit der Zahl hinter dem case überein, springt das Programm dorthin und führt den Code dort aus.</li>
+                    <li>Die Werte hinter case müssen Compile-Zeit-Konstanten (constexpr oder Literale) sein, also ein fester Wert, den das Programm bereits beim Übersetzen (Kompilieren) kennt</li>
+                    <li>Da die Wochentage von 1 bis 7 lückenlos hintereinander liegen, optimieren manche Compiler dies im Hintergrund zu einer Jump Table (Sprungtabelle), wodurch das Programm schneller und effizienter läuft, als mit if-else-Abfragen</li>
+                </ul>
+                <p>3. Die Bremse: break;</p>
+                <ul>
+                    <li>Das break beendet das switch-Statement an der Stelle, an der es auftritt</li>
+                    <li>Ohne break, springt das Programm automatisch in das nächste case darunter (Fall-Through), selbst wenn die Zahl und der Wert gar nicht übereinstimmen</li>
+                    <li>Der Fall-Through ist auf Assembly-Ebene das schlichte Fehlen eines JMP-Befehls am Ende eines Blocks</li>
+                </ul>
+                <p>4. Der Scope-Hinweis</p>
+                <ul>
+                    <li>Der gesamte switch-Block zwischen den äußersten geschweiften Klammern { ... } teilt sich einen einzigen gemeinsamen Gültigkeitsbereich (Scope) für Variablen.</li>
+                    <li>Das Problem: Würde man in case 3 eine Variable mit int arbeitsStunden = 8; deklarieren ohne die zusätzlichen geschweiften Klammern, würde es gar nicht kompilieren.</li>
+                    <li>C++ verbietet es strikt, die Initialisierung einer im Scope befindlichen Variable zu überspringen</li>
+                    <li>Die Lösung: Wenn man innerhalb eines case Variablen deklarieren will, musst man mit zusätzlichen geschweiften Klammern { ... } (wie in case 3 gezeigt) einen lokalen Sub-Scope erzwingen</li>
+                </ul>
+                <p>5. Das Auffangbecken: default</p>
+                <ul>
+                    <li>Wenn der Benutzer eine Zahl eingibt, die weder 1 noch 7 ist (z. B. 42), greift dieser Programmabschnitt und gibt "Kein Tag in einer Woche" aus</li>
+                </ul>
+
+
+
+            </section>
+
+            <section class="section" id="loop">
+                <h1>Schleifen</h1>
+                <h2>while</h2>
+                <p>Eine Schleife wiederholt einen Codeblock so lange, wie eine bestimmte Bedingung wahr ist. Die Bedingung wird vor jedem Durchlauf geprüft (Kopfgesteuerte Schleife). Ist sie von Anfang an false, läuft die Schleife kein einziges Mal.</p>
+<pre class="code-block">
+<span class="keyword">while</span> (Bedingung)
+<span class="bracket">{</span>
+    <span class="comment">//Code, der wiederholt wird</span>
+<span class="bracket">}</span>
+</pre>
+
+            <ul>
+                <li>Endlosschleifen: Wenn sich die Bedingung im Schleifenkopf niemals ändert und niemals false wird, läuft die Schleife ewig, bis das Programm abstürtzt, die Schleife einfriert oder das Betriebssystem das Programm beendet.</li>
+                <li>C++ akzeptiert als Bedingung auch Ganzzahlen (0 ist false, alles andere ist true)</li>
+            </ul>
+            <p>Ein Beispielprogramm für C++ :</p>
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="keyword">int</span> zaehler = <span class="number">3</span>;
+
+    <span class="keyword">while</span>(zaehler > <span class="number">0</span>)
+    <span class="bracket">{</span>
+        std::cout &lt;&lt; zaehler &lt;&lt; <span class="string">"...\n"</span>;
+        zaehler--;
+    <span class="bracket">}</span>
+    std::cout &lt;&lt; <span class="string">"Start!\n"</span>;
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+                <h2>do-while</h2>
+                <p>Der Code im Inneren der Schleife wird immer mindestens einmal ausgeführt - Die Prüfung der Bedingung erfolgt erst am Ende nach dem Durchlauf</p>
+
+<pre class="code-block">
+<span class="keyword">do</span>
+<span class="bracket">{</span>
+    <span class="comment"> //Code der wiederholt werden soll, aber immer mindestens einmal ausgeführt wird</span>
+<span class="bracket">}</span>
+<span class="keyword">while</span>(bedingung);
+</pre>
+
+                <ul>
+                    <li>Der Code im do-Block läuft immer mindestens einmal, selbst wenn die Bedingung von Anfang an false (falsch) ist</li>
+                    <li>Das Semikolon (;) ganz Ende der Schleife wird oft vergessen - das führt zu einem Compiler-Fehler.</li>
+                    <li>Wenn eine Variable innerhalb des do-Blocks deklariert wird, kann sie unten im while(...) nicht abgefragt werden</li>
+                </ul>
+                <h2>for</h2>
+                <p>Eine Schleife, die ideal ist, wenn man im Voraus genau weiß, wie oft der Codeblock wiederholt werden soll (z. B. exakt 10-mal)</p>
+
+<pre class="code-block">
+<span class="keyword">for</span>(initialisierung; bedingung; schrittweise_aenderung)
+<span class="bracket">{</span>
+    <span class="comment"> //Code der wiederholt wird</span>
+<span class="bracket">}</span>
+</pre>
+
+            <p>Die drei Teile im Kopf der Schleife werden durch Semikolons ; getrennt</p>
+            <ul>
+                <li>Initialisierung: Startwert für eine Zählervariable setzen (wird nur einmal ganz am Anfang ausgeführt)</li>
+                <li>Bedingung: Sie wird vor jedem Durchlauf geprüft. Ist sie true, läuft die Schleife</li>
+                <li>Schrittweise Änderung: Verändert den Zähler nach jedem Durchlauf (z. B. hochzählen)</li>
+            </ul>
+
+            <p>Ein Code-Beispiel: </p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="comment">//Start bei i = 1; Solange i kleiner/gleich 5 ist; i nach jedem Durchlauf um 1 erhöhen</span>
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">5</span>; i++)
+    <span class="bracket">{</span>
+        std::cout &lt;&lt; <span class="string">"5er-Reihe: "</span> &lt;&lt; (i * <span class="number">5</span>) &lt;&lt; <span class="string">"\n"</span>;
+    <span class="bracket">}</span>
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+                <ul>
+                    <li>Meistens starten Schleifen bei 0 statt bei 1. Eine Schleife, die 5-mal laufen soll, sieht meistens so aus: for (int i = 0; i &lt; 5; i++)</li>
+                    <li>Die Zählvariable i existiert nur innerhalb der Schleife, sobald die Schleife fertig ist, ist i gelöscht</li>
+                    <li>Unendliche Schleife: Das Gegenstück zu while(true) ist in C++ sehr häufig for(;;) - Compiler generieren hierfür oft minimal saubereren Assembler-Code ohne Bedingungsprüfung</li>
+                    <li>Auch bei Schleifen, können break und continue verwendet werden, break bricht die Schleife ab, an der stelle, an der es auftritt, während continue die schleife von vorne startet und den restlichen Code überspringt</li>
+                </ul>
+                
+                
+                <h3>Übung</h3>
+                <p>Erstellen Sie ein Programm, das mittels while, do-while und for-Schleife jeweils die Zahlen von 1 bis 10 ausgibt.</p>
+
+            </section>
+
+            <section class="section" id="array">
+                <h1>Arrays</h1>
+                <p>Ein Array ist eine Sammlung von Elementen des gleichen Datentyps, die hintereinander im Speicher abgelegt werden. Die Größe ist nach der Erstellung fest und unveränderlich. Ein Array kann also mehrere Ganzzahlen speichern.</p>
+                <ul>
+                    <li>Der Index: Das erste Element liegt immer bei Index 0. Das letzte Element liegt bei Größe minus 1.</li>
+                    <li>Der Speicher: Die Elemente liegen wie eine Kette lückenlos nebeneinander im Arbeitsspeicher (RAM). Ist ein int 4 Bytes groß und das Array enthält 4 Elemente, so ist das ganze Array 16 Bytes groß</li>
+                </ul>
+                <p>Die Erstellung eines Array folgt diesem Schema: datentyp name[größe]; Hier ein paar Beispiele:</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="comment">//Deklaration eines Arrays mit 4 Elementen.</span>
+    <span class="keyword">int</span> array_1[<span class="number">4</span>];
+
+    <span class="comment">//Befüllen mit Werten:</span>
+    array_1[<span class="number">0</span>] = <span class="number">1</span>;
+    array_1[<span class="number">1</span>] = <span class="number">2</span>;
+    array_1[<span class="number">2</span>] = <span class="number">3</span>;
+    array_1[<span class="number">3</span>] = <span class="number">4</span>;
+
+    <span class="comment">//Initialisierung eines Arrays</span>
+    <span class="keyword">int</span> array_2[<span class="number">3</span>] = <span class="bracket">{</span><span class="number">5</span>, <span class="number">2</span>, <span class="number">4</span><span class="bracket">}</span>;
+
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+                <p>Hier sieht man, wie man auf die Werte im Array zugreifen kann:</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="keyword">int</span> array[<span class="number">4</span>] = <span class="bracket">{</span><span class="number">5</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">0</span><span class="bracket">}</span>;
+
+    <span class="comment">//Schleife läuft von Index 0 bis Index 3</span>
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> i &lt; <span class="number">4</span>; i++)
+    <span class="bracket">{</span>
+        <span class="comment">//Zugriff auf das Element an Position 'i' via array[i]</span>
+        std::cout &lt;&lt; <span class="string">"Index "</span> &lt;&lt; i &lt;&lt; <span class="string">" hat den Wert: "</span> &lt;&lt; array[i] &lt;&lt; <span class="string">"\n"</span>;
+    <span class="bracket">}</span>
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+                <p>Man kann ein Array erstellen, und keine Anzahl der Elemente mittelien, wenn man den Wert direkt zuweist, die Größe bleibt trotzdem unveränderlich:</p>
+
+<pre class="code-block">
+<span class="keyword">int</span> array[] = <span class="bracket">{</span><span class="number">5</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">0</span><span class="bracket">}</span>; <span class="comment">//Erstellt automatisch ein Array mit 4 Elementen, da 4 Elemente direkt zugewiesen werden</span>
+</pre>
+
+                <h2>sizeof()</h2>
+                <p>Um die Größe eines Datentyps oder eines Arrays herauszufinden, verwendet man in C++ sizeof(array); dies gibt die Größe des Arrays in Byte zurück, also ein int Array mit 4 Elementen, wäre in diesem Fall 16 Byte, wenn ein int 4 Byte groß ist. Um die Anzahl der Elemente im Array herauszufinden, kann man sizeof(array) / sizeof(int) verwenden, wenn ein int 4 Byte groß ist, gibt sizeof(int) 4 zurück.</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="keyword">int</span> array[<span class="number">4</span>] = <span class="bracket">{</span><span class="number">5</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">0</span><span class="bracket">}</span>;
+
+
+    std::cout &lt;&lt; <span class="function">sizeof</span>(array) &lt;&lt; std::endl; <span class="comment">//gibt 16 zurück</span>
+    std::cout &lt;&lt; <span class="function">sizeof</span>(int) &lt;&lt; std::endl; <span class="comment">//gibt 4 zurück</span>
+    std::cout &lt;&lt; <span class="function">sizeof</span>(array) / <span class="function">sizeof</span>(int) &lt;&lt; std::endl; <span class="comment">//Anzahl der Elemente ist 4</span>
+    std::cout &lt;&lt; <span class="function">sizeof</span>(array) / <span class="function">sizeof</span>(array[0]) &lt;&lt; std::endl; <span class="comment">//Anzahl der Elemente ist 4</span>
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+                <ul>
+                    <li>Index-Out-of-Bounds: Wenn ein Array die Größe 4 hat und man versucht, auf array[4] zuzugreifen, stürzt das Programm oft nicht sofort ab! C++ erlaubt dir den Zugriff auf diesen verbotenen Speicherbereich. Man liest oder überschreibt dann zufällige Daten (sehr gefährlicher Fehler).</li>
+                    <li>Größe nachträglich ändern: Das geht nicht. Wenn man ein Array mit 5 Elementen erstellt hat, bleibt es für immer 5 Elemente groß.</li>
+                </ul>
+
+                <p>
+                    Weitere Informationen zu Arrays:
+                </p>
+                <a href="PDF/Arrays.pdf">Array.pdf</a>
+
+                <h2>Mehrdimensionale Arrays</h2>
+                <p>Ein mehrdimensionales Array in C++ ist ein Array aus Arrays, das Daten in einer Tabellen- oder Matrixform speichert</p>
+
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="keyword">int</span> array[<span class="number">3</span>][<span class="number">4</span>] = <span class="bracket">{</span><span class="bracket">{</span><span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span><span class="bracket">}</span>, <span class="bracket">{</span><span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span><span class="bracket">}</span>, <span class="bracket">{</span><span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span><span class="bracket">}</span><span class="bracket">}</span>;
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+                <h3>Übung</h3>
+                <p>Jetzt soll das gelernte über Arrays und Schleifen angewendet werden. Hierzu gibt es mehrere Übungsaufgaben:</p>
+                <a href="Übungsaufgaben Array.pdf">Übungsaufgaben Array.pdf</a>
+
+
+
+            </section>
+
+            <section class="section" id="Strings">
+                <h1>Strings</h1>
+                <p>Bisher gab es den Datentyp char, dieser kann genau ein einziges Zeichen speichern. Strings hingegen können eine ganze Zeichenkette, also Wörter oder ganze Sätze speichern. In C++ gibt es zwei Arten von Strings: C-Style Strings (ein char Array aus der Programmiersprache C) und die modernen, komfortablen C++ Strings</p>
+                <h2>C-Style String</h2>
+                <p>Ein C-Style String ist ein Array aus einzelnen Zeichen (char), das zwingend mit einem unsichtbaren Null-Zeichen ('\0', "Null-Terminator") enden muss, damit C++ weiß, wo der Text zu Ende ist.</p>
+
+<pre class="code-block">
+<span class="keyword">char</span> text[] = <span class="string">"Hallo"</span>; <span class="comment">//Erstellt automatisch ein Array der Größe 6 (5 Buchstaben + '\0')</span>
+</pre>
+
+                <h2>C++ String</h2>
+                <p>Die moderne Version zu C-Style Strings sind C++ Strings, diese sind moderne Objekte aus der Standardbibliothek &lt;string&gt;. Sie verwalten den Speicher komplett automatisch und besitzen nützliche String-Methoden.</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+<span class="include">#include</span> <span class="prepr">&lt;string&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    std::string text = <span class="string">"Hallo"</span>;
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+                <p>Hier sind die wichtigsten String-Methoden:</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+<span class="include">#include</span> <span class="prepr">&lt;string&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    std::string gruss = <span class="string">"Hallo Welt"</span>;
+
+    <span class="comment">//1. Länge ermitteln</span>
+    std::cout &lt;&lt; <span class="string">"Laenge: "</span> &lt;&lt; gruss.<span class="function">length</span>() &lt;&lt; <span class="string">"\n";</span> <span class="comment">//Ausgabe: 10</span>
+
+    <span class="comment">//2. Text anhängen (Direkt veränderbar!)</span>
+    gruss += <span class="string">"!!!"</span>; 
+    std::cout &lt;&lt; gruss &lt;&lt; <span class="string">"\n"</span>; <span class="comment">//Ausgabe: Hallo Welt!!!</span>
+
+    <span class="comment">//3. Teiltext ausschneiden (Sub-String)</span>
+    <span class="comment">//Parameter: (Start-Index, Anzahl der Zeichen)</span>
+    std::string welt = gruss.<span class="function">substr</span>(<span class="number">6</span>, <span class="number">4</span>); 
+    std::cout &lt;&lt; <span class="string">"Teiltext: "</span> &lt;&lt; welt &lt;&lt; <span class="string">"\n"</span>; <span class="comment">//Ausgabe: Welt</span>
+
+    <span class="comment">//4. Text durchsuchen</span>
+    <span class="keyword">size_t</span> position = gruss.<span class="function">find</span>(<span class="string">"Welt"</span>);<span class="comment">//size_t speichert eine Ganzzahl</span>
+    <span class="keyword">if</span>(position != std::string::npos)
+    <span class="bracket">{</span>
+        std::cout &lt;&lt; <span class="string">"'Welt' gefunden an Index: "</span> &lt;&lt; position &lt;&lt; <span class="string">"\n"</span>;
+    <span class="bracket">}</span>
+
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+                <ul>
+                    <li>In C++ vergleicht man Strings ganz intuitiv mit dem normalen Operator: if(str1 == str2)</li>
+                    <li>Einzelne Zeichen (char) stehen in einfachen Anführungszeichen ('A'), Texte (String) immer in doppelten ("Hallo")</li>
+                    <li>Man kann einzelne Buchstaben in einem C++ String direkt per Index ändern (z. B. gruss[0] = 'X';)</li>
+                    <li>manche ältere Schnittstellen zu C++ erwarten statt std::string ein const char*</li>
+                    <li>Strings werden am besten mit: std::getline(std::cin, string) eingelesen (da std::cin >> string beim ersten Leerzeichen abbricht)</li>
+                </ul>
+
+            </section>
+
+            <section class="section" id="function">
+                <h1>Funktionen</h1>
+                <p>Funktionen sind wiederholbare Codeblöcke. Sie lösen Teilaufgaben, machen den Code lesbarer und verhindern, dass man Anweisungen mehrfach schreiben muss. Eine Funktion besteht aus einem Rückgabetyp, einem Namen, optionalen Parametern in runden Klammern und dem Codeblock in geschweiften Klammern.</p>
+
+<pre class="code-block">
+<span class="keyword">rückgabetyp</span> <span >funktionsnamen</span> (parameter1, parameter2)
+<span class="bracket">{</span>
+    <span class="comment">//Code der Funktion</span>
+    <span class="keyword">return</span> ergebnis;
+<span class="bracket">}</span>
+</pre>
+
+                <ul>
+                    <li>Rückgabetyp: Legt fest, von welchem Datentyp der Wert ist, den die Funktion zurückgibt (z. B. int, double, string). Liefert die Funktion keinen Wert zurück, nutzt man das Schlüsselwort void</li>
+                    <li>Funktionsname: Ein aussagekräftiger Name für die Aufgabe der Funktion</li>
+                    <li>Parameter: Übergabewerte, mit denen die Funktion arbeitet. Sie werden wie Variablen deklariert.</li>
+                    <li>return: Beendet die Funktion und gibt das Ergebnis an die Stelle zurück, an der die Funktion aufgerufen wurde.</li>
+                </ul>
+                <p>Hier eine Funktion namens printHello(), die "Hello World" ausgibt. Diese braucht keine Rückgabe:</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="comment">//Funktion definieren, außerhalb der main-Funktion</span>
+<span class="keyword">void</span> <span class="function">printHello</span>()
+<span class="bracket">{</span>
+    std::cout &lt;&lt; <span class="string">"Hello World"</span>;
+<span class="bracket">}</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="function">printHello</span>(); <span class="comment">//Aufruf der Funktion</span>
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+                <p>Hier eine Funktion namens add(), die zwei int entgegennimmt und das Ergebnis deren Addition zurückgibt:</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="keyword">int</span> <span class="function">add</span>(<span class="keyword">int</span> a, <span class="keyword">int</span> b)
+<span class="bracket">{</span>
+   <span class="keyword">return</span> a + b;
+<span class="bracket">}</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    std::cout &lt;&lt; <span class="function">add</span>(<span class="number">6</span>, <span class="number">4</span>); <span class="comment">//Aufruf der Funktion, Ausgabe: 10</span>
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+            <h2>main()</h2>
+            <p>Die main()-Funktion ist eine besondere Funktion. Jedes ausführbare Programm muss eine main()-Funktion haben, da hier die Ausführung des Programmes beginnt.</p>
+            <ul>
+                <li>Der Rückgabewert der main()-Funktion wird unter Unix-Betriebssystemen wie Linux ausgewertet - 0 bedeutet, das Programm ist erfolgreich durchgelaufen, alle anderen Werte stehen für Misserfolg</li>
+                <li>Nur in der main()-Funktion kann die return-Anweisung komplett weggelassen werden, der Compiler geht dann davon aus, das main() 0 zurückgibt</li>
+                <li>main() kann mit oder ohne Parameter genutzt werden, will man die Parameter verwenden benutzt man main(int argc, const char* argv[])</li>
+                <li>die Parameter werden beim Aufruf des Programms übergeben</li>
+            </ul>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span>* argv[])
+<span class="bracket">{</span>
+    std::cout &lt;&lt; argc &lt;&lt; std::endl; <span class="comment">//argc = Anzahl der Übergebenen werte + 1, werden also beim Starten des Programms 2 Werte übergeben, ist argc = 3</span>
+    std::cout &lt;&lt; argv[<span class="number">1</span>] &lt;&lt; std::endl; <span class="comment">//argv = Array von C-Style Strings, dass die Übergabewerte enthölt</span>
+<span class="bracket">}</span>
+</pre>
+
+            <ul>
+                <li>argv[0] ist der Name des Programms selbt und wird beispielsweise für Fehlermeldungen verwendet</li>
+                <li>argv ist ein Array von C-Style Strings, möchte man die Werte Verwenden, so muss man vielleicht deren Datentyp ändern.</li>
+            </ul>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span>* argv[])
+<span class="bracket">{</span>
+    std::cout &lt;&lt; argc &lt;&lt; std::endl;
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; argc; i++)
+    <span class="bracket">{</span>
+        std::cout &lt;&lt; argv[i] &lt;&lt; std::endl;
+    <span class="bracket">}</span>
+<span class="bracket">}</span>
+</pre>
+
+                <p>In der Konsole kann das Programm nach dem Kompilieren ausgeführt werden und die Werte können durch Leerzeichen getrennt an das Programm mitgeliefert werden.</p>
+
+<pre class="consoleOut">
+./main 600 hallo wert1 Wert2
+5
+600
+hallo
+wert1
+Wert2
+</pre>
+
+            </section>
+
+            <section class="section" id="overload">
+                <h1>Überladung</h1>
+                <p>Überladung (Function Overloading oder Funktionsüberladung) erlaubt es, mehrere Funktionen mit dem gleichen Namen zu definieren. Sie müssen sich jedoch in ihren Parametern unterscheiden. Das ist nützlich, wenn dieselbe Logik für unterschiedliche Datentypen oder eine unterschiedliche Anzahl von Werten angewendet werden soll.</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="comment">//Gleicher Name, aber unterschiedliche Parameter</span>
+<span class="comment">//Variante 1: addiert ganze Zahlen</span>
+<span class="keyword">int</span> <span class="function">add</span>(<span class="keyword">int</span> a, <span class="keyword">int</span> b)
+<span class="bracket">{</span>
+    <span class="keyword">return</span> a + b;
+<span class="bracket">}</span>
+
+<span class="comment">//Variante 2: addiert Kommazahlen (gleicher Name!)</span>
+<span class="keyword">double</span> <span class="function">add</span>(<span class="keyword">double</span> a, <span class="keyword">double</span> b)
+<span class="bracket">{</span>
+    <span class="keyword">return</span> a + b;
+<span class="bracket">}</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    std::cout &lt;&lt; <span class="function">add</span>(<span class="number">5</span>, <span class="number">3</span>) &lt;&lt; <span class="string">"\n"</span>; <span class="comment">//Ruft Variante 1 auf (Ausgabe: 8)</span>
+    std::cout &lt;&lt; <span class="function">add</span>(<span class="number">5.5</span>, <span class="number">2.1</span>) &lt;&lt; <span class="string">"\n"</span>; <span class="comment">//Ruft Variante 2 auf (Ausgabe: 7.6)</span>
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+
+            <ul>
+                <li>Erlaubt: Unterschiedliche Anzahl an Parametern</li>
+                <li>Erlaubt: Unterschiedliche Datentypen der Parameter</li>
+                <li>Erlaubt: Unterschiedliche Reihenfolge der Parameter-Datentypen (z. B. fn(int, double) vs. fn(double, int))</li>
+                <li>Nicht erlaubt: Reine Unterscheidung durch den Rückgabetyp</li>
+                <li>Implizite Typkonvertierung: Wenn man printData(3.14) (ein double) aufruft, aber nur eine Version für int existiert, konvertiert C++ den Wert implizit. Gibt es jedoch auch eine Version für float, führt dies zu einem Compiler-Fehler (Ambiguity / Mehrdeutigkeit).</li>
+            </ul>
+
+            </section>
+
+            <section class="section" id="file">
+                <h1>Dateien lesen und schreiben</h1>
+                <p>Um in C++ Text in eine Datei zu schreiben, nutzt man die Bibliothek &lt;fstream&gt; (File Stream) und das Objekt std::ofstream (Output File Stream). Das Prinzip funktioniert fast genauso wie die Ausgabe auf dem Bildschirm mit std::cout, nur dass der Text stattdessen in eine Datei umgeleitet wird.</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+<span class="include">#include</span> <span class="prepr">&lt;fstream&gt;</span> <span class="comment">//WICHTIG: Ermöglicht das Arbeiten mit Dateien</span>
+<span class="include">#include</span> <span class="prepr">&lt;string&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    std::string meinText = <span class="string">"Hallo, das ist mein erster Text in einer Datei!"</span>;
+
+    <span class="comment">//1. Datei zum Schreiben öffnen oder automatisch erstellen, falls noch nicht vorhanden</span>
+    std::ofstream datei(<span class="string">"mein_text.txt"</span>);
+
+    <span class="comment">//2. Prüfen, ob die Datei erfolgreich geöffnet werden konnte</span>
+    <span class="keyword">if</span>(datei.<span class="function">is_open</span>())
+    <span class="bracket">{</span>
+        <span class="comment">//3. Den String mit '&lt;&lt;' in die Datei schreiben</span>
+        datei &lt;&lt; meinText &lt;&lt; <span class="string">"\n"</span>;
+        
+        <span class="comment">//4. Datei wieder schließen (wichtig für die Speicherung!)</span>
+        datei.<span class="function">close</span>(); 
+        
+        std::cout &lt;&lt; <span class="string">"Datei erfolgreich gespeichert!\n"</span>;
+    <span class="bracket">}</span>
+    else
+    <span class="bracket">{</span>
+        std::cout &lt;&lt; <span class="string">"Fehler beim Oeffnen der Datei!\n"</span>;
+    <span class="bracket">}</span>
+
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+                <p>Dieses Programm überschreibt den Text in der Datei, möchte man allerdings an den Text in der Datei nur weiteren Text anhängen, muss man beim Öffnen der Datei wie folgt vorgehen:</p>
+
+<pre class="code-block">
+std::ofstream datei(<span class="string">"mein_text.txt"</span>, std::ios::app);
+</pre>
+
+                <p>Um in C++ den Inhalt einer Textdatei in einen std::string einzulesen, nutzt man die Bibliothek &lt;fstream&gt; und das Objekt std::ifstream (Input File Stream). Das Prinzip funktioniert ähnlich wie die Tastatureingabe mit std::cin, jedoch wird hier zeilenweise aus einer Datei eingelesen.</p>
+                
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+<span class="include">#include</span> <span class="prepr">&lt;fstream&gt;</span> <span class="comment">//WICHTIG: Ermöglicht das Arbeiten mit Dateien</span>
+<span class="include">#include</span> <span class="prepr">&lt;string&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    std::string zeile; <span class="comment">//String, in den jede Zeile kurz gespeichert werden soll</span>
+
+    <span class="comment">//1. Datei zum Lesen öffnen</span>
+     std::ifstream datei(<span class="string">"mein_text.txt"</span>);
+
+    <span class="comment">//2. Prüfen, ob die Datei existiert und geöffnet werden konnte</span>
+    <span class="keyword">if</span>(datei.<span class="function">is_open</span>())
+    <span class="bracket">{</span>
+        <span class="comment">//3. Zeile für Zeile auslesen, bis das Ende der Datei erreicht ist</span>
+        <span class="keyword">while</span>(std::<span class="function">getline</span>(datei, zeile))
+        <span class="bracket">{</span>
+            std::cout &lt;&lt; zeile &lt;&lt; <span class="string">"\n"</span>; <span class="comment">//gibt die eingelesene Zeile aus</span>
+        <span class="bracket">}</span>
+        
+        <span class="comment">//4. Datei wieder schließen (wichtig für die Speicherung!)</span>
+        datei.<span class="function">close</span>(); 
+        
+        std::cout &lt;&lt; <span class="string">"Datei erfolgreich gelesen!\n"</span>;
+    <span class="bracket">}</span>
+    else
+    <span class="bracket">{</span>
+        std::cout &lt;&lt; <span class="string">"Fehler beim Oeffnen der Datei!\n"</span>;
+    <span class="bracket">}</span>
+
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>               
+
+            </section>
+            
+            <section class="section" id="exception">
+                <h1>Exception Handling</h1>
+                <p>Die Ausnahmebehandlung (Exception Handling) wird genutzt, um auf unvorhergesehene Fehler zu reagieren, die während der Laufzeit des Programms auftreten können (z. B. eine Division durch Null oder eine Datei lesen, die plötzlich gelöscht wurde). Das Ziel ist es, einen Programmabsturz zu verhindern und den Fehler kontrolliert abzufangen. Dazu nutzt C++ drei Schlüsselwörter: try, throw und catch.</p>
+                <ul>
+                    <li>try: versuchen - der try-Block enthält den Code, der ausgeführt werden soll, der aber einen Fehler verursachen könnte</li>
+                    <li>thow: werfen - tritt im try-Block ein Fehler auf, bricht das Programm innerhalb des Blocks sofort ab und wirft eine Fehlermeldung</li>
+                </ul>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+<span class="include">#include</span> <span class="prepr">&lt;string&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="keyword">int</span> alter = <span class="number">15</span>;
+
+    <span class="keyword">try</span>
+    <span class="bracket">{</span>
+        <span class="comment">//1. Gefährlichen Code überwachen</span>
+        <span class="keyword">if</span>(alter &lt; <span class="number">16</span>)
+        <span class="bracket">{</span>
+            <span class="comment">//2. einen Fehler signalisieren und eine eigene Nachricht "werfen"</span>
+            <span class="keyword">throw</span> std::string(<span class="string">"Zutritt verweigert: Du bist zu jung!"</span>);
+        <span class="bracket">}</span>
+        std::cout &lt;&lt; <span class="string">"Zutritt gewaehrt.\n"</span>; <span class="comment">//Wird bei Fehlern übersprungen</span>
+    <span class="bracket">}</span>
+    <span class="keyword">catch</span> (const std::string& fehlerMeldung)
+    <span class="bracket">{</span>
+        <span class="comment">//3. Fehler abfangen</span>
+        std::cout &lt;&lt; <span class="string">"Fehler abgefangen: "</span> &lt;&lt; fehlerMeldung &lt;&lt; <span class="string">"\n"</span>;
+    <span class="bracket">}</span>
+
+    std::cout &lt;&lt; <span class="string">"Programm laeuft normal weiter...\n"</span>;
+
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>      
+
+
+            </section>
+        </main>
+        
+    </div>
+    <a href="index.html" class="back-button">&#8592; Zurück</a>
+    <footer class="site-footer">
+        Autor: Erik Nürnberger - Datum: 07.09.2026
+    </footer>
+
+    <script>
+        const sidebarItems = document.querySelectorAll('.sidebar-item');
+        const sections = document.querySelectorAll('.section');
+        const contentArea = document.querySelector('.content-area');
+
+        sidebarItems.forEach(item =>
+        {
+            item.addEventListener('click', function(e)
+            {
+                e.preventDefault(); 
+                const targetId = this.getAttribute('href').substring(1);
+                
+                const targetSection = document.getElementById(targetId);
+
+                if(targetSection)
+                {
+                    targetSection.scrollIntoView(
+                    {
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        const observerOptions = 
+        {
+            root: contentArea,
+            rootMargin: '-10% 0px -80% 0px', 
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) =>
+        {
+            entries.forEach(entry =>
+            {
+                if(entry.isIntersecting)
+                {
+                    const currentId = entry.target.getAttribute('id');
+                    
+                    sidebarItems.forEach(item =>
+                    {
+                        item.classList.remove('active');
+                        if(item.getAttribute('href') === '#' + currentId)
+                        {
+                            item.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        const toggleSwitch = document.getElementById('myToggle');
+
+        const currentTheme = localStorage.getItem('theme');
+        if(currentTheme)
+        {
+            document.body.classList.add(currentTheme);
+            if(currentTheme === 'dark-mode')
+            {
+                toggleSwitch.checked = true;
+            }
+        }
+
+        toggleSwitch.addEventListener('change', function(e)
+        {
+            if(e.target.checked)
+            {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark-mode');
+            }
+            else
+            {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light-mode');
+            }
+        });
+
+    </script>
+</body>
+</html>

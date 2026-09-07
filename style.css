@@ -1,0 +1,155 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+body
+{
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: linear-gradient(135deg, #d9b8e4, #2f1a81);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.title1
+{
+    color: #ffffff;
+    font-size: 300%;
+    line-height: 1;
+    margin: 0;
+}
+
+.header
+{
+    background-color: #c10a27;
+    padding: 10pt;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.logo1
+{
+    width: 8%;
+    background-color: #ffffff;
+    min-width: 70px;
+    margin: 0;
+    padding: 0;
+}
+
+.container-bx
+{
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    flex: 1;
+    gap: 20pt;
+    padding: 40px
+}
+
+.container
+{
+    position: relative;
+    z-index: 5;
+
+    flex: 1;
+    max-width: 450px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+
+    text-decoration: none;
+    color: #ffffff;
+    text-align: center;
+    font-size: clamp(2rem, 5vw, 2.4rem);
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.container p
+{
+    margin: 0;
+    line-height: 1.2;
+}
+
+
+.card-icon
+{
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+}
+
+
+.container:hover
+{
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: #ffffff;
+}
+
+.slogan
+{
+    position: fixed;
+    bottom: 40px;
+    right: 25px;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.slogan img
+{
+    width: 140px;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
+}
+
+.site-footer
+{
+    background-color: #ffffff;
+    color: #777777;
+    font-size: 0.8rem;
+    text-align: center;
+    padding: 8px 20px;
+    width: 100%;
+    margin-top: auto;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
+}
+
+
+@media (max-width: 850px)
+{
+    .container-bx
+    {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .container
+    {
+        width: 100%;
+        max-width: 400px;
+        min-height: 150px;
+    }
+}

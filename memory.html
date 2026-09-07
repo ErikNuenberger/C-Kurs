@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory</title>
+    <link rel="stylesheet" href="kategorystyle.css">
+</head>
+<body>
+    <div id="header" class="header">
+        <img class="logo1" src="Images/infoteam_4x_4c_rgb_Logo.png">
+        <h1 class="title1">C++ Kurs - Speichermanipulation</h1>
+        <div class="toggle-container">
+            <span>Darkmode</span>
+            <label class="switch">
+                <input type="checkbox" id="myToggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </div>
+    <div class="main-wrapper">
+        <aside class="glass-sidebar">
+            <a href="#pointer" class="sidebar-item active">
+                Pointer
+            </a>
+            
+            <a href="#reference" class="sidebar-item">
+                Referenzen
+            </a>
+
+            <a href="#stack-heap" class="sidebar-item">
+                Stack vs. Heap
+            </a>
+
+            <a href="#vector" class="sidebar-item">
+                Vector
+            </a>
+            
+            <a href="#pass" class="sidebar-item">
+                Pass by Value vs. Pass by Reference
+            </a>
+
+            <a href="#smartptr" class="sidebar-item">
+                Smartpointer
+            </a>
+        </aside>
+    
+
+     <main class="content-area">
+            <section class="section" id="pointer">
+                <h1>Pointer</h1>
+                <p>In C++ ist ein Pointer (auf Deutsch: Zeiger) eine spezielle Variable, die nicht einen normalen Wert (wie eine Zahl oder einen Buchstaben) speichert, sondern die Speicheradresse einer anderen Variable im Arbeitsspeicher (RAM).</p>
+                <h2>Speicheradressen und der Adress-Operator (&)</h2>
+                <p>Jede Variable, die im Programm deklariert wird, belegt einen bestimmten Bereich im Arbeitsspeicher. Dieser Speicherbereich besitzt eine eindeutige Adresse(meist in Hexadezimaldarstellung angegeben)</p>
+                <ul>
+                    <li>Mit dem Adress-Operator (&) lässt sich die Speicheradresse einer Variable ermitteln</li>
+                </ul>
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="keyword">int</span> a = <span class="number">19</span>;
+
+    <span class="comment">//Gibt den gespeicherten Wert der Variable a aus (z. B. 19)</span>
+    std::cout &lt;&lt; a &lt;&lt; std::endl;
+
+    <span class="comment">//Gibt die Speicheradresse der Variable a im RAM aus (z. B. 0x7ffd5b8e4a2c)</span>
+    std::cout &lt;&lt; &amp;a &lt;&lt; std::endl;
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+                <p>Pointer deklarieren und initialisieren</p>
+                <ul>
+                    <li>Ein Pointer speichert die Adresse einer Variable, um später auf diese zugreifen zu können</li>
+                    <li>Ein Pointer wird deklariert, indem ein Sternchen(*) an den Datentyp angehängt wird (z.B.: int*)</li>
+                    <li>Der Datentyp des Pointers muss immer mit dem Datentyp der Variable deren Adresse er speichert übereinstimmen (eine int Variable erfortert einen int* Pointer)</li>
+                    <li>Deklarieren und Zuweisen einer Adresse: Datentyp* PointerName = &Variable;</li>
+                </ul>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="keyword">int</span> a = <span class="number">19</span>;
+
+    <span class="comment">//Pointer speichert die Adresse von a</span>
+    <span class="keyword">int*</span> ptr = &amp;a;
+
+    <span class="comment">//Gibt die im Pointer gespeicherte Adresse aus (entspricht &a)</span>
+    std::cout &lt;&lt; ptr &lt;&lt; std::endl;
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+        
+                <p>Pointer dereferenzieren</p>
+                <ul>
+                    <li>Um den Wert auszulesen, der sich an der Adresse befindet, die der Pointer speichert oder diesen Wert zu verändern, muss der Pointer dereferenziert werden</li>
+                    <li>Um einen Pointer zu dereferenzieren muss man vor den Pointer-Namen ein * setzen (z.B.: *ptr)</li>
+                </ul>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="keyword">int</span> a = <span class="number">19</span>;
+    <span class="keyword">int*</span> ptr = &amp;a;
+
+    <span class="comment">//Dereferenzierung: Liest den Wert an der Adresse aus (gibt 19 aus)</span>
+    std::cout &lt;&lt; *ptr &lt;&lt; std::endl;
+
+    <span class="comment">//Wert direkt über den Pointer im Speicher verändern</span>
+    *ptr = <span class="number">42</span>;
+    std::cout &lt;&lt; *ptr &lt;&lt; std::endl; <span class="comment">//Gibt 42 aus</span>
+
+    <span class="comment">//Da ptr auf a zeigt, hat sich auch der Wert von a geändert:</span>
+    std::cout &lt;&lt; a &lt;&lt; std::endl; <span class="comment">//Gibt 42 aus</span>
+
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+
+                <p>Der Null-Pointer (nullptr)</p>
+                <ul>
+                    <li>Wird ein Pointer deklariert, ohne ihm eine adresse zuzuweisen (int ptr*;), erhält er einen zufälligen Speicherinhalt (eine sogenannte Garbage-Adresse). Ein Schreib- oder Lesezugrifff auf einen solchen uninitialisierten pointer führt zu unvorhergesehenem Verhalten oder zum Absturz den Programms.</li>
+                    <li>Das Schlüsselwort nullptr wird verwendet um explizit zu kennzeichnen, dass ein Pointer auf keine gültige Adresse zeigt</li>
+                </ul>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="comment">//Ein Pointer, der aktuell auf nichts zeigt</span>
+    <span class="keyword">int*</span> ptr = <span class="keyword">nullptr</span>;
+
+    <span class="comment">//Vor dem Dereferenzieren immer prüfen, ob der Pointer gültig ist!</span>
+    <span class="keyword">if</span>(ptr != <span class="keyword">nullptr</span>)
+    <span class="bracket">{</span>
+        std::cout &lt;&lt; *ptr &lt;&lt; std::endl;
+    <span class="bracket">}</span>
+    <span class="keyword">else</span>
+    <span class="bracket">{</span>
+        std::cout &lt;&lt; <span class="string">"Pointer zeigt auf keine gültige Adresse!"</span> &lt;&lt; std::endl;
+    <span class="bracket">}</span>
+
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+                <h2>Pointer auf Arrays und C-Style Strings</h2>
+                <p>In C++ besteht eine Direkte Beziehung zwischen Pointern und Arrays. Der Name eines Arrays verhält sich in den meisten Kontexten wie ein Pointer auf das erste Element des Arrays.</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="keyword">int</span> zahlen[<span class="number">3</span>] = {<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>};
+    <span class="comment">//Der Array-Name 'zahlen' liefert die Adresse des ersten Elements (&zahlen[0])</span>
+    <span class="keyword">int*</span> ptr = zahlen;
+
+    <span class="comment">//Zugriff auf das erste Element über Dereferenzierung (Index 0)</span>
+    std::cout &lt;&lt; *ptr &lt;&lt; std::endl; <span class="comment">//Gibt 10 aus</span>
+
+    <span class="comment">//Pointer-Arithmetik: Verschiebt den Pointer gedanklich um 1 Element weiter im Speicher</span>
+    std::cout &lt;&lt; *(ptr + <span class="number">1</span>) &lt;&lt; std::endl; <span class="comment">//Gibt 20 aus</span>
+    std::cout &lt;&lt; *(ptr + <span class="number">2</span>) &lt;&lt; std::endl; <span class="comment">//Gibt 30 aus</span>
+
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+                <p>Ein klassischer C-Style String ist eine Abfolge(Array) von Zeichen (char), die im Speicher mit einem Null-Zeichen ('\0') abgeschlossen wird. Dieses Array wird über einen Pointer auf das erste Zeichen repräsentiert:</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="comment">//Pointer zeigt auf das erste Zeichen 'H' im Speicher</span>
+    <span class="keyword">const char*</span> text = <span class="string">"Hallo"</span>;
+
+    <span class="comment">//Auslesen des ersten Zeichens über Dereferenzierung</span>
+    std::cout &lt;&lt; *text &lt;&lt; std::endl; <span class="comment">//Gibt 'H' aus</span>
+
+    <span class="comment">//Auslesen des zweiten Zeichens über Pointer-Arithmetik</span>
+    std::cout &lt;&lt; *(text + <span class="number">1</span>) &lt;&lt; std::endl; <span class="comment">//Gibt 'a' aus</span>
+
+    <span class="comment">//Wird der Pointer direkt an std::cout übergeben, wird der gesamte String gedruckt</span>
+    std::cout &lt;&lt; text &lt;&lt; std::endl; <span class="comment">//Gibt "Hallo" aus</span>
+
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+                <h2>Pointer auf Pointer (Doppel-Pointer)</h2>
+                <p>Da ein Pointer selbst eine Variable ist, belegt er ebenfalls Speicherplatz und besitzt eine eigene Speicheradresse. Ein Pointer auf einen Pointer speichert somit die Adresse einer Pointer-Variable. Er wird mit zwei Sternchen (int**) deklariert.</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="keyword">int</span> a = <span class="number">100</span>;
+    <span class="comment">//ptr1 speichert die Adresse von a</span>
+    <span class="keyword">int*</span> ptr1 = &amp;a;
+
+    <span class="comment">//ptr2 speichert die Adresse von ptr1</span>
+    <span class="keyword">int**</span> ptr2 = &amp;ptr1;
+
+    <span class="comment">//Werte auslesen:</span>
+    std::cout &lt;&lt; a &lt;&lt; std::endl; <span class="comment">//100 (Wert von a)</span>
+    std::cout &lt;&lt; *ptr1 &lt;&lt; std::endl; <span class="comment">//100 (Einfache Dereferenzierung: Liest a über ptr1)</span>
+    std::cout &lt;&lt; **ptr2 &lt;&lt; std::endl; <span class="comment">//100 (Doppelte Dereferenzierung: Liest a über ptr2 -> ptr1)</span>
+
+    <span class="comment">//Adressen ausgeben:</span>
+    std::cout &lt;&lt; ptr1 &lt;&lt; std::endl; <span class="comment">//Gibt die Speicheradresse von a aus</span>
+    std::cout &lt;&lt; ptr2 &lt;&lt; std::endl; <span class="comment">//Gibt die Speicheradresse von ptr1 aus</span>
+
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+            </section>
+            
+            <section class="section" id="reference">
+                <h1>Referenzen (Aliase)</h1>
+                <p>In C++ ist eine Referenz ein alternativer Name (ein Alias) für eine bereits existierende Variable. Sobald eine Referenz erstellt wurde, verhält sie sich syntaktisch exakt wie die ursprüngliche Variable selbst. Jede Änderung an der Referenz ändert direkt den Wert der Originalvariablen, da beide denselben Speicherbereich repräsentieren.</p>
+                <p>Referenzen deklarieren & initialisieren (&amp;)</p>
+                <ul>
+                    <li>Eine Referenz wird deklariert, indem ein Kaufmanns-Und &amp; (Ampersand) an den Datentyp angehängt wird (z. B. int&amp;)</li>
+                    <li>Im Gegensatz zu Pointern müssen Referenzen zwingend direkt bei der Deklaration mit einer bereits existierenden Variablen initialisiert werden</li>
+                    <li>Deklarieren einer Referenz: Datentyp&amp; ReferenzName = OriginalVariable;</li>
+                </ul>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="keyword">int</span> alter = <span class="number">25</span>;
+
+    <span class="comment">//refAlter ist ab sofort ein Alias für die Variable alter</span>
+    <span class="keyword">int&amp;</span> refAlter = alter;
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+                <ul>
+                    <li>Bei einer Deklaration (int&amp; ref = a;) gehört das &amp; zum Datentyp und kennzeichnet die Variable als Referenz</li>
+                    <li>Bei einer Zuweisung/Auswertung (int* ptr = &amp;a;) ist das &amp; der Adress-Operator, der die Speicheradresse für einen Pointer liefert.</li>
+                </ul>
+                <p>Im Gegensatz zu Pointern benötigen Referenzen keinen Dereferenzierungs-Operator (*), um an den Wert zu gelangen. Man liest und überschreibt sie exakt so wie eine ganz normale Variable.</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="keyword">int</span> a = <span class="number">10</span>;
+    <span class="keyword">int&amp;</span> ref = a;
+
+    <span class="comment">//Wert über die Referenz verändern</span>
+    ref = <span class="number">42</span>;
+
+    <span class="comment">//Da ref und a denselben Speicherplatz repräsentieren, ändert sich a direkt mit</span>
+    <span class="comment">//refAlter ist ab sofort ein Alias für die Variable alter</span>
+    <span class="keyword">int&amp;</span> refAlter = alter;
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+                <p>Referenzen sind speichersicherer und oft einfacher zu lesen als Pointer, unterliegen aber strengen compilerseitigen Regeln:</p>
+                <ul>
+                    <li>Keine uninitialisierten Referenzen: Der Code int& ref; führt sofort zu einem Compiler-Fehler.</li>
+                    <li>eine Null-Referenzen: Eine Referenz muss immer auf ein gültiges, existierendes Objekt zeigen. Ein Äquivalent zum nullptr gibt es bei Referenzen nicht.</li>
+                    <li>Kein Umbiegen möglich (Re-Seating): Sobald eine Referenz an eine Variable gebunden ist, bleibt sie für ihre gesamte Lebensdauer an diese gebunden. Weist man ihr eine andere Variable zu, wird nur der Wert kopiert, die Referenz wird dabei nicht auf die andere Variable umgeleitet.</li>
+                </ul>
+                <p>Eine const-Referenz ist ein Alias für eine Variable, der nur Lesezugriff (Read-Only) gewährt. Dies wird in C++ extrem häufig genutzt (insbesondere bei Funktionen), um große Datenstrukturen effizient zu übergeben. Durch die Referenz wird verhindert, dass der Datensatz aufwendig im Speicher kopiert werden muss (wie es bei normaler Variablenübergabe der Fall wäre), und durch das const wird gleichzeitig garantiert, dass die Originaldaten nicht versehentlich verändert werden.</p>
+
+
+
+
+            </section>
+
+            <section class="section" id="stack-heap">
+                <h1>Stack vs. Heap</h1>
+                <p>Stack und Heap sind zwei unterschiedliche Varianten um Daten in der Memory(RAM) eines Computers zu Speichern.</p>
+                <h2>Stack</h2>
+                <p>Ein Stack (oder auch Stapel) ist die eifnachste Variante, Daten in der Memory zu speichern. Wird beispielsweise eine Funktion berechne definiert, die eigene Variablen enthält, werden diese auf einen Stapel gelegt. Dieser Stapel gehört dann zur Funktion. Wenn die Funktion endet, werden die Variablen innerhalb der Funktion nacheinander vom Stapel gelöscht. Der Stapel funktioniert nach dem Prinzip: last in - first out. Man kann ihn sich wie einen Stapel von Tellern vorstellen, man kann oben immer einen Teller auflegen und den obersten Teller einfach entfernen, entfernt man den untersten Teller zuerst, würde der gesamte Stapel umfallen. Der Stapelspeicher wird vom Compiler automatisch verwaltet. Stapelspeicher sind extrem schnell, aber in ihrer Größe begrenzt.</p>
+                <img src="Images/Stack.png" class="stackImage">
+
+<pre class="code-block">
+<span class="keyword">void</span> <span class="function">berechne</span>(<span class="keyword">int</span> param)
+<span class="bracket">{</span>
+    <span class="keyword">int</span> a;
+    <span class="keyword">int</span> b;
+    <span class="keyword">int</span> c;
+<span class="bracket">}</span>
+</pre>
+
+                <p>Auf dem Stapel befinden sich nicht nur Variablen, Parameter und Rückgabewerte einer Funktion, das System speichert dort auch die Adresse, an die es zurückspringen muss, wenn eine Funktion endet.</p>
+
+                <h2>Heap</h2>
+                <p>Will man selber definieren, wie lange Daten in der Memory gespeichert beliben muss man sie dynamisch mit new erstellen (Haufenspeicher). Dadurch werden diese Daten auf dem Heap gespeichert. new Liefert einen Zeiger zurück, der auf den Speicherbereich der Daten verweist. Dieser Speicherbereich wird irgendwo in der Memory vom Betriebssystem festgelegt. Das fürht dazu, das das Speichern der Daten länger dauert, es ist dafür flexibler. Es gibt keine Begrenzugne für die Größe der der Daten. Alles was auf den Heap mit new gespeichert wird, wird nicht automatisch verwaltet, es muss explizit mit delete wieder gelöscht werden, sonst wird der Speicherbereich erst nach Programmende wieder freigegeben.</p>
+
+<pre class="code-block">
+<span class="keyword">void</span> <span class="function">berechne</span>()
+<span class="bracket">{</span>
+    <span class="keyword">int*</span> ptr = <span class="keyword">new int</span>(12); <span class="comment">//Speichert einen neuen int im Heap mit dem Wert 12</span>
+    <span class="keyword">delete</span> ptr; <span class="comment">//explizit Löschen</span>
+<span class="bracket">}</span>
+</pre>
+
+
+
+
+
+            </section>
+
+            <section class="section" id="vector">
+                <h1>Vector</h1>
+                <p>Ein std::vector in C++ ist ein dynamisches Array aus der Standardbibliothek, das seine Größe automatisch anpassen kann, wenn Elemente hinzugefügt oder entfernt werden. Im Gegensatz zu herkömmlichen C-Arrays müssen Sie die Größe nicht zur Kompilierzeit kennen. Die Elemente werden in einem zusammenhängenden Speicherbereich abgelegt, was einen extrem schnellen, direkten Zugriff über Indizes erlaubt.</p>
+                <ul>
+                    <li>Um std::vector zu nutzen, muss die Header-Datei &lt;vector&gt; eingebunden werden</li>
+                </ul>
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+<span class="include">#include</span> <span class="prepr">&lt;vector&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="comment">//1. Initialisierung eines Vektors mit 3 Zahlen</span>
+    std::vector&lt;<span class="keyword">int</span>&gt; zahlen = <span class="bracket">{</span><span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span><span class="bracket">}</span>;
+    
+    <span class="comment">//2. Element am Ende hinzufügen</span>
+    zahlen.<span class="function">push_back</span>(<span class="number">40</span>);
+
+    <span class="comment">//3. Zugriff auf Elemente</span>
+    std::cout &lt;&lt; <span class="string">"Erstes Element: "</span> &lt;&lt; zahlen[<span class="number">0</span>] &lt;&lt;; <span class="comment">// Ohne Prüfung ob index auch zum Array gehört oder schon den Speicherbereich des Arrays übertritt</span>
+    std::cout &lt;&lt; <span class="string">"Zweites Element: "</span> &lt;&lt; zahlen.<span class="function">at</span>(<span class="number">1</span>) &lt;&lt;; <span class="comment">//Ist sicherer (wirft Fehler bei ungültigem Index)</span>
+<span class="bracket">}</span>
+</pre>
+
+                <ul>
+                    <li>Die Methode .clear() löscht alle Elemente aus dem Vector</li>
+                    <li>.size() gibt die Anzahl der Elemente im Vector zurück</li>
+                    <li>.capacity() gibt an, wie viele Elemente in den bereits reservierten Speicher passen, ohne dass neuer Speicher vom Betriebssystem angefordert werden muss</li>
+                </ul>
+
+            </section>
+            
+            <section class="section" id="pass">
+                <h1>Pass by Value vs. Pass by Reference</h1>
+                <h2>Pass by Value</h2>
+                <p>Pass by Value ist die klassische Übergabe von Parametern an eine Funktion, hierbei werden die Übergabewerte in die Parameter der funktion kopiert. Die Funktion erhält eine Kopie des übergebenen Arguments. Änderungen in der Funktion betreffen nur die Kopie. Hier ein Beispiel:</p>
+                
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="keyword">void</span> <span class="function">modifyValue</span>(<span class="keyword">int</span> x)
+<span class="bracket">{</span>
+    x = <span class="number">100</span>; <span class="comment">//Ändert nur die lokale Kopie</span>
+<span class="bracket">}</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="keyword">int</span> var = <span class="number">5</span>;
+    <span class="function">modifyValue</span>(var);
+    std::cout &lt;&lt; var; <span class="comment">//Ausgabe: 5 (Original bleibt unverändert)</span>
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+                <ul>
+                    <li>Pass by Value ist schneller bei kleinen Datentypen</li>
+                    <li>Haupteinsatzzweck sind Primitive Typen (int, double, char), wenn Daten geschützt bleiben sollen.</li>
+                </ul>
+
+
+                <h2>Pass by Reference</h2>
+                <p>Im Unterschied dazu kann durch Pass by Reference die Funktion direkt den Original-Wert verändern. Die Funktion erhält einen Alias (eine Referenz / die Speicheradresse) des Originals. Änderungen in der Funktion verändern das Original. Hier ein Beispiel:</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="keyword">void</span> <span class="function">modifyValue</span>(<span class="keyword">int</span> &amp;x)
+<span class="bracket">{</span>
+    x = <span class="number">100</span>; <span class="comment">//Ändert das Originalobjekt im Speicher</span>
+<span class="bracket">}</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="keyword">int</span> var = <span class="number">5</span>;
+    <span class="function">modifyValue</span>(var);
+    std::cout &lt;&lt; var; <span class="comment">//Ausgabe: 100 (Original wurde verändert!)</span>
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+                <ul>
+                    <li>Pass by Reference ist schneller bei großen Objekten, da kein Kopieraufwand entsteht.</li>
+                    <li>Haupteinsatzzweck ist wenn Werte modifiziert werden sollen oder für große Objekte</li>
+                </ul>
+
+                <h2>Pass by Pointer</h2>
+                <p>Mit Pass by Pointer übergibt man einer Funktion die Speicheradresse einer Variable. Hier ein Code-Beispiel:</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="keyword">void</span> <span class="function">modifyValue</span>(<span class="keyword">int*</span> ptr)
+<span class="bracket">{</span>
+    <span class="keyword">if</span>(ptr != <span class="keyword">nullptr</span>)
+    <span class="bracket">{</span>
+        *ptr = <span class="number">100</span>; <span class="comment">//Ändert den Wert an der Speicheradresse</span>
+    <span class="bracket">}</span>
+<span class="bracket">}</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="keyword">int</span> var = <span class="number">5</span>;
+    <span class="function">modifyValue</span>(&amp;var);
+    std::cout &lt;&lt; var; <span class="comment">//Ausgabe: 100 (Original wurde verändert!)</span>
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+                <ul>
+                    <li>Pass by Pointer sollte man verwenden, wenn man Optionale Argumente verwendet (nullptr): Eine Referenz muss immer auf ein existierendes Objekt verweisen. Ein Pointer dagegen kann nullptr (Nullzeiger) sein. Wenn Ihre Funktion also auch "nichts" akzeptieren soll, ist ein Pointer ideal</li>
+                    <li>C-Kompatibilität: Wenn Sie Code schreiben, der mit alten C-Bibliotheken interagieren muss, muss man manchmal Pass by Pointer verwenden, da reines C keine Referenzen kennt.</li>
+                </ul>
+        
+                <h2>const Pointer &amp; const Reference</h2>
+                <p>Will man Pass by Reference oder Pass by Pointer für große Objekte verwenden, diese aber vor veränderung schützen, kann man einen const Pointer oder eine const Reference verwenden.</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+<span class="include">#include</span> <span class="prepr">&lt;vector&gt;</span>
+
+<span class="comment">//const reference: Effizient, da keine Kopie erzeugt wird. Sicher, da schreibgeschützt.</span>
+<span class="keyword">void</span> <span class="function">printVector</span>(<span class="keyword">const</span> std::vector&lt;<span class="keyword">int</span>&gt; &amp;vec)
+<span class="bracket">{</span>
+    <span class="comment">//vec.push_back(10); //COMPILER-FEHLER! Modifikationen sind verboten.</span>
+    <span class="keyword">for</span>(<span class="keyword">int</span> val = <span class="number">0</span>; val &lt; vec.<span class="function">size</span>(); val++)
+    <span class="bracket">{</span>
+        std::cout &lt;&lt; vec[val] &lt;&lt; std::endl;
+    <span class="bracket">}</span>
+<span class="bracket">}</span>
+
+<span class="comment">//const pointer:</span>
+<span class="keyword">void</span> <span class="function">printValue</span>(<span class="keyword">const int*</span> ptr)
+<span class="bracket">{</span>
+    <span class="comment">//*ptr = 20; // COMPILER-FEHLER: Der Wert hinter dem Zeiger ist schreibgeschützt.</span>
+    <span class="keyword">if</span>(ptr != <span class="keyword">nullptr</span>)
+    <span class="bracket">{</span>
+        std::cout &lt;&lt; *ptr;
+    <span class="bracket">}</span>
+<span class="bracket">}</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    std::vector&lt;<span class="keyword">int</span>&gt; zahlen = <span class="bracket">{</span><span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span><span class="bracket">}</span>;
+    <span class="function">printVector</span>(zahlen);
+
+    <span class="keyword">int</span> var = <span class="number">5</span>;
+    <span class="function">printValue</span>(&amp;var);
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+
+
+
+            </section>
+
+            <section class="section" id="smartptr">
+                
+            </section>
+     </main>
+    </div>
+
+     <a href="index.html" class="back-button">&#8592; Zurück</a>
+     <footer class="site-footer">
+        Autor: Erik Nürnberger - Datum: 07.09.2026
+    </footer>
+
+    <script>
+        const sidebarItems = document.querySelectorAll('.sidebar-item');
+        const sections = document.querySelectorAll('.section');
+        const contentArea = document.querySelector('.content-area');
+
+        sidebarItems.forEach(item =>
+        {
+            item.addEventListener('click', function(e)
+            {
+                e.preventDefault(); 
+                const targetId = this.getAttribute('href').substring(1);
+                
+                const targetSection = document.getElementById(targetId);
+
+                if(targetSection)
+                {
+                    targetSection.scrollIntoView(
+                    {
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        const observerOptions = 
+        {
+            root: contentArea,
+            rootMargin: '-10% 0px -80% 0px', 
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) =>
+        {
+            entries.forEach(entry =>
+            {
+                if(entry.isIntersecting)
+                {
+                    const currentId = entry.target.getAttribute('id');
+                    
+                    sidebarItems.forEach(item =>
+                    {
+                        item.classList.remove('active');
+                        if(item.getAttribute('href') === '#' + currentId)
+                        {
+                            item.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        const toggleSwitch = document.getElementById('myToggle');
+
+        const currentTheme = localStorage.getItem('theme');
+        if(currentTheme)
+        {
+            document.body.classList.add(currentTheme);
+            if(currentTheme === 'dark-mode')
+            {
+                toggleSwitch.checked = true;
+            }
+        }
+
+        toggleSwitch.addEventListener('change', function(e)
+        {
+            if(e.target.checked)
+            {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark-mode');
+            }
+            else
+            {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light-mode');
+            }
+        });
+
+    </script>
+
+
+</body>
+</html>
