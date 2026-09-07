@@ -339,6 +339,11 @@ Zeilen
                     <li>Hier wurde die Variable alter2 genannt, da alter schon existiert und eine Variable eindeutig sein muss</li>
                 </ul>
 
+                <p>Durch die nähe zur Hardware, die C++ hat sieht man oft Dinge, die auf den ersten Blick verwirren können, so werden Beispielsweise Buchstaben (char) im Computer wie Zahlen behandelt. Um Den dezimalen Zahlenwert eines Buchstaben herauszufinden, kann man eine Ascii-Tabelle Verwenden - die folgende ascii tabelle zeigt den Dezimalwert, das Zeichen, den Binärwert und den Hexadezimalwert eines char.</p>
+                <div class="table-container">
+                    <img src="Images/ascii-tabelle.gif" class="asciiImage">
+                </div>
+
                 <p>weitere Beispiele:</p>
 <pre class="code-block">
 <span class="keyword">char</span> Buchstabe = <span class="string">'H'</span>; <span class="comment">//char speichert Zeichen innerhalb von Apostrophen ab</span>
@@ -1068,6 +1073,9 @@ std::cin &gt;&gt; number;
                 <h3>Übung</h3>
                 <p>Jetzt soll das gelernte über Arrays und Schleifen angewendet werden. Hierzu gibt es mehrere Übungsaufgaben:</p>
                 <a href="PDF/Übungsaufgaben Array.pdf">Übungsaufgaben Array.pdf</a>
+
+
+
             </section>
 
             <section class="section" id="Strings">
@@ -1134,6 +1142,9 @@ std::cin &gt;&gt; number;
                     <li>manche ältere Schnittstellen zu C++ erwarten statt std::string ein const char*</li>
                     <li>Strings werden am besten mit: std::getline(std::cin, string) eingelesen (da std::cin >> string beim ersten Leerzeichen abbricht)</li>
                 </ul>
+
+                <h3>8. Übung</h3>
+                <p>Erstellen Sie zwei Strings, einen C-Style String und einen C++ String. Beide Strings sollen folgenden Text als Wert zugewiesen bekommen: "HaLlO WeLt". Dieser Text enthält sowohl Groß- als auch Kleinbuchstaben. Das Programm soll die Strings so manipulieren, dass sie nur noch Kleinbuchstaben besitzen.</p>
 
             </section>
 
@@ -1238,6 +1249,8 @@ wert1
 Wert2
 </pre>
 
+                <h3>9. Übung</h3>
+                <p>Erstellen Sie eine Funktion namens printFour(), die eine Zahl (int) als Parameter entgegennimmt und diese vier Mal untereinander ausgibt. Rufen Sie die Funktion in main() zweimal auf, einmal mit dem Wert 5 und einmal mit dem Wert 8.</p>
             </section>
 
             <section class="section" id="overload">
