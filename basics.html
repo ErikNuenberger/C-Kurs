@@ -166,6 +166,22 @@
     std::cout &lt;&lt; <span class="string">"Hello World"</span>;
     <span class="keyword">return</span> <span class="number">0</span>;
 <span class="bracket">}</span></pre>
+
+                <ul>
+                    <li>Um den C++ Code zu kompilieren, muss man in Visual Studio Code nur auf das kleine, graue Dreieck in der rechten, oberen Ecke des fensters klicken.</li>
+                    <li>Will man den Code allerdings manuell kompilieren und ausführen, kann man das im Visual Studio Code - Terminal machen.</li>
+                    <li>wichtig ist, das man sich im Terminal im gleichen Verzeichnis befindet, in dem die .cpp datei ist.</li>
+                    <li>hierfür wird g++ verwendet, darauf folgt der Dateiname (main.cpp), bzw. die Dateinamen, wenn man mehere .cpp oder header-Dateien hat.</li>
+                    <li>auf die Dateinamen folgt ein -o das sagt dem Compiler, das er eine Ausgabedatei erstellen soll, dann folgt der name dieser Datei</li>
+                    <li>wird keine Dateiendung angegeben, wird automatisch eine .exe bzw. eine .exec Datei erstellt.</li>
+                    <li>zum Schluss kann noch die exe mit ./Dateiname ausgeführt werden</li>
+                </ul>
+<pre class="consoleOut">
+g++ main.cpp -o main
+./main
+</pre>
+
+
                 <h2>#include &lt;iostream&gt;:</h2>
                 <ul>
                     <li>ist ein sogenanntes Präprozessor-Statement</li>
@@ -314,7 +330,7 @@ Zeilen
                     <li>Die Namen können frei gewählt werden, dürfen aber keine Leerzeichen enthalten. Sie dürfen nicht mit einer Zahl beginnen (können aber Zahlen enthalten) und dürfen kein C++-Keyword sein.</li>
                 </ul>
 
-                <p>Wert zuweisen:</p>
+                <p>Wert zuweisen (allokieren):</p>
                 <ul>
                     <li>Werte einer Variablen können verschieden dargestellt werden: Zahlwerte können dezimal (z.B. 3), hexadezimal mit einem 0x als Präfix (z.B. 0x1F) oder binär mit einem 0b als Präfix (z.B. 0b10011) zugewiesen werden.</li>
                     <li>Die gerade eben erstellte Variable alter soll nun einen Wert erhalten</li>
@@ -339,7 +355,7 @@ Zeilen
                     <li>Hier wurde die Variable alter2 genannt, da alter schon existiert und eine Variable eindeutig sein muss</li>
                 </ul>
 
-                <p>Durch die nähe zur Hardware, die C++ hat sieht man oft Dinge, die auf den ersten Blick verwirren können, so werden Beispielsweise Buchstaben (char) im Computer wie Zahlen behandelt. Um Den dezimalen Zahlenwert eines Buchstaben herauszufinden, kann man eine Ascii-Tabelle Verwenden - die folgende ascii tabelle zeigt den Dezimalwert, das Zeichen, den Binärwert und den Hexadezimalwert eines char.</p>
+                <p>Durch die nähe zur Hardware, die C++ hat sieht man oft Dinge, die auf den ersten Blick verwirren können, so werden Beispielsweise Buchstaben (char) im Computer wie Zahlen behandelt. Um den dezimalen Zahlenwert eines Buchstaben herauszufinden, kann man eine Ascii-Tabelle verwenden - die folgende ascii tabelle zeigt den Dezimalwert, das Zeichen, den Binärwert und den Hexadezimalwert eines char.</p>
                 <div class="table-container">
                     <img src="Images/ascii-tabelle.gif" class="asciiImage">
                 </div>
@@ -1378,7 +1394,8 @@ std::ofstream datei(<span class="string">"mein_text.txt"</span>, std::ios::app);
                 <p>Die Ausnahmebehandlung (Exception Handling) wird genutzt, um auf unvorhergesehene Fehler zu reagieren, die während der Laufzeit des Programms auftreten können (z. B. eine Division durch Null oder eine Datei lesen, die plötzlich gelöscht wurde). Das Ziel ist es, einen Programmabsturz zu verhindern und den Fehler kontrolliert abzufangen. Dazu nutzt C++ drei Schlüsselwörter: try, throw und catch.</p>
                 <ul>
                     <li>try: versuchen - der try-Block enthält den Code, der ausgeführt werden soll, der aber einen Fehler verursachen könnte</li>
-                    <li>thow: werfen - tritt im try-Block ein Fehler auf, bricht das Programm innerhalb des Blocks sofort ab und wirft eine Fehlermeldung</li>
+                    <li>thow: werfen - ist optional, tritt im try-Block ein Fehler auf, bricht das Programm innerhalb des Blocks sofort ab und wirft eine Fehlermeldung</li>
+                    <li>catch: fangen - fängt den Fehler ab und definiert, was getan werden soll, wenn der Fehler auftritt</li>
                 </ul>
 
 <pre class="code-block">
@@ -1388,7 +1405,6 @@ std::ofstream datei(<span class="string">"mein_text.txt"</span>, std::ios::app);
 <span class="keyword">int</span> <span class="function">main</span>()
 <span class="bracket">{</span>
     <span class="keyword">int</span> alter = <span class="number">15</span>;
-
     <span class="keyword">try</span>
     <span class="bracket">{</span>
         <span class="comment">//1. Gefährlichen Code überwachen</span>
