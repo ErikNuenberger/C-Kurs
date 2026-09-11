@@ -481,7 +481,258 @@
 
             <section class="section" id="smartptr">
                 <h1>Smartpointer</h1>
-                <p>Ist noch in Arbeit</p>
+                <p>Ein normaler Pointer (Rohzeiger oder Raw Pointer) ist lediglich eine Variable, die eine Speicheradresse speichert. Wenn man damit Speicher auf dem Heap reserviert (mit new), muss man ihn zwingend wieder händisch freigeben (mit delete). Vergisst man das, bleibt der Speicher blockiert (Speicherleck).</p>
+                <p>Ein Smart Pointer ist ein „intelligenter“ Zeiger. Technisch gesehen ist es ein Objekt, das einen normalen Pointer umhüllt (Wrapper). Das Besondere ist, er verwaltet den Speicher automatisch. Sobald der Smart Pointer nicht mehr benötigt wird (weil das Programm das Ende des aktuellen Blocks { ... } erreicht), gibt er den reservierten Speicher im Hintergrund automatisch frei. Smartpointer sind in C++ erst ab Version 11 hinzugekommen.</p>
+
+                <ul>
+                    <li>Um Smartpointer zu nutzen, muss die Bibliothek &lt;memory&gt; eingebunden werden</li>
+                </ul>
+
+                <h2>std::unique_ptr</h2>
+                <p>Ein unique_ptr besitzt eine Ressurce exklusiv. Es darf niemals ein zweiter Zeiger auf den selben Speicher existieren. Man kann einen unique_ptr nicht kopieren, sondern nur den Besitz mit std::move() an einen anderen unique_ptr übergeben. Dabei wird der alte Zeiger genullt und der neue Zeiger übernimmt die Verantwortung für den Speicher.</p>
+                <p>Diese Zeile initialisiert einen std::unique_ptr<int> direkt über seinen Konstruktor (ohne Zuweisungsoperator). Dabei wird dynamisch ein int mit dem Wert 5 auf dem Heap allokiert. Der Smart Pointer übernimmt die exklusive Eigentümerschaft für diesen Speicherbereich und garantiert, dass dieser automatisch freigegeben wird, sobald der Pointer seinen Gültigkeitsbereich (Scope) verlässt:</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+<span class="include">#include</span> <span class="prepr">&lt;memory&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    std::unique_ptr&lt;<span class="keyword">int</span>&gt; ptr(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">5</span>));
+    std::cout &lt;&lt; *ptr &lt;&lt; std::endl; <span class="comment">//Dereferenzierung mit * um den Wert auszugeben</span>
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+                <p>Die folgende Zeile bewirkt funktional genau dasselbe wie deine vorherige Variante, nutzt aber die Kopierinitialisierung mit einem temporären Objekt (Copy-Initialization) anstelle der direkten Initialisierung. Dabei wird auf der rechten Seite des Gleichheitszeichens explizit ein temporärer std::unique_ptr&lt;int&gt; erzeugt und dieser dann der Variable ptr1 zugewiesen. In modernen C++ Compilern (ab C++11, garantiert ab C++17) optimiert der Compiler diesen Vorgang durch sogenannte Copy Elision (Kopiereliminierung) vollständig weg. Das bedeutet, dass im fertigen Maschinencode kein temporäres Objekt erstellt oder kopiert wird, sondern der Zeiger direkt an Ort und Stelle konstruiert wird - die Performance ist also absolut identisch.</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+<span class="include">#include</span> <span class="prepr">&lt;memory&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    std::unique_ptr&lt;<span class="keyword">int</span>&gt; ptr1 = std::unique_ptr&lt;<span class="keyword">int</span>&gt;(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">4</span>));
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+                <p>Die nächste Variante nutzt das auto-keyword, dieses kam in C++ 11 dazu und sorgt für die automatische Typableitung. Der Compiler setzt zur Kompilierzeit den Typ einer Variablen anhand dessen fest, was ihr zugewiesen wird. Der Compiler schaut sich die rechte Seite der Zuweisung an, erkennt dort den Typ std::unique_ptr&lt;int&gt; und weist der Variable ptr2 automatisch genau diesen Typ zu. Dabei wird dynamisch ein int mit dem Wert 3 auf dem Heap allokiert, dessen exklusive Eigentümerschaft und automatische Speicherverwaltung sofort von ptr2 übernommen werden. Diese Schreibweise kombiniert die explizite Erstellung des Smart Pointers auf der rechten Seite mit der Bequemlichkeit von auto auf der linken Seite, wodurch du dir das doppelte Hinschreiben des Typs sparst.</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+<span class="include">#include</span> <span class="prepr">&lt;memory&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="keyword">auto</span> ptr2 = std::unique_ptr&lt;<span class="keyword">int</span>&gt;(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">3</span>));
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+                <p>Mit make_unique() kann man einen unique_ptr erstellen, ohne den Speicher selbst explizit mit new anzufordern. make_unique() gibt es erst seit C++ 14.</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+<span class="include">#include</span> <span class="prepr">&lt;memory&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="keyword">auto</span> ptr3 = std::<span class="function">make_unique</span>&lt;<span class="keyword">int</span>&gt;(<span class="number">2</span>);
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+                <p>so kann man unique_ptr verwenden:</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+<span class="include">#include</span> <span class="prepr">&lt;memory&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    std::unique_ptr&lt;<span class="keyword">int</span>&gt; ptr(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">5</span>));
+    std::cout &lt;&lt; *ptr &lt;&lt; std::endl; <span class="comment">//Dereferenzierung mit * um den Wert auszugeben</span>
+    std::cout &lt;&lt; &amp;ptr &lt;&lt; std::endl; <span class="comment">//mit & die Adresse ausgeben</span>
+
+    std::unique_ptr&lt;<span class="keyword">int</span>&gt; ptr1 = std::unique_ptr&lt;<span class="keyword">int</span>&gt;(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">4</span>));
+    <span class="keyword">auto</span> ptr2 = std::unique_ptr&lt;<span class="keyword">int</span>&gt;(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">3</span>));
+    <span class="keyword">auto</span> ptr3 = std::<span class="function">make_unique</span>&lt;<span class="keyword">int</span>&gt;(<span class="number">2</span>);
+    
+    <span class="comment">//compiler-fehler: unique_ptr darf nicht kopiert werden</span>
+    <span class="comment">//auto ptr2 = ptr1;</span> <span class="comment">//Fehler: unique_ptr kann nicht kopiert werden!</span>
+
+    <span class="comment">//Wert von der Speicheradresse kopieren, auf die der Pointer verweist funktioniert</span>
+    <span class="keyword">int</span> wert_kopie = *ptr;
+    std::cout &lt;&lt; *ptr &lt;&lt; std::endl; <span class="comment">//Ausgabe: 5</span>
+    std::cout &lt;&lt; wert_kopie &lt;&lt; std::endl; <span class="comment">//Ausgabe: 5</span>
+
+    <span class="comment">//ptr1 verliert die Ressource, ptr4 übernimmt sie.</span>
+    std::unique_ptr &lt;<span class="keyword">int</span>&gt; ptr4 = std::<span class="function">move</span>(ptr1);
+    std::cout &lt;&lt; *ptr4 &lt;&lt; std::endl; <span class="comment">//Ausgabe: 4</span>
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+                <p>Wenn man bereits einen normalen int im Code hat und einen unique_ptr darauf verweisen lassen willst, muss man extrem aufpassen. Da ein unique_ptr am Ende seines Lebensdauer versucht, den Speicher mit delete freizugeben, stürzt das Programm ab, wenn der int auf dem Stack liegt (Stack-Variablen dürfen nicht einfach so gelöscht werden). Man muss dem unique_ptr daher einen Custom Deleter (einen leeren Zerstörer) mitgeben:</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+<span class="include">#include</span> <span class="prepr">&lt;memory&gt;</span>
+
+<span class="comment">//Eine ganz normale Funktion, die nichts tut, außer eine Ausgabe.</span>
+<span class="comment">//Sie dient als Zerstörer, der den Speicher NICHT löscht.</span>
+<span class="keyword">void</span> <span class="function">leerer_deleter</span>(<span class="keyword">int*</span> ptr)
+<span class="bracket">{</span>
+    <span class="comment">//Absichtlich leer! Kein 'delete ptr;'</span>
+    std::cout &lt;&lt; <span class="string">"[Deleter] - löscht nichts. Der Stack-Speicher ist sicher!\n"</span>;
+<span class="bracket">}</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="keyword">int</span> mein_int = <span class="number">100</span>; <span class="comment">//Liegt auf dem Stack</span>
+
+    <span class="comment">//einen eigenen Scope erstellen, in dem der unique_ptr existieren soll mit: { ... }</span>
+    <span class="bracket">{</span>
+        <span class="comment">//dem unique_ptr muss im Typen mitgeteilt werden, dass er einen Funktionszeiger als Deleter erwartet: void(*)(int*) </span>
+        std::unique_ptr&lt;<span class="keyword">int</span>, <span class="keyword">void</span>(*)(<span class="keyword">int*</span>)&gt; ptr(&mein_int, <span class="function">leerer_deleter</span>);
+
+        <span class="comment">//Zugriff auf den Wert funktioniert ganz normal</span>
+        std::cout &lt;&lt; *ptr &lt;&lt; std::endl;
+    <span class="bracket">}</span> <span class="comment">//&lt;-- Hier verlässt 'ptr' den Scope und wird zerstört. Er ruft 'leerer_deleter(&mein_int)' auf. Nichts passiert mit dem Stack.</span>
+    std::cout &lt;&lt; mein_int &lt;&lt; std::endl;
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+                <h2>std::shared_ptr</h2>
+                <p>Ein shared_ptr erlaubt es, dass mehrere Zeiger gleichzeitig auf dieselbe Ressource verweisen. Intern zählt er mit, wie viele shared_ptr gerade auf diesen Speicher zeigen (Referenzzähler). Erst wenn der allerletzte shared_ptr gelöscht wird, wird auch der Speicher freigegeben.</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+<span class="include">#include</span> <span class="prepr">&lt;memory&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    std::shared_ptr&lt;<span class="keyword">int</span>&gt; ptr1(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">10</span>));
+    std::shared_ptr&lt;<span class="keyword">int</span>&gt; ptr2 = ptr1; <span class="comment">//Beide zeigen nun auf die 10. Zähler steht auf 2.</span>
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+            
+                <p>Auch shared_ptr können auf unterschiedliche Weisen erstellt werden:</p>
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+<span class="include">#include</span> <span class="prepr">&lt;memory&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="comment">//1. Direktinitialisierung (ohne Zuweisungsoperator)</span>
+    std::shared_ptr&lt;<span class="keyword">int</span>&gt; ptr(<span class="keyword">new int</span>(<span class="number">5</span>));
+    std::cout &lt;&lt; *ptr &lt;&lt; std::endl; <span class="comment">//Dereferenzierung mit * um den Wert auszugeben</span>
+    std::cout &lt;&lt; &ptr &lt;&lt; std::endl; <span class="comment">//mit & die Adresse des Smart Pointers auf dem Stack ausgeben</span>
+
+    <span class="comment">//2. Explizite Variante mit Zuweisungsoperator</span>
+    std::shared_ptr&lt;<span class="keyword">int</span>&gt; ptr1 = std::shared_ptr&lt;<span class="keyword">int</span>&gt;(<span class="keyword">new int</span>(<span class="number">4</span>));
+    
+    <span class="comment">//3. Variante mit auto (ohne make_shared)</span>
+    <span class="keyword">auto</span> ptr2 = std::shared_ptr&lt;<span class="keyword">int</span>&gt;(<span class="keyword">new int</span>(<span class="number">3</span>));
+    
+    <span class="comment">//4. Die Variante mit make_shared (zum Vergleich)</span>
+    <span class="keyword">auto</span> ptr3 = std::make_shared&lt;<span class="keyword">int</span>&gt;(<span class="number">2</span>);
+    
+    <span class="comment">//anders als bei unique_ptr: Ein shared_ptr darf kopiert werden</span>
+    <span class="comment">//ptr1 und ptr2_kopie teilen sich nun die Eigentümerschaft am selben int (Wert 4)</span>
+    <span class="keyword">auto</span> ptr1_kopie = ptr1; 
+    std::cout &lt;&lt; <span class="string">"Referenzzaehler: "</span> &lt;&lt; ptr1.<span class="function">use_count</span>() &lt;&lt; std::endl; <span class="comment">//Ausgabe: 2</span>
+
+    <span class="comment">//Wert von der Speicheradresse kopieren funktioniert natürlich auch</span>
+    <span class="keyword">int</span> wert_kopie = *ptr;
+    std::cout &lt;&lt; *ptr &lt;&lt; std::endl; <span class="comment">//Ausgabe: 5</span>
+    std::cout &lt;&lt; wert_kopie &lt;&lt; std::endl; <span class="comment">//Ausgabe: 5</span>
+
+    <span class="comment">//Verschieben (std::move) funktioniert ebenfalls:</span>
+    <span class="comment">//ptr1_kopie verliert die Ressource komplett, ptr4 übernimmt sie.</span>
+    std::shared_ptr&lt;<span class="keyword">int</span>&gt; ptr4 = std::<span class="function">move</span>(ptr1_kopie);
+    std::cout &lt;&lt; *ptr4 &lt;&lt; std::endl; <span class="comment">//Ausgabe: 4</span>
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+                <h2>std::weak_ptr</h2>
+                <p>Ein weak_ptr ist ein Helfer für den shared_ptr. Er zeigt zwar auf denselben Speicher, erhöht aber den Referenzzähler nicht. Er besitzt die Ressource nicht, sondern "beobachtet" sie nur. Er wird genutzt, um zu verhindern, dass sich zwei shared_ptr gegenseitig im Kreis referenzieren, was dazu führen würde, dass der Speicher niemals freigegeben wird. Da er den Speicher nicht besitzt, kann man nicht direkt auf den Wert zugreifen (man muss ihn erst kurzzeitig in einen shared_ptr umwandeln).</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+<span class="include">#include</span> <span class="prepr">&lt;memory&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="comment">//Wir brauchen zuerst einen shared_ptr, der den int (Wert 5) auf dem Heap besitzt</span>
+    std::shared_ptr&lt;<span class="keyword">int</span>&gt; shared_basis = std::make_shared&lt;<span class="keyword">int</span>&gt;(<span class="number">5</span>);
+
+    <span class="comment">//1. Direktinitialisierung (ohne Zuweisungsoperator) aus einem shared_ptr</span>
+    std::weak_ptr&lt;<span class="keyword">int</span>&gt; ptr(shared_basis);
+    
+    <span class="comment">//WICHTIG: Man kann einen weak_ptr NICHT direkt mit * dereferenzieren!</span>
+    <span class="comment">//Um an den Wert zu kommen, muss man ihn mit .lock() kurzzeitig in einen shared_ptr umwandeln:</span>
+    <span class="keyword">if</span>(<span class="keyword">auto</span> locked_ptr = ptr.<span class="function">lock</span>())
+    <span class="bracket">{</span>
+        std::cout &lt;&lt; *locked_ptr &lt;&lt; std::endl; <span class="comment">//Ausgabe: 5</span>
+    <span class="bracket">}</span>
+    std::cout &lt;&lt; &ptr &lt;&lt; std::endl; <span class="comment">//mit & die Adresse des weak_ptr auf dem Stack ausgeben</span>
+
+    <span class="comment">//2. Explizite Variante mit Zuweisungsoperator aus einem shared_ptr</span>
+    std::weak_ptr&lt;<span class="keyword">int</span>&gt; ptr1 = std::weak_ptr&lt;<span class="keyword">int</span>&gt;(shared_basis);
+    
+    <span class="comment">//3. Variante mit auto</span>
+    <span class="keyword">auto</span> ptr2 = std::weak_ptr&lt;<span class="keyword">int</span>&gt;(shared_basis);
+    
+    <span class="comment">//4. Ein weak_ptr DARF kopiert werden (erhöht den Referenzzähler für das Objekt aber NICHT)</span>
+    <span class="keyword">auto</span> ptr2_kopie = ptr2; 
+
+    <span class="comment">//Wie viele shared_ptr besitzen das Objekt gerade?</span>
+    std::cout &lt;&lt; <span class="string">"Shared-Besitzer: "</span> &lt;&lt; shared_basis.<span class="function">use_count</span>() &lt;&lt; std::endl; <span class="comment">//Ausgabe: 1 (die weak_ptr zaehlen nicht!)</span>
+
+    <span class="comment">//Verschieben (std::move) funktioniert ebenfalls:</span>
+    std::weak_ptr&lt;<span class="keyword">int</span>&gt; ptr4 = std::<span class="function">move</span>(ptr2_kopie);
+    
+    <span class="comment">//Was passiert, wenn der shared_ptr stirbt?</span>
+    std::cout &lt;&lt; <span class="string">"\n--- shared_basis wird zurueckgesetzt ---"</span> &lt;&lt; std::endl;
+    shared_basis.<span class="function">reset</span>(); <span class="comment">//Der int auf dem Heap wird geloescht, da use_count auf 0 faellt</span>
+    
+    <span class="comment">//Der weak_ptr merkt, dass das Objekt weg ist (er verhindert keine Speicherlecks!)</span>
+    <span class="keyword">if</span>(ptr.<span class="function">expired</span>())
+    <span class="bracket">{</span>
+        std::cout &lt;&lt; <span class="string">"Das Objekt existiert nicht mehr!"</span> &lt;&lt; std::endl;
+    <span class="bracket">}</span>
+    
+    <span class="comment">//ptr.lock() liefert jetzt einen leeren shared_ptr (nullptr) zurueck</span>
+    <span class="keyword">auto</span> locked_ptr_dead = ptr.<span class="function">lock</span>();
+    <span class="keyword">if</span>(!locked_ptr_dead)
+    <span class="bracket">{</span>
+        std::cout &lt;&lt; <span class="string">"Zugriff verweigert, Speicher wurde sicher freigegeben."</span> &lt;&lt; std::endl;
+    <span class="bracket">}</span>
+
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+                <h2>Smartpointer Methoden</h2>
+                <ul>
+                    <li>.get() - liefert den verpackten rohen Zeiger zurück</li>
+                    <li>Operator: * - Dereferenzierungs-Operator funktioniert wie .get()</li>
+                    <li>Operator: -> - erlaubt den Zugriff auf Member eines Objekts, auf das der Smartpointer verweist</li>
+                    <li>.reset() - kann verwendet werden um den rohen Zeiger vorzeitig zu löschen</li>
+                    <li>swap(a, b) - kann inhalte von Smartpointern vertauschen</li>
+                </ul>
+
+
+
+
+
+
+
+
             </section>
      </main>
     </div>
