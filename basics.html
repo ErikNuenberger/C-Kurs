@@ -536,6 +536,7 @@ std::cout &lt;&lt; <span class="number">6</span> % <span class="number">5</span>
 <span class="keyword">int</span> c = <span class="number">5</span>;
 c = c - <span class="number">1</span>; <span class="comment">//c = 4</span>
 c++; <span class="comment">//c = 5</span>
+++c; <span class="comment">//c = 6, ++ kann vor oder nach dem Variablennamen stehen</span>
 
 <span class="keyword">bool</span> lichtIstAn = <span class="keyword">true</span>;
 <span class="keyword">bool</span> lichtIstAus = !lichtIstAn;
@@ -1263,6 +1264,27 @@ std::cin &gt;&gt; number;
 hallo
 wert1
 Wert2
+</pre>
+
+                <p>Eine Funktion muss immer definiert werden, bevor sie benutzt wird: void myFunc(int param); Sie kann später jeder Zeit deklariert werden, aber sie muss dem Compiler an dem Punkt bekannt sein, an dem sie aufgerufen wird.</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="comment">//Definition bevor add() aufgerufen wird</span>
+<span class="keyword">int</span> <span class="function">add</span>(<span class="keyword">int</span> a, <span class="keyword">int</span> b);
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    std::cout &lt;&lt; <span class="function">add</span>(<span class="number">6</span>, <span class="number">4</span>); <span class="comment">//Aufruf der Funktion, Ausgabe: 10</span>
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+
+<span class="comment">//Deklaration: was tut die Funktion</span>
+<span class="keyword">int</span> <span class="function">add</span>(<span class="keyword">int</span> a, <span class="keyword">int</span> b)
+<span class="bracket">{</span>
+   <span class="keyword">return</span> a + b;
+<span class="bracket">}</span>
 </pre>
 
                 <h3>9. Übung</h3>

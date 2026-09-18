@@ -21,8 +21,28 @@
 
      <div class="main-wrapper">
         <aside class="glass-sidebar">
-            <a href="#class" class="sidebar-item active">
+            <a href="#macro" class="sidebar-item active">
+                Makros & Präprozessor
+            </a>
+
+            <a href="#headerfile" class="sidebar-item">
+                header-Dateien und Modularisierung
+            </a>
+            
+            <a href="#namespace" class="sidebar-item">
+                namespace
+            </a>
+
+            <a href="#struct" class="sidebar-item">
+                Structs
+            </a>
+
+            <a href="#class" class="sidebar-item">
                 Klassen
+            </a>
+
+            <a href="#method" class="sidebar-item">
+                Methoden
             </a>
             
             <a href="#object" class="sidebar-item">
@@ -44,38 +64,212 @@
             <a href="#static" class="sidebar-item">
                 Static
             </a>
+
+            <a href="#template" class="sidebar-item">
+                Templates
+            </a>
+
+            <a href="#enum" class="sidebar-item">
+                enum
+            </a>
+
+            <a href="#rest" class="sidebar-item">
+                Rest API
+            </a>
         </aside>
     
 
      <main class="content-area">
-            <section class="section" id="class">
-                <h1>Klassen</h1>
-            </section>
+        <section class="section" id="macro">
+            <h1>Makros & Präprozessor</h1>
+            <h2>Makros</h2>
+            <p>Makros in C++ sind Code-Fragmente, die eine Bezeichnung erhalten. Bevor der eigentliche Compiler den Code übersetzt, ersetzt der Präprozessor diese Bezeichnungen im gesamten Quelltext durch den definierten Code.</p>
+            <p>Makro-ähnliche Objekte:</p>
+
+<pre class="code-block">
+<span class="include">#define</span> PI <span class="number">3.14159</span>
+<span class="include">#define</span> BUFFER_SIZE <span class="number">1024</span>
+</pre>
+            <p>Funktionstyp-Makros (Function-like Macros):</p>
+            <ul>
+                <li>Diese Makros verhalten sich optisch wie Funktionen und können Argumente entgegennehmen.</li>
+                <li>Ein Aufruf wie SQUARE(5) wird im Code durch ((5) * (5)) ersetzt. Hinweis: Die vielen Klammern sind wichtig, um Fehler bei der operator-Reihenfolge zu vermeiden</li>
+            </ul>
+
+<pre class="code-block">
+<span class="include">#define</span> SQUARE(x) ((x) * (x))
+</pre>
+
+            <p>In älterem C-Code waren Makros allgegenwärtig. Im modernen C++ (ab C++11) gelten sie jedoch oft als schlechter Stil und sollten durch sicherere Alternativen ersetzt werden.</p>
+
+            <h2>header-Dateien</h2>
+            <p>Zu den Präprozessor-Statements zählen auch #include statements. Sie geben an, welche Bibliotheken und Dateien eingebunden werden sollen.</p>
+            <ul>
+                <li>will man eine Bibliothek einbinden, nutzt man: #include &lt;BibliothekenName&gt;</li>
+                <li>will man eine header-Datei einbinden, nutzt man: #include "HeaderDatei.h" oder headerDatei.hpp"</li>
+                <li>die " geben dem Präprozessor die Information im Projektverzeichnis zu suchen, also im gleichen Ordner, in dem sich die .cpp-Datei befindet</li>
+            </ul>
+            <p>Wenn Sie eine Headerdatei (z. B. Auto.h) in mehreren anderen Dateien Ihres Projekts einbinden, kopiert der Präprozessor den Inhalt von Auto.h jedes Mal eins zu eins in diese Dateien.</p>
+            <p>Wenn in Auto.h eine Klasse definiert ist, sieht der Compiler dieselbe Klasse plötzlich mehrfach. Das führt zu einem Kompilierfehler ("Redefinition of class..."). Um das zu verhindern, nutzt man entweder Include Guards oder #pragma once.</p>
+            <p>Include Guards</p>
+            <ul>
+                <li>Diese Methode ist der traditionelle, ISO-C++-standardisierte Weg, um sicherzustellen, dass der Inhalt einer Headerdatei nur genau einmal vom Compiler gelesen wird.</li>
+            </ul>
+
+<pre class="code-block">
+<span class="include">#ifndef</span> AUTO_H
+<span class="include">#define</span> AUTO_H
+
+<span class="class">class</span> Auto
+<span class="bracket">{</span>
+    <span class="comment">//Klasseninhalt</span>
+<span class="bracket">}</span>;
+<span class="include">#endif</span>
+</pre>
+
+            <ul>
+                <li>#ifndef AUTO_H bedeutet: "Wenn das Makro AUTO_H noch nicht definiert ist (if not defined)..."</li>
+                <li>Der Präprozessor springt in die nächste Zeile und definiert mit #define AUTO_H genau dieses Makro.</li>
+                <li>Danach folgt der eigentliche Code der Headerdatei.</li>
+                <li>#endif schließt den Block ab.</li>
+                <li>Wird diese Headerdatei im selben Kompiliervorgang ein zweites Mal aufgerufen, sieht der Präprozessor, dass AUTO_H bereits existiert. Er springt sofort zum #endif und ignoriert den Code dazwischen komplett.</li>
+                <li>Die moderne Alternative: #pragma once</li>
+            </ul>
+
+
+
+
+
+
+        </section>
+
+        <section class="section" id="headerfile">
+            <h1>header-Dateien und Modularisierung</h1>
+            <p>In C++ werden Header-Dateien genutzt, um Code sauber in mehrere Dateien aufzuteilen und dem Compiler mitzuteilen, welche Funktionen existieren, bevor sie benutzt werden.</p>
+            <ul>
+                <li>in C++ ist die Dateiendung einer header-Datei dem Compiler egal, er muss lediglich den Quellcode aus dieser Datei, in die Datei kopieren, in der die header-Datei eingebunden wird</li>
+                <li>Die Konvention ist allerdings die Dateiendung .h für header-Dateien, die in der Sprache C und C++ funktionieren, diese ernthalten C-Code.</li>
+                <li>.hpp hingegen kennzeichnen header-Dateien exklusiv für C++</li>
+            </ul>
+            <p>Ein Programm soll übersichtlicher werden und wird deshalb in mehere Dateien aufgeteilt:</p>
+
+            <ul>
+                <li>in mathematik.hpp wird eine Funktion namens addieren() deklariert, es wird nicht definiert, was sie tut.</li>
+                <li>überall wo mathematik.hpp eingebunden wird, wird damit dem Compiler bekannt gegeben, das eine Funktion namens addieren() existiert.</li>
+                <li>das ermöglicht es, die Funktion überall in dort aufzurufen, wo die header-Datei eingebunden wird</li>
+            </ul>
+
+<pre class="code-block">
+<span class="include">#ifndef</span> MATHEMATIK_HPP
+<span class="include">#define</span> MATHEMATIK_HPP
+
+<span class="keyword">int</span> <span class="function">addieren</span>(<span class="keyword">int</span> a, <span class="keyword">int</span> b);
+<span class="include">#endif</span>
+</pre>
+
+            <ul>
+                <li>jetzt soll die Funktion auch etwas tun, hierzu muss sie definiert werden</li>
+                <li>die Funktion kann in einer .cpp-Datei definiert werden, die zum Beispiel mathematik.cpp heißt</li>
+                <li>hier bekommt die Funktion ihre eigentliche Logik, die dann über alle Dateien, die die header-Datei einbinden, gleich ist</li>
+            </ul>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">"mathematik.hpp"</span>
+
+<span class="keyword">int</span> <span class="function">addieren</span>(<span class="keyword">int</span> a, <span class="keyword">int</span> b)
+<span class="bracket">{</span>
+    <span class="keyword">return</span> a + b;
+<span class="bracket">}</span>
+</pre>
+
+            <ul>
+                <li>nun soll addieren() in main.cpp aufgerufen und verwendet werden</li>
+                <li>dazu muss nur die header-Datei eingebunden werden, addieren() kann dann wie eine ganz normale Funktion genutzt werden</li>
+            </ul>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+<span class="include">#include</span> <span class="prepr">"mathematik.hpp"</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    std::cout &lt;&lt; addieren(<span class="number">5</span>, <span class="number">5</span>);
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+        </section>
+
+        <section class="section" id="namespace">
+            <h1>namespaces</h1>
+            <p>Namespaces (Namensräume) in C++ dienen dazu, Code logisch zu strukturieren und Namenskonflikte zu vermeiden. Wenn Sie in einem großen Projekt oder bei der Verwendung verschiedener Bibliotheken denselben Namen für eine Funktion, Klasse oder Variable verwenden, sorgt ein Namespace dafür, dass der Compiler genau weiß, welches Element gemeint ist.</p>
+            <ul>
+                <li>wei Entwickler können unabhängig voneinander eine Funktion namens print() schreiben. Liegen diese in unterschiedlichen Namespaces, kollidieren sie nicht.</li>
+                <li>Standardbibliothek: Die gesamte C++-Standardbibliothek liegt im Namespace std (z. B. std::cout, std::vector)</li>
+            </ul>
+            <p>Durch die Verwendung eines namespaces, kann das Programm "hello world" anders dargestellt werden, da dem Compiler nicht mitgeteilt werden muss, dass cout aus dem Standard-Namespace ist.</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="keyword">using namespace</span> std; <span class="comment">//mit using namespace std, verwendet der gesamte Code ab dem using namespace diesen namespace</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    cout &lt;&lt; <span class="string">"hello world"</span>;
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+            <p>Es ist jedoch besser, statt using namespace, den namespace mit :: festzulegen, wie es bisher passiert ist, so ist für jede Funktion der namespace klar und eindeutig definiert und es kann nicht zu Überschneidungen kommen.</p>
+        </section>
+
+        <section class="section" id="struct">
+            <h1>Structs</h1>
+        </section>
+
+        <section class="section" id="class">
+            <h1>Klassen</h1>
+        </section>
+
+        <section class="section" id="method">
+            <h1>Methoden</h1>
+        </section>
             
-            <section class="section" id="object">
-                <h1>Objekt / Instanz</h1>
-            </section>
+        <section class="section" id="object">
+            <h1>Objekt / Instanz</h1>
+        </section>
 
-            <section class="section" id="Construktor">
-                <h1>Konstruktor / Destruktuor</h1>
-            </section>
+        <section class="section" id="Construktor">
+            <h1>Konstruktor / Destruktuor</h1>
+        </section>
 
-            <section class="section" id="abstract">
-                <h1>Abstrakte Klassen und Interfaces</h1>
-            </section>
+        <section class="section" id="abstract">
+            <h1>Abstrakte Klassen und Interfaces</h1>
+        </section>
 
-            <section class="section" id="inheritance">
-                <h1>Vererbung</h1>
-            </section>
+        <section class="section" id="inheritance">
+            <h1>Vererbung</h1>
+        </section>
             
-            <section class="section" id="static">
-                
-            </section>
+        <section class="section" id="static">
+            <h1>Static</h1>
+        </section>
+
+        <section class="section" id="template">
+            <h1>Templates</h1>
+        </section>
+
+        <section class="section" id="enum">
+            <h1>enum</h1>
+        </section>
+
+        <section class="section" id="rest">
+            <h1>Rest API</h1>
+        </section>
     </main>
     </div>
 
-     <a href="index.html" class="back-button">&#8592; Zurück</a>
-     <footer class="site-footer">
+    <a href="index.html" class="back-button">&#8592; Zurück</a>
+    <footer class="site-footer">
         Autor: Erik Nürnberger - Datum: 07.09.2026
     </footer>
 
