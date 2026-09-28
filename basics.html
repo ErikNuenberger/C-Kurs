@@ -454,6 +454,17 @@ Letter1 = Letter1; <span class="comment">//Letter1 überschreibt sich selbst, da
             
                 <h3>2. Übung</h3>
                 <p>Erstellen Sie eine Variable vom Typ int, mit dem Namen Zahl und weisen sie ihr den Wert 15 zu. Erstellen sie dann eine globale Variable namens Letter, vom Typ char und weisen ihr den Buchstaben 'c' zu. Überschreiben sie den Wert von Zahl mit dem Wert von Letter.</p>
+
+
+                <h2>Uniform Initialization</h2>
+                <p>Uniform Initialization (einheitliche Initialisierung) oder Brace Initialization wurde mit C++11 eingeführt und dient dazu, die historisch chaotischen und fehleranfälligen Wege der Wertevergabe in C++ zu vereinheitlichen.</p>
+                <p>1. Schutz vor Datenverlust (Narrowing Conversions) - Die Klammer-Initialisierung verhindert implizite, unsichere Typkonvertierungen. Wenn Sie versuchen, einen Datentyp mit größerem Wertebereich in einen kleineren zu pressen, bricht der Compiler mit einem Error ab, statt Daten stillschweigend abzuschneiden</p>
+
+<pre class="code-block">
+<span class="keyword">int</span> a = <span class="number">5.5</span>; <span class="comment">//C-Style: Kompiliert! Die Nachkommastelle wird abgeschnitten (a wird 5).</span>
+<span class="keyword">int</span> b<span class="bracket">{</span><span class="number">5.5</span><span class="bracket">}</span>; <span class="comment">//Uniform: Compiler-Fehler! (Narrowing conversion)</span>
+</pre>
+
             </section>
 
             <section class="section" id="IO">
@@ -1287,8 +1298,56 @@ Wert2
 <span class="bracket">}</span>
 </pre>
 
+                <h2>Rekursion</h2>
+                <p>Rekursion bedeutet in der Informatik einfach, dass eine Funktion sich selbst aufruft. Man nutzt sie, um große Aufgaben in kleinere, identische Teilaufgaben zu zerlegen. Damit eine Rekursion nicht ewig läuft und das Programm abstürzt (ein sogenannter Stack Overflow), braucht jede rekursive Funktion eine Abbruchbedingung (Base Case). Sobald diese erreicht ist, stoppt die Funktion und gibt die Ergebnisse zurück.</p>
+                <p>Direkte Rekursion</p>
+                <ul>
+                    <li>Eine Funktion ruft sich selbst direkt in ihrem eigenen Code auf. Das ist der häufigste Fall</li>
+                    <li>Funktion A ruft Funktion A auf</li>
+                </ul>
+                <p>Indirekte Rekursion</p>
+                <ul>
+                    <li>Eine Funktion ruft eine andere Funktion auf, welche wiederum die erste Funktion aufruft. Es entsteht ein Kreislauf über Umwege.</li>
+                    <li>Funktion A ruft Funktion B auf, Funktion B ruft dann Funktion A auf</li>
+                </ul>
+
+                <p>Die Fibonacci-Folge (Direkte Rekursion) - Die Fibonacci-Folge ist das klassische Beispiel für direkte Rekursion. Die Regel lautet: Eine Zahl ist immer die Summe der beiden vorherigen Zahlen (0, 1, 1, 2, 3, 5, 8, 13...)</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="keyword">int</span> <span class="function">fibonacci</span>(<span class="keyword">int</span> n)
+<span class="bracket">{</span>
+    <span class="comment">//1. Abbruchbedingung (Base Case)</span>
+    <span class="comment">//Für n = 0 ist das Ergebnis 0, für n = 1 ist es 1.</span>
+    <span class="keyword">if</span>(n &lt;= <span class="number">1</span>)
+    <span class="bracket">{</span>
+        <span class="keyword">return</span> n;
+    <span class="bracket">}</span>
+    
+    <span class="comment">//2. Rekursiver Aufruf</span>
+    <span class="comment">//Die Funktion ruft sich selbst zweimal mit kleineren Werten auf</span>
+    <span class="keyword">return</span> <span class="function">fibonacci</span>(n - <span class="number">1</span>) + <span class="function">fibonacci</span>(n - <span class="number">2</span>);
+<span class="bracket">}</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="keyword">int</span> position = <span class="number">6</span>;
+    std::cout &lt;&lt; <span class="function">fibonacci</span>(position); <span class="comment">//Aufruf der Funktion</span>
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+
+
+
                 <h3>9. Übung</h3>
                 <p>Erstellen Sie eine Funktion namens printFour(), die eine Zahl (int) als Parameter entgegennimmt und diese vier Mal untereinander ausgibt. Rufen Sie die Funktion in main() zweimal auf, einmal mit dem Wert 5 und einmal mit dem Wert 8.</p>
+                
+
+
+
+
             </section>
 
             <section class="section" id="overload">

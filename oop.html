@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OOP</title>
     <link rel="stylesheet" href="kategorystyle.css">
+    <link rel="icon" type="image/png" href="bild.png">
 </head>
 <body>
     <div id="header" class="header">
@@ -33,6 +34,10 @@
                 namespace
             </a>
 
+            <a href="#oop" class="sidebar-item">
+                Objektorientierung
+            </a>
+
             <a href="#struct" class="sidebar-item">
                 Structs
             </a>
@@ -44,13 +49,17 @@
             <a href="#method" class="sidebar-item">
                 Methoden
             </a>
+
+            <a href="#Construktor" class="sidebar-item">
+                Konstruktor / Destruktor
+            </a>
             
             <a href="#object" class="sidebar-item">
                 Objekt / Instanz
             </a>
 
-            <a href="#Construktor" class="sidebar-item">
-                Konstruktor / Destruktuor
+            <a href="#uml" class="sidebar-item">
+                UML-Klassendiagramme
             </a>
 
             <a href="#abstract" class="sidebar-item">
@@ -222,24 +231,271 @@
             <p>Es ist jedoch besser, statt using namespace, den namespace mit :: festzulegen, wie es bisher passiert ist, so ist für jede Funktion der namespace klar und eindeutig definiert und es kann nicht zu Überschneidungen kommen.</p>
         </section>
 
+        <section class="section" id="oop">
+            <h1>Objektorientierung</h1>
+            <p>Die Objektorientierte Programmierung (OOP) ist ein beliebtes Modell in der Softwareentwicklung, bei dem der Programmcode um reale oder logische "Dinge" herum aufgebaut wird. Anstatt ein Programm als eine lange Liste von Befehlen zu schreiben, teilt man es in kleinere, eigenständige Bausteine auf.</p>
+            <ul>
+                <li>Wiederverwendbarkeit: Code kann an verschiedenen Stellen im Programm leicht wieder genutzt werden.</li>
+                <li>Code wird leichter zu warten und ist auch leichter zu erweitern</li>
+                <li>der Code wird verständlicher, da Programme reale Objekte abbilden</li>
+            </ul>
+
+        </section>
+
         <section class="section" id="struct">
             <h1>Structs</h1>
+            <p>Ein struct (Struktur) in C++ ist ein selbst definierter, zusammengesetzter Datentyp. Er erlaubt es, mehrere Variablen, auch unterschiedlicher Datentypen, unter einem gemeninsamen Namen zu gruppieren. In C++ sind struct und class technisch fast identisch, der einzige Unterschid liegt in der Standard-Sichtbarkeit (Zugriffsrechte)</p>
+            <ul>
+                <li>Ein struct fasst zusammengehörende Daten an einem Ort zusammen.</li>
+            </ul>
+            <p>In einem Programm soll ein Auto beschrieben werden, das drei Eigenschaften hat, einen String, der die Marke des Autos speichert, einen int, der das Baujahr speichert und einen int, der die PS des Autos speichert. Für ein Auto sieht das dann so aus:</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+<span class="include">#include</span> <span class="prepr">&lt;string&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    std::string marke = <span class="string">"BMW"</span>;
+    <span class="keyword">int</span> baujahr = <span class="number">2020</span>;
+    <span class="keyword">int</span> ps = <span class="number">190</span>;
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+            <p>das ist bei einem einzigen Auto kein Problem, will man aber mehrere Autos erfassen, trifft man schnell auf das Problem, dass man unfassbar viele Variablen hat, die im Code verstreut sind.</p>
+            <ul>
+                <li>Hierzu kann man einen struct verwenden</li>
+                <li>Ein struct erlaubt es, einen eigenen Datentyp zu erfinden, in dem mehrere Variablen unterschiedlicher Datentypen zusammengefasst werden.</li>
+                <li>zum Beispiel der Datentyp int, sagt dem Computer nur: es werden 4 Byte RAM reserviert um eine Ganzzahl darin zu speichern.</li>
+                <li>bei einem struct, der ein Auto speichern soll, werden also zwei Integer und ein String an Speicher reserviert</li>
+                <li>ein stuct ist wie ein Bauplan für ein Auto-Objekt</li>
+            </ul>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+<span class="include">#include</span> <span class="prepr">&lt;string&gt;</span>
+
+<span class="comment">//struct global als Bauplan für ein Auto-Objekt erstellen (eigener Datentyp Auto)</span>
+<span class="class">struct</span> Auto
+<span class="bracket">{</span>
+    std::string marke = <span class="string">"BMW"</span>;
+    <span class="keyword">int</span> baujahr = <span class="number">2020</span>;
+    <span class="keyword">int</span> ps = <span class="number">190</span>;
+<span class="bracket">}</span>; <span class="comment">//Semikolon</span>
+</pre>
+            <p>In C++ kann der Zugriff auf den struct mit Sichtbarkeiten (Zugriffsrechten) geregelt werden:</p>
+            <ul>
+                <li>public: - alles, was hinter public folgt, kann überall im Programm gelesen und verändert werden</li>
+                <li>wird bei einem struct kein Zugriffsmodifizierer hingeschrieben, so ist alles im struct als public gekennzeichnet</li>
+                <li>private: - alles hinter private ist geschützt, von außen kann niemand darauf zugreifen</li>
+                <li>private wird dann benutzt, wenn der Zugriff auf Daten von außen gezielt verhindert werden soll</li>
+                <li>auf private Daten kann nur der struct selbst zugreifen</li>
+            </ul>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+<span class="include">#include</span> <span class="prepr">&lt;string&gt;</span>
+
+<span class="comment">//struct global als Bauplan für ein Auto-Objekt erstellen (eigener Datentyp Auto)</span>
+<span class="class">struct</span> Auto
+<span class="bracket">{</span>
+    <span class="keyword">private:</span>
+        std::string marke = <span class="string">"BMW"</span>;
+    <span class="keyword">public:</span>
+        std::string name = marke + <span class="string">" i4"</span>;
+        <span class="keyword">int</span> baujahr = <span class="number">2020</span>;
+        <span class="keyword">int</span> ps = <span class="number">530</span>;
+<span class="bracket">}</span>; <span class="comment">//Semikolon!</span>
+</pre>
+            <p>In diesem Programm kann der Name des Autos verändert werden, die Marke allerdings nicht.</p>
+
         </section>
 
         <section class="section" id="class">
             <h1>Klassen</h1>
+            <p>In C++ bildet eine Klasse (Keyword class) die fundamentale Bauanleitung für benutzerdefinierte Datentypen. Auf abstrakter Ebene kapselt sie Daten (Attribute) und das Zugriffsrecht auf diese Daten in einer logischen Einheit.</p>
+            <ul>
+                <li>Eine Klasse ist im Grunde ein Bauplan für einen eigenen Datentyp.</li>
+                <li>Eine Klasse fasst mehrere Variablen unterschiedlicher Datentypen zusammen und definiert, wer von außen auf diese Daten zugreifen kann</li>
+                <li>In C++ sind structs und Klassen nahezu identisch, der einzige Unterschied liegt in der Standard-Sichtbarkeit Eine Klasse ist standardmäßig private.</li>
+            </ul>
+            <p>der folgende Code in C++ erstellt eine Klasse Auto, die die drei Merkmale: baujahr(private),  und ps(public) besitzt:</p>
+
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+<span class="include">#include</span> <span class="prepr">&lt;string&gt;</span>
+
+<span class="comment">//Klasse global als Bauplan für ein Auto-Objekt erstellen</span>
+<span class="class">class</span> Auto
+<span class="bracket">{</span>
+    <span class="keyword">private:</span>
+        <span class="keyword">int</span> baujahr = <span class="number">2020</span>;
+    <span class="keyword">public:</span>
+        std::string marke = <span class="string">"BMW"</span>;
+        <span class="keyword">int</span> ps = <span class="number">530</span>;
+<span class="bracket">}</span>; <span class="comment">//Semikolon!</span>
+</pre>
+            
+            <h2>Warum werden class und struct unterschiedlich verwendet?</h2>
+            <p>Obwohl beide Keywords nahezu das gleiche in C++ tun, werden sie aus sematischen Gründen und Konvention unterscheiden:</p>
+            <ul>
+                <li>In der objektorientierten Programmierung sollen Objektzustände nicht ungeprüft von außen verändert werden können (safety by default) - da Klassen-Member standardmäßig auf private gesetzt werden</li>
+                <li>Klassen signalisieren anderen Entwicklern, dass sie nicht direkt auf Speicherzustände zugreifen sollen</li>
+                <li>structs werden für PODs (Plain Old Data) oder DTOs (Data Transfer Object) genutzt, also reine Datensammlungen ohne Zugriffsregeln.</li>
+            </ul>
+
         </section>
 
         <section class="section" id="method">
             <h1>Methoden</h1>
+            <p>In C++ sind Methoden (oder auch Member Functions oder Elementfunktionen genannt) Funktionen, die fest in eine Klasse integriert sind. Während die Attribute (Variablen) den Zustand eines Objekts speichern, definieren die Methoden das Verhalten des Objekts und die Art und Weise, wie es mit seinen eigenen Daten arbeitet.</p>
+
+            <ul>
+                <li>Methoden bilden die selbstdefinierte Schnittstelle zwischen den verborgenen Daten eines Objekts und der restlichen Anwendung</li>
+                <li>Anstatt dass externe Programmteile Rohdaten auslesen, berechnen und wieder zurückschreiben, wird diese Logik in die Methoden der Klasse verlagert</li>
+                <li>Methoden stellen sicher, dass alle Änderungen an den internen Variablen streng kontrolliert und nach selbst festgelegten Regeln ablaufen</li>
+                <li>Nicht für jedes Objekt im Arbeitsspeicher besitzt eine eigene Methode, alle Instanzen teilen sich eine Methode gemeinsam, sie existiert nur ein einziges mal im Arbeitsspeicher für die gesamte Klasse</li>
+            </ul>
+
+            <p>Damit die Methode bei der Ausführung weiß, mit den Daten welcher konkreten Instanz sie arbeiten soll, nutzt C++ einen versteckten Mechanismus: Den this-Pointer. Wird eine Methode für ein bestimmtes Objekt ausgeführt, übergibt der Compiler im Hintergrund automatisch einen Zeiger auf die Speicheradresse genau dieses Objekts an die Methode. Jeder Zugriff auf eine Klassenvariable innerhalb der Methode wird über diesen this-Zeiger aufgelöst. So liest oder überschreibt die Logik zielsicher exakt die Speicherbereiche der richtigen Instanz.</p>
+
+            <p>Hier ist eine Klasse Auto, mit der Eigenschaft geschwindigkeit, und einer Methode beschleunigeUmEins</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="comment">//Klasse Auto als Bauplan für ein Auto-Objekt</span>
+<span class="class">class</span> Auto
+<span class="bracket">{</span>
+    <span class="keyword">private:</span>
+        <span class="keyword">float</span> geschwindigkeit = <span class="number">0.0f</span>;
+    <span class="keyword">public:</span>
+        <span class="comment">//beschleunigeUmEins erhöht die geschwindigkeit beim Aufruf um 1 und verändert die Daten dieses Auto-Objekts, das die Methode aufgerufen hat</span>
+        <span class="keyword">void</span> <span class="function">beschleunigeUmEins</span>()
+        <span class="bracket">{</span>
+            geschwindigkeit++;
+        <span class="bracket">}</span>
+<span class="bracket">}</span>; <span class="comment">//Semikolon!</span>
+</pre>
+
+            <h2>Getter- und Setter-Methoden</h2>
+            <p>Da die Variablen einer Klasse in C++ meist vor dem direkten Zugriff von außen geschützt sind (private), werden spezielle Methoden benötigt, um diese Daten sicher zu lesen oder zu schreiben.</p>
+            <ul>
+                <li>Getter(Lesezugriff) - Eine Methode, die den Wert einer privaten Variable zurückgibt. Die Getter-Methode macht Daten nach außen sichtbar und schützt sie aber vor Veränderung</li>
+                <li>Setter(Schreibzugriff) - Eine Methode, die einen neuen Wert entgegennimmt und in die private Variable schreibt. Diese kann die Werte vor dem speichern validieren.</li>
+            </ul>
+            <p>Dieses Programm besitzt eine Klasse Math, mit 2 privaten variablen und einer Getter- und einer Setter-Methode</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="class">class</span> Math
+<span class="bracket">{</span>
+        <span class="comment">//</span>
+        <span class="keyword">int</span> divisor = <span class="number">1</span>;
+        <span class="keyword">float</span> PI = <span class="number">3.1415f</span>;
+    <span class="keyword">public:</span>
+        <span class="comment">//Getter</span>
+        <span class="keyword">float</span> <span class="function">getPI</span>()
+        <span class="bracket">{</span>
+            <span class="keyword">return</span> PI;
+        <span class="bracket">}</span>
+
+        <span class="comment">//Setter</span>
+        <span class="keyword">void</span> <span class="function">setDivisor</span>(<span class="keyword">int</span> div)
+        <span class="bracket">{</span>
+            <span class="keyword">if</span>(div != <span class="number">0</span>)
+            <span class="bracket">{</span>
+                divisor = div;
+            <span class="bracket">}</span>
+            <span class="keyword">else</span>
+            <span class="bracket">{</span>
+                std::cout &lt;&lt; <span class="string">"Teilung durch 0 nicht möglich"</span> &lt;&lt; std::endl;
+            <span class="bracket">}</span>
+        <span class="bracket">}</span>
+<span class="bracket">}</span>; <span class="comment">//Semikolon!</span>
+</pre>
+
+            <h2>this</h2>
+            <p>In C++ regeln das this-Keyword sowie der Arrow-Operator (->) den direkten Zugriff auf ein Objekt und dessen Member (Variablen und Methoden)</p>
+            <ul>
+                <li>Da this ein Pointer auf die eigene Instanz ist, muss innerhalb der Klasse immer der Arrow-Operator (->) genutzt werden, um über this auf die eigenen Member zuzugreifen.</li>
+            </ul>
+            <p>Hier eine Beispielklasse, die den Bauplan für ein Spieler-Objekt darstellt:</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="class">class</span> Spieler
+<span class="bracket">{</span>
+        <span class="keyword">int</span> posX = <span class="number">0</span>;
+    <span class="keyword">public:</span>
+        <span class="comment">//Getter</span>
+        <span class="keyword">int</span> <span class="function">getPosX</span>()
+        <span class="bracket">{</span>
+            <span class="keyword">return</span> posX;
+        <span class="bracket">}</span>
+
+        <span class="comment">//Setter</span>
+        <span class="keyword">void</span> <span class="function">setPosX</span>(<span class="keyword">int</span> posX)
+        <span class="bracket">{</span>
+            <span class="keyword">this</span>-&gt;posX = posX; <span class="comment">//this-&gt;posX ist die position x des Objektes, posX ist der parameter der Methode, dessen Wert gespeichert werden soll</span>
+        <span class="bracket">}</span>
+<span class="bracket">}</span>; <span class="comment">//Semikolon!</span>
+</pre>
+
+            <p>Setter dienen nicht nur der simplen Werteprüfung, sondern vor allem dem Erhalt von Invarianten. Eine Invariante ist ein Zustand, der logisch immer gültig sein muss. Oft gehören mehrere Variablen untrennbar zusammen und dürfen nur gemeinsam geändert werden. Das Videospiel-Szenario: </p>
+            <ul>
+                <li>Eine Spielerfigur hat eine Position im 2D-Raum, die in den Variablen x und y gespeichert ist. Wenn man diese von außen nacheinander über zwei separate Setter (setX und setY) ändert, entsteht ein gefährliches Problem</li>
+                <li>Der Spieler steht auf der Position (10, 10).</li>
+                <li>Er soll durch ein Event auf (20, 20) teleportiert werden.</li>
+                <li>Das Programm führt Befehle nacheinander aus.</li>
+                <li>Das Programm führt setX(20) aus.</li>
+                <li>In diesem exakten Moment befindet sich der Spieler auf (20, 10).</li>
+                <li>Danach führt das Programm setY(20) aus.</li>
+                <li>Dieser fehlerhafte Zwischenzustand bei existiert vielleicht nur für Mikrosekunden, kann aber fatale Bugs auslösen. Wenn genau in diesem Moment ein anderer Thread die Position ausliest oder die Physik-Engine eine Kollisionsabfrage durchführt, könnte der Spieler bei (20, 10) durch eine eigentlich massive Wand fallen oder Schaden nehmen.</li>
+            </ul>
+
+            <p>Die Lösung: Ein gemeinsamer Setter</p>
+
+<pre class="code-block">
+<span class="class">class</span> Spieler
+<span class="bracket">{</span>
+        <span class="keyword">int</span> x = <span class="number">0</span>;
+        <span class="keyword">int</span> y = <span class="number">0</span>;
+    <span class="keyword">public:</span>
+        <span class="comment">//gemeinsamer Setter</span>
+        <span class="keyword">void</span> <span class="function">setPosition</span>(<span class="keyword">int</span> x, <span class="comment">int</span> y)
+        <span class="bracket">{</span>
+            <span class="keyword">this</span>-&gt;x = x;
+            <span class="keyword">this</span>-&gt;y = y;
+        <span class="bracket">}</span>
+        <span class="comment">//andere variante für die Setter-Methode:</span>
+        <span class="comment">/*
+        void setPosition(int neuesX, int neuesY)
+        {
+            x = neuesX;
+            y = neuesY;
+        }
+        */</span>
+<span class="bracket">}</span>; <span class="comment">//Semikolon!</span>
+</pre>
+            <p>mit dem gemeinsamen Setter kann sichergestellt werden, dass x und y immer zusammen Werte zugewiesen bekommen</p>
+        </section>
+
+        <section class="section" id="Construktor">
+            <h1>Konstruktor / Destruktor</h1>
+            <p>Der Konstruktor und der Destruktor sind besondere Methoden. Sie besitzen keinen Rückgabetyp und haben den gleichen Namen, wie die Klasse. Der Kosntruktor wird beim erstellen des Objektes aufgerufen, der Destruktor, wenn das Objekt zerstört wird.</p>
         </section>
             
         <section class="section" id="object">
             <h1>Objekt / Instanz</h1>
         </section>
 
-        <section class="section" id="Construktor">
-            <h1>Konstruktor / Destruktuor</h1>
+        <section class="section" id="uml">
+            <h1>UML-Klassendiagramme</h1>
         </section>
 
         <section class="section" id="abstract">

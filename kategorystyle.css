@@ -423,7 +423,7 @@ pre.consoleOut
 .comment
 {
     font-family: 'Consolas', 'Courier New', monospace;
-    color: #00cf11;
+    color: #1cca2b;
 }
 .number
 {
@@ -433,7 +433,7 @@ pre.consoleOut
 .class
 {
     font-family: 'Consolas', 'Courier New', monospace;
-    color: #24b600;
+    color: #00ff95;
 }
 
 
