@@ -58,6 +58,10 @@
                 Objekt / Instanz
             </a>
 
+            <a href="#ausl" class="sidebar-item">
+                Klassen auslagern
+            </a>
+
             <a href="#uml" class="sidebar-item">
                 UML-Klassendiagramme
             </a>
@@ -393,7 +397,7 @@
 
 <span class="class">class</span> Math
 <span class="bracket">{</span>
-        <span class="comment">//</span>
+        <span class="comment">//private Member-Variablen, das private: kann weggelassen werden, da die Standard-Sichtbarkeit einer Klasse private ist</span>
         <span class="keyword">int</span> divisor = <span class="number">1</span>;
         <span class="keyword">float</span> PI = <span class="number">3.1415f</span>;
     <span class="keyword">public:</span>
@@ -467,7 +471,7 @@
         <span class="keyword">int</span> y = <span class="number">0</span>;
     <span class="keyword">public:</span>
         <span class="comment">//gemeinsamer Setter</span>
-        <span class="keyword">void</span> <span class="function">setPosition</span>(<span class="keyword">int</span> x, <span class="comment">int</span> y)
+        <span class="keyword">void</span> <span class="function">setPosition</span>(<span class="keyword">int</span> x, <span class="keyword">int</span> y)
         <span class="bracket">{</span>
             <span class="keyword">this</span>-&gt;x = x;
             <span class="keyword">this</span>-&gt;y = y;
@@ -487,15 +491,296 @@
 
         <section class="section" id="Construktor">
             <h1>Konstruktor / Destruktor</h1>
-            <p>Der Konstruktor und der Destruktor sind besondere Methoden. Sie besitzen keinen Rückgabetyp und haben den gleichen Namen, wie die Klasse. Der Kosntruktor wird beim erstellen des Objektes aufgerufen, der Destruktor, wenn das Objekt zerstört wird.</p>
+            <p>Der Konstruktor und der Destruktor sind besondere Methoden einer Klasse. Sie besitzen keinen Rückgabetyp (nicht einmal void) und tragen exakt denselben Namen wie die Klasse selbst. Der Konstruktor wird automatisch beim Erstellen des Objektes aufgerufen, der Destruktor, wenn das Objekt zerstört wird. Um den Destruktor optisch zu unterscheiden, wird seinem Namen eine Tilde (~) vorangestellt.</p>
+            <h2>Konstruktor</h2>
+            <p>Wenn ein Objekt im Arbeitsspeicher angelegt wird, enthält dieser Speicherplatz oft noch zufälligen "Datenmüll" von vorherigen Programmen. Der Konstruktor sorgt dafür, dass das Objekt direkt ab der ersten Millisekunde seiner Existenz in einem sauberen, definierten Zustand (einer gültigen Invariante) ist. Man unterscheidet grob zwei Arten: </p>
+            <ul>
+                <li>Standardkonstruktor (Default Constructor): Nimmt keine Parameter entgegen und setzt Standardwerte</li>
+                <li>Parametrisierter Konstruktor: Nimmt Werte von außen entgegen (z. B. Startkoordinaten), um das Objekt spezifisch einzurichten</li>
+            </ul>
+
+            <h2>Destruktor</h2>
+            <p>Der Destruktor (~Klassenname()) wird exakt dann aufgerufen, wenn die Lebensdauer eines Objekts endet. Das passiert entweder automatisch, wenn eine lokale Variable ihren Gültigkeitsbereich (die umschließenden geschweiften Klammern } ) verlässt, oder manuell, wenn ein dynamisch erzeugtes Objekt mit delete gelöscht wird.</p>
+<pre class="code-block">
+<span class="class">class</span> DatenPuffer
+<span class="bracket">{</span>
+        <span class="keyword">int*</span> speicher;
+        <span class="keyword">int</span> groesse;
+    <span class="keyword">public:</span>
+        <span class="comment">//Parametrisierter Konstruktor</span>
+        <span class="function">DatenPuffer</span>(<span class="keyword">int</span> anzahlElemente)
+        <span class="bracket">{</span>
+            groesse = anzahlElemente;
+            <span class="comment">//Fordert dynamisch Speicher auf dem Heap an</span>
+            speicher = <span class="keyword">new int</span>[groesse];
+        <span class="bracket">}</span>
+
+        <span class="function">~DatenPuffer</span>()
+        <span class="bracket">{</span>
+            <span class="comment">//Gibt den angeforderten Speicher zwingend wieder frei</span>
+            <span class="keyword">delete</span>[] speicher; 
+        <span class="bracket">}</span>
+<span class="bracket">}</span>; <span class="comment">//Semikolon!</span>
+</pre>
+
+            <p>Ein Anwendungsfall für einen Konstruktor könnte bei der oben erstellten Klasse Spieler sein, das ein Spieler-Objekt bei der erstellung bereits Start-Werte für die Position mitgegeben bekommt.</p>
+
+<pre class="code-block">
+<span class="class">class</span> Spieler
+<span class="bracket">{</span>
+        <span class="keyword">int</span> x = <span class="number">0</span>;
+        <span class="keyword">int</span> y = <span class="number">0</span>;
+    <span class="keyword">public:</span>
+        <span class="comment">//gemeinsamer Setter</span>
+        <span class="keyword">void</span> <span class="function">setPosition</span>(<span class="keyword">int</span> x, <span class="keyword">int</span> y)
+        <span class="bracket">{</span>
+            <span class="keyword">this</span>-&gt;x = x;
+            <span class="keyword">this</span>-&gt;y = y;
+        <span class="bracket">}</span>
+        <span class="comment">//Konstruktor</span>
+        <span class="function">Spieler</span>(<span class="keyword">int</span> x, <span class="keyword">int</span> y)
+        <span class="bracket">{</span>
+            <span class="keyword">this</span>-&gt;x = x;
+            <span class="keyword">this</span>-&gt;y = y;
+        <span class="bracket">}</span>
+<span class="bracket">}</span>; <span class="comment">//Semikolon!</span>
+</pre>
+
         </section>
             
         <section class="section" id="object">
             <h1>Objekt / Instanz</h1>
+            <p>Ein Objekt ist die Umsetzung der Klasse. Wenn die Klasse der Bauplan für ein Haus ist (sie legt fest, wo Wände und Türen sind), dann ist das Objekt das fertige, gebaute Haus, in das man einziehen kann. Der Begriff Instanz wird meist synonym zu Objekt verwendet. Man sagt: "eine Klasse wird instanziieret", was bedeutet: Aus der Klasse wird ein Objekt im Arbeitsspeicher, das mit echten Daten gefüllt wird. Aus einer einzigen Klasse (z. B. Spieler) können hunderte unabhängige Objekte (Instanzen) erzeugt werden, von denen jedes seine eigenen Werte hat.</p>
+
+            <h2>Objekte erzeugen</h2>
+            <p>In C++ hat man die Wahl zwischen zwei grundlegend verschiedenen Speicherarten: dem Stack (ohne new) und dem Heap (mit new)</p>
+            <p>Objekte auf dem Stack erzeugen</p>
+            <ul>
+                <li>Dies ist der Standardweg in C++ und sollte immer bevorzugt werden, wenn möglich. Das Objekt wird als normale lokale Variable erstellt.</li>
+                <li>Lebensdauer des Objekts: Sobald der aktuelle Block (z. B. eine Funktion oder Schleife) beendet wird, wird automatisch der Destruktor aufgerufen und der Speicher wieder freigegeben.</li>
+            </ul>
+
+<pre class="code-block">
+<span class="comment">//Erstellung eines Spieler-Objekts, wie eine Variable, vom Typ Spieler mit dem Namen meinSpieler</span>
+<span class="class">Spieler</span> meinSpieler; 
+<span class="comment">//Mit Parametern für den Konstruktor, erzeugt ein Spieler-Objekt namens gegner</span>
+<span class="class">Spieler</span> gegner(<span class="number">10</span>, <span class="number">20</span>);
+</pre>
+
+            <p>Objekte auf dem Heap erzeugen</p>
+            <ul>
+                <li>Das Keyword new wird in C++ nur verwendet, wenn das Objekt den aktuellen Code-Block(Scope) überleben soll oder extrem groß ist</li>
+                <li>Das Objekt wird auf dem "Heap" (dynamischer Speicher) erstellt. new gibt nicht das Objekt selbst zurück, sondern nur einen Zeiger (Pointer) auf die Speicheradresse des Objekts</li>
+                <li>das objekt existiert so lange, bis es explizit mit delete zerstört wird</li>
+            </ul>
+
+<pre class="code-block">
+<span class="class">Spieler</span>* dynamischerSpieler = <span class="keyword">new</span> <span class="function">Spieler</span>();
+</pre>
+
+            <p>Um direkt auf public-Werte und auf die Methoden der Objekte zugreifen zu können, kommt es darauf an, wie das objekt erzeugt wurde. Der Zugriff auf ein Objekt, das auf dem Stack erzeugt wurde:</p>
+<pre class="code-block">
+<span class="class">class</span> Spieler
+<span class="bracket">{</span>
+    <span class="keyword">public:</span>
+        <span class="keyword">int</span> lebenspunkte; <span class="comment">//Public Variable (direkt zugreifbar)</span>
+
+        <span class="keyword">void</span> <span class="function">heilen</span>()
+        <span class="bracket">{</span>
+            lebenspunkte = <span class="number">100</span>;
+        <span class="bracket">}</span>
+<span class="bracket">}</span>; <span class="comment">//Semikolon!</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="comment">//Objekt erzeugen (Stack)</span>
+    <span class="class">Spieler</span> held;
+
+    <span class="comment">//Direkter Zugriff auf eine public Variable mit '.'</span>
+    held.lebenspunkte = <span class="number">50</span>;
+
+    <span class="comment">//Aufruf einer public Methode mit '.'</span>
+    held.<span class="function">heilen</span>(); 
+
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+            <p>Wenn das Objekt auf dem Heap erstellt wurde, erfolgt der Zugriff über den Preil-Operator (-&gt;)</p>
+
+
+<pre class="code-block">
+<span class="class">class</span> Spieler
+<span class="bracket">{</span>
+    <span class="keyword">public:</span>
+        <span class="keyword">int</span> lebenspunkte; <span class="comment">//Public Variable (direkt zugreifbar)</span>
+
+        <span class="keyword">void</span> <span class="function">heilen</span>()
+        <span class="bracket">{</span>
+            lebenspunkte = <span class="number">100</span>;
+        <span class="bracket">}</span>
+<span class="bracket">}</span>; <span class="comment">//Semikolon!</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="comment">//Objekt erzeugen (Heap)</span>
+    <span class="class">Spieler</span>* heldZeiger = <span class="keyword">new</span> <span class="function">Spieler</span>();
+
+    <span class="comment">//Direkter Zugriff auf eine public Variable mit '-&gt;'</span>
+    heldZeiger-&gt;lebenspunkte = <span class="number">50</span>;
+
+    <span class="comment">//Aufruf einer public Methode mit '-&gt;'</span>
+    heldZeiger-&gt;<span class="function">heilen</span>();
+
+    <span class="comment">//ZWINGEND ERFORDERLICH: Manuelles Loeschen!</span>
+    <span class="keyword">delete</span> heldZeiger;
+
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+            <p>Der Zugriff auf den Konstruktor und Destruktor ist nicht möglich, da diese bei der Erzeugung bzw. der Zerstörung der Objekte automatisch aufgerufen werden.</p>
+        </section>
+
+        <section class="section" id="ausl">
+            <h1>Klassen auslagern</h1>
+            <p>Es lohnt sich in großen Projekten mit mehreren Beteiligten, darüber Nachzudenken, Klassen und Methoden in Dateien uszulagern, um die Projektstruktur übersichtlicher zu gestalten. Zum Beispiel: </p>
+            <ul>
+                <li>main.cpp: enthält die main()-Funktion und hier werden Objekte erzeugt.</li>
+                <li>Klasse.hpp: enthält die Klasse (je Klasse eine .hpp Datei)</li>
+                <li>Klasse.cpp: die Mehtoden der Klasse werden in eine separate .cpp datei ausgelagert</li>
+            </ul>
+            <p>Hier wird das ganze an der Klasse Spieler veranschaulicht:</p>
+            <h2>bisher:</h2>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+<span class="class">class</span> Spieler
+<span class="bracket">{</span>
+    <span class="keyword">public:</span>
+        <span class="keyword">int</span> posX;
+        <span class="keyword">int</span> posY;
+
+        <span class="keyword">void</span> <span class="function">printPos</span>()
+        <span class="bracket">{</span>
+            std::cout &lt;&lt; PosX &lt; &lt; <span class="string">", "</span> &lt;&lt; PosY;
+        <span class="bracket">}</span>
+<span class="bracket">}</span>; <span class="comment">//Semikolon!</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="comment">//Objekt erzeugen (Heap)</span>
+    <span class="class">Spieler</span>* spielerZeiger = <span class="keyword">new</span> <span class="function">Spieler</span>();
+
+    spielerZeiger-&gt;PosX = <span class="number">10</span>;
+    spielerZeiger-&gt;PosY = <span class="number">20</span>;
+
+    spielerZeiger-&gt;<span class="function">print</span>();
+
+    <span class="keyword">delete</span> spielerZeiger;
+
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+            <h2>ausgelagert:</h2>
+            <p>Spieler.hpp:</p>
+<pre class="code-block">
+<span class="include">#ifndef</span> SPIELER_H
+<span class="include">#define</span> SPIELER_H
+
+<span class="class">class</span> Spieler
+<span class="bracket">{</span>
+    <span class="keyword">public:</span>
+        <span class="keyword">int</span> posX;
+        <span class="keyword">int</span> posY;
+
+        <span class="keyword">void</span> <span class="function">printPos</span>(); <span class="comment">//Methode wird deklariert, es wird nicht definiert, was sie tut</span>
+<span class="bracket">}</span>; <span class="comment">//Semikolon!</span>
+
+<span class="include">#endif</span>
+</pre>
+
+            <p>Spieler.cpp:</p>
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">"Spieler.hpp"</span>
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="comment">//Spieler:: bedeutet, die nachfolgende Methode gehört zu der Klasse Spieler</span>
+<span class="class">Spieler</span>::<span class="keyword">void</span> <span class="function">printPos</span>()
+<span class="bracket">{</span>
+    std::cout &lt;&lt; PosX &lt; &lt; <span class="string">", "</span> &lt;&lt; PosY;
+<span class="bracket">}</span>
+</pre>
+
+            <p>main.cpp:</p>
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">"Spieler.hpp"</span>
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="comment">//Objekt erzeugen (Heap)</span>
+    <span class="class">Spieler</span>* spielerZeiger = <span class="keyword">new</span> <span class="function">Spieler</span>();
+
+    spielerZeiger-&gt;PosX = <span class="number">10</span>;
+    spielerZeiger-&gt;PosY = <span class="number">20</span>;
+
+    spielerZeiger-&gt;<span class="function">print</span>();
+
+    <span class="keyword">delete</span> spielerZeiger;
+
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+            <p>der Compiler-Befehl um aus diesen Dateien eine .exe zu erstellen:</p>
+<pre class="consoleOut">
+g++ main.cpp Spieler.cpp -o main
+</pre>
+
         </section>
 
         <section class="section" id="uml">
             <h1>UML-Klassendiagramme</h1>
+            <p>UML steht für Unified Modeling Language (vereinheitlichte Modellierungssprache). Wenn Architekten ein Gebäude entwerfen, zeichnen sie vorher einen Bauplan, damit jeder genau weiß, wo die tragenden Wände hinkommen. In der Softwareentwicklung ist UML genau dieser Bauplan. UML hilft Entwicklern, sich einen schnellen Überblick zu verschaffen und die Architektur eines Programms im Team zu besprechen, ohne sich in tausenden Zeilen Code zu verlieren. Ein UML-Klassendiagramm zeigt dabei auf einen Blick, welche Bausteine (Klassen) das System hat und was die daraus erstellten Objekte können.</p>
+            <h2>Darstellung einer Klasse:</h2>
+            <p>eine Klasse Student, enthält einen String name, einen int matrikelnummer und einen int alter</p>
+        
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+<span class="include">#include</span> <span class="prepr">&lt;string&gt;</span>
+<span class="class">class</span> Student
+<span class="bracket">{</span>
+    <span class="keyword">private:</span>
+        std::string name;
+        <span class="keyword">int</span> matrikelnummer;
+        <span class="keyword">int</span> alter;
+
+    <span class="keyword">public:</span>
+        <span class="function">Student</span>(std::string name, <span class="keyword">int</span> matrikelnummer, <span class="keyword">int</span> alter)
+        <span class="bracket">{</span>
+            <span class="keyword">this</span>-&gt;name = name;
+            <span class="keyword">this</span>-&gt;matrikelnummer = matrikelnummer;
+            <span class="keyword">this</span>-&gt;alter = alter;
+        <span class="bracket">}</span>
+        <span class="keyword">void</span> <span class="function">PrintStudentInfo</span>()
+        <span class="bracket">{</span>
+            std::cout &lt;&lt; <span class="string">"Name:\t\t"</span> &lt;&lt; name &lt;&lt; std::endl;
+            std::cout &lt;&lt; <span class="string">"Matrikelnummer:\t"</span> &lt;&lt; matrikelnummer &lt;&lt; std::endl;
+            std::cout &lt;&lt; <span class="string">"Alter:\t\t"</span> &lt;&lt; alter &lt;&lt; std::endl;
+        <span class="bracket">}</span>
+<span class="bracket">}</span>; <span class="comment">//Semikolon!</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="class">Student</span>* s1 = <span class="keyword">new</span> <span class="function">Student</span>(<span class="string">"Julia Mueller"</span>, <span class="number">200151305</span>, <span class="number">19</span>);
+
+    s1-&gt;<span class="function">PrintStudentInfo</span>();
+
+    <span class="keyword">delete</span> s1;
+
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+        
         </section>
 
         <section class="section" id="abstract">
