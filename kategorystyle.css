@@ -334,6 +334,18 @@ td:first-child
     height: auto;
 }
 
+.UMLImage
+{
+    width: 450px;
+    height: auto;
+}
+
+.UMLImageSmall
+{
+    width: 350px;
+    height: auto;
+}
+
 .asciiImage
 {
     width: auto;
@@ -431,7 +443,7 @@ pre.consoleOut
 .comment
 {
     font-family: 'Consolas', 'Courier New', monospace;
-    color: #1cca2b;
+    color: #4edd2a;
 }
 .number
 {
@@ -441,7 +453,7 @@ pre.consoleOut
 .class
 {
     font-family: 'Consolas', 'Courier New', monospace;
-    color: #00ff95;
+    color: #00f0b4;
 }
 
 
@@ -694,4 +706,17 @@ body.dark-mode .site-footer
         overflow-x: auto;
         line-height: 1.5;
     }
+
+    .UMLImage
+    {
+        width: 280px;
+        height: auto;
+    }
+
+    .UMLImageSmall
+    {
+        width: 240px;
+        height: auto;
+    }
+
 }

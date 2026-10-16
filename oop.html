@@ -66,12 +66,12 @@
                 UML-Klassendiagramme
             </a>
 
-            <a href="#abstract" class="sidebar-item">
-                Abstrakte Klassen und Interfaces
-            </a>
-            
             <a href="#inheritance" class="sidebar-item">
                 Vererbung
+            </a>
+
+            <a href="#abstract" class="sidebar-item">
+                Abstrakte Klassen und Interfaces
             </a>
 
             <a href="#static" class="sidebar-item">
@@ -281,7 +281,7 @@
 <span class="include">#include</span> <span class="prepr">&lt;string&gt;</span>
 
 <span class="comment">//struct global als Bauplan für ein Auto-Objekt erstellen (eigener Datentyp Auto)</span>
-<span class="class">struct</span> Auto
+<span class="keyword">struct</span> <span class="class">Auto</span>
 <span class="bracket">{</span>
     std::string marke = <span class="string">"BMW"</span>;
     <span class="keyword">int</span> baujahr = <span class="number">2020</span>;
@@ -302,7 +302,7 @@
 <span class="include">#include</span> <span class="prepr">&lt;string&gt;</span>
 
 <span class="comment">//struct global als Bauplan für ein Auto-Objekt erstellen (eigener Datentyp Auto)</span>
-<span class="class">struct</span> Auto
+<span class="keyword">struct</span> <span class="class">Auto</span>
 <span class="bracket">{</span>
     <span class="keyword">private:</span>
         std::string marke = <span class="string">"BMW"</span>;
@@ -332,7 +332,7 @@
 <span class="include">#include</span> <span class="prepr">&lt;string&gt;</span>
 
 <span class="comment">//Klasse global als Bauplan für ein Auto-Objekt erstellen</span>
-<span class="class">class</span> Auto
+<span class="keyword">class</span> <span class="class">Auto</span>
 <span class="bracket">{</span>
     <span class="keyword">private:</span>
         <span class="keyword">int</span> baujahr = <span class="number">2020</span>;
@@ -371,7 +371,7 @@
 <span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
 
 <span class="comment">//Klasse Auto als Bauplan für ein Auto-Objekt</span>
-<span class="class">class</span> Auto
+<span class="keyword">class</span> <span class="class">Auto</span>
 <span class="bracket">{</span>
     <span class="keyword">private:</span>
         <span class="keyword">float</span> geschwindigkeit = <span class="number">0.0f</span>;
@@ -395,7 +395,7 @@
 <pre class="code-block">
 <span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
 
-<span class="class">class</span> Math
+<span class="keyword">class</span> <span class="class">Math</span>
 <span class="bracket">{</span>
         <span class="comment">//private Member-Variablen, das private: kann weggelassen werden, da die Standard-Sichtbarkeit einer Klasse private ist</span>
         <span class="keyword">int</span> divisor = <span class="number">1</span>;
@@ -432,7 +432,7 @@
 <pre class="code-block">
 <span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
 
-<span class="class">class</span> Spieler
+<span class="keyword">class</span> <span class="class">Spieler</span>
 <span class="bracket">{</span>
         <span class="keyword">int</span> posX = <span class="number">0</span>;
     <span class="keyword">public:</span>
@@ -465,7 +465,7 @@
             <p>Die Lösung: Ein gemeinsamer Setter</p>
 
 <pre class="code-block">
-<span class="class">class</span> Spieler
+<span class="keyword">class</span> <span class="class">Spieler</span>
 <span class="bracket">{</span>
         <span class="keyword">int</span> x = <span class="number">0</span>;
         <span class="keyword">int</span> y = <span class="number">0</span>;
@@ -502,7 +502,7 @@
             <h2>Destruktor</h2>
             <p>Der Destruktor (~Klassenname()) wird exakt dann aufgerufen, wenn die Lebensdauer eines Objekts endet. Das passiert entweder automatisch, wenn eine lokale Variable ihren Gültigkeitsbereich (die umschließenden geschweiften Klammern } ) verlässt, oder manuell, wenn ein dynamisch erzeugtes Objekt mit delete gelöscht wird.</p>
 <pre class="code-block">
-<span class="class">class</span> DatenPuffer
+<span class="keyword">class</span> <span class="class">DatenPuffer</span>
 <span class="bracket">{</span>
         <span class="keyword">int*</span> speicher;
         <span class="keyword">int</span> groesse;
@@ -526,7 +526,7 @@
             <p>Ein Anwendungsfall für einen Konstruktor könnte bei der oben erstellten Klasse Spieler sein, das ein Spieler-Objekt bei der erstellung bereits Start-Werte für die Position mitgegeben bekommt.</p>
 
 <pre class="code-block">
-<span class="class">class</span> Spieler
+<span class="keyword">class</span> <span class="class">Spieler</span>
 <span class="bracket">{</span>
         <span class="keyword">int</span> x = <span class="number">0</span>;
         <span class="keyword">int</span> y = <span class="number">0</span>;
@@ -580,7 +580,7 @@
 
             <p>Um direkt auf public-Werte und auf die Methoden der Objekte zugreifen zu können, kommt es darauf an, wie das objekt erzeugt wurde. Der Zugriff auf ein Objekt, das auf dem Stack erzeugt wurde:</p>
 <pre class="code-block">
-<span class="class">class</span> Spieler
+<span class="keyword">class</span> <span class="class">Spieler</span>
 <span class="bracket">{</span>
     <span class="keyword">public:</span>
         <span class="keyword">int</span> lebenspunkte; <span class="comment">//Public Variable (direkt zugreifbar)</span>
@@ -609,7 +609,7 @@
 
 
 <pre class="code-block">
-<span class="class">class</span> Spieler
+<span class="keyword">class</span> <span class="class">Spieler</span>
 <span class="bracket">{</span>
     <span class="keyword">public:</span>
         <span class="keyword">int</span> lebenspunkte; <span class="comment">//Public Variable (direkt zugreifbar)</span>
@@ -653,7 +653,7 @@
 
 <pre class="code-block">
 <span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
-<span class="class">class</span> Spieler
+<span class="keyword">class</span> <span class="class">Spieler</span>
 <span class="bracket">{</span>
     <span class="keyword">public:</span>
         <span class="keyword">int</span> posX;
@@ -687,7 +687,7 @@
 <span class="include">#ifndef</span> SPIELER_H
 <span class="include">#define</span> SPIELER_H
 
-<span class="class">class</span> Spieler
+<span class="keyword">class</span> <span class="class">Spieler</span>
 <span class="bracket">{</span>
     <span class="keyword">public:</span>
         <span class="keyword">int</span> posX;
@@ -746,7 +746,7 @@ g++ main.cpp Spieler.cpp -o main
 <pre class="code-block">
 <span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
 <span class="include">#include</span> <span class="prepr">&lt;string&gt;</span>
-<span class="class">class</span> Student
+<span class="keyword">class</span> <span class="class">Student</span>
 <span class="bracket">{</span>
     <span class="keyword">private:</span>
         std::string name;
@@ -779,16 +779,319 @@ g++ main.cpp Spieler.cpp -o main
     <span class="keyword">return</span> <span class="number">0</span>;
 <span class="bracket">}</span>
 </pre>
+            <p>Das UML-Klassendiagramm zu dieser Klasse sieht dann so aus:</p>
+            <img src="Images/Klassendiagramm UML - Student.png" class="UMLImage">
+            <p>Die Zugriffsmodifizierer einer Klasse werden in UML mit + für public, - für private und # für protected dargestellt.</p>
 
-        
-        </section>
+            <p>Der Code instanziieret die Klasse Student, das erzeugte Objekt heißt s1 und besitzt die Werte - Name: "Julia Mueller", Matrikelnummer: 200151305 und Alter: 19. Das Objekt wird so dargestellt:</p>
+            <img src="Images/Objektdiagramm UML - Student.png" class="UMLImageSmall">
 
-        <section class="section" id="abstract">
-            <h1>Abstrakte Klassen und Interfaces</h1>
         </section>
 
         <section class="section" id="inheritance">
             <h1>Vererbung</h1>
+            <p>Die Vererbung ist eines der Kernprinzipien der objektorientierten Programmierung. Sie erlaubt es, neue Klassen auf Basis existierender Klassen zu erstellen. Dadurch wird Code wiederverwendbar, erweiterbar und leichter zu warten.</p>
+            <p>Bei der Vererbung gibt es:</p>
+            <ul>
+                <li>Die Basisklasse (Elternklasse): Dies ist die allgemeinere Klasse. Sie definiert Eigenschaften (Attribute) und Verhaltensweisen (Methoden), die allen Unterklassen gemeinsam sind. Beispiel: Die Klasse „Fahrzeug“.</li>
+                <li>Die abgeleitete Klasse (Kindklasse): Dies ist die spezialisierte Klasse. Sie übernimmt automatisch alle Eigenschaften und Verhaltensweisen der Basisklasse, kann aber eigene, spezifische Details hinzufügen oder bestehende Verhaltensweisen abändern. Beispiel: Die Klasse „Auto“ erbt von „Fahrzeug“.</li>
+            </ul>
+            <h3>Die „Ist-ein“-Beziehung (Is-A):</h3>
+            <p>Das wichtigste Kriterium für Vererbung ist die logische Überprüfung: Ein Auto ist ein Fahrzeug. Wenn dieser Satz Sinn ergibt, ist Vererbung der richtige Ansatz.</p>
+            <ul>
+                <li>Standardmäßig keine automatische Polymorphie (Statische Bindung): In Java oder C# sind Methoden standardmäßig überschreibbar (virtuell). In C++ ist das Gegenteil der Fall. Wenn eine abgeleitete Klasse eine Methode der Basisklasse neu definiert, entscheidet der Datentyp der Referenz oder des Pointers, welche Methode aufgerufen wird - nicht das tatsächliche Objekt im Speicher (Kompilierzeit- vs. Laufzeit-Entscheidung).</li>
+                <li>Der Zugriffsmodifikator beim Erben: C++ verlangt bei der Definition der Vererbung explizit ein Schlüsselwort wie public, protected oder private. Das steuert, wie die geerbten Mitglieder in der neuen Klasse nach außen hin sichtbar sind. In den meisten anderen Sprachen ist diese Vererbung immer automatisch public</li>
+                <li>Mehrfachvererbung: C++ erlaubt einer Klasse, von mehreren Basisklassen gleichzeitig zu erben. Das ist mächtig, bringt aber eigene Herausforderungen mit sich (z. B. das Namenskonflikt-Problem, wenn zwei Elternklassen eine gleichnamige Methode haben).</li>
+                <li>Objektlebenszyklus: Bei der Erstellung eines Objekts der Kindklasse wird zuerst der Konstruktor der Basisklasse aufgerufen und danach der der Kindklasse. Beim Löschen (Destruktor) läuft es genau umgekehrt</li>
+            </ul>
+            <h3>Sichtbarkeit protected</h3>
+            <p>protected (Geschützt): Ist ein wichtiger Sichtbarkeitsmodifikator für Vererbung. Die eigene Klasse und alle davon abgeleiteten Kindklassen dürfen auf protected-Attribute zugreifen, aber der Rest des Programms (von außen) nicht.</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+<span class="include">#include</span> <span class="prepr">&lt;string&gt;</span>
+
+<span class="comment">//Elternklasse Fahrzeug</span>
+<span class="keyword">class</span> <span class="class">Fahrzeug</span>
+<span class="bracket">{</span>
+    <span class="keyword">protected:</span>
+        std::string name;
+        std::string farbe;
+        <span class="keyword">int</span> baujahr;
+        <span class="keyword">double</span> velocity;
+    <span class="keyword">public:</span>
+        <span class="comment">//Konstruktor für die Fahrzeug Klasse, kann von allen Erben verwendet werden</span>
+        <span class="function">Fahrzeug</span>(std::string name, std::string farbe, <span class="keyword">int</span> baujahr, <span class="keyword">double</span> velocity = <span class="number">0</span>) 
+        <span class="bracket">{</span>
+            <span class="keyword">this</span>-&gt;name = name;
+            <span class="keyword">this</span>-&gt;farbe = farbe;
+            <span class="keyword">this</span>-&gt;baujahr = baujahr;
+            <span class="keyword">this</span>-&gt;velocity = velocity;
+        <span class="bracket">}</span>
+
+        <span class="keyword">void</span> <span class="function">accelerate</span>()
+        <span class="bracket">{</span>
+            <span class="keyword">if</span>(<span class="keyword">this</span>-&gt;velocity &lt; <span class="number">300</span>)
+            <span class="bracket">{</span>
+                velocity = velocity + <span class="number">0.5</span>;
+            <span class="bracket">}</span>
+        <span class="bracket">}</span>
+
+        <span class="keyword">void</span> <span class="function">slowDown</span>()
+        <span class="bracket">{</span>
+            <span class="keyword">if</span>(<span class="keyword">this</span>-&gt;velocity &gt; <span class="number">0</span>)
+            <span class="bracket">{</span>
+                velocity = velocity - <span class="number">0.5</span>;
+            <span class="bracket">}</span>
+        <span class="bracket">}</span>
+<span class="bracket">}</span>;
+
+<span class="comment">//Kindklasse Auto erbt von Fahrzeug</span>
+<span class="keyword">class</span> <span class="class">Auto</span> : <span class="keyword">public</span> <span class="class">Fahrzeug</span>
+<span class="bracket">{</span>
+    <span class="keyword">private:</span>
+        std::string nummernschild;
+    <span class="keyword">public:</span>
+        <span class="comment">//Konstruktor -&gt; Der Auto Konstruktor nutzt einfach den Konstruktor von Fahrzeug</span>
+        <span class="function">Auto</span>(std::string name, std::string farbe, <span class="keyword">int</span> baujahr, std::string plate = <span class="string">"Unbekannt"</span>, <span class="keyword">double</span> velocity = <span class="number">0</span>) : <span class="class">Fahrzeug</span>(name, farbe, baujahr, velocity)
+        <span class="bracket">{</span>
+            <span class="keyword">this</span>-&gt;nummernschild = plate;
+        <span class="bracket">}</span>
+
+        <span class="keyword">void</span> <span class="function">setlicensePlate</span>(std::string plate)
+        <span class="bracket">{</span>
+            <span class="keyword">if</span>(plate.<span class="function">length</span>() &gt; <span class="number">9</span>)
+            <span class="bracket">{</span>
+                <span class="keyword">this</span>-&gt;nummernschild = <span class="string">"! "</span> + plate;
+            <span class="bracket">}</span>
+            <span class="keyword">else</span>
+            <span class="bracket">{</span>
+                <span class="keyword">this</span>-&gt;nummernschild = plate;
+            <span class="bracket">}</span>
+        <span class="bracket">}</span>
+
+        <span class="keyword">void</span> <span class="function">printInfo</span>()
+        <span class="bracket">{</span>
+            std::cout &lt;&lt; <span class="string">"----------------------------------------------"</span> &lt;&lt; std::endl;
+            std::cout &lt;&lt; <span class="string">"Fahrzeug:\t\t"</span> &lt;&lt; <span class="keyword">this</span>-&gt;name &lt;&lt; std::endl;
+            std::cout &lt;&lt; <span class="string">"Farbe:\t\t\t"</span> &lt;&lt; <span class="keyword">this</span>-&gt;farbe &lt;&lt; std::endl;
+            std::cout &lt;&lt; <span class="string">"Baujahr:\t\t"</span> &lt;&lt; <span class="keyword">this</span>-&gt;baujahr &lt;&lt; std::endl;
+            std::cout &lt;&lt; <span class="string">"Geschwindigkeit:\t"</span> &lt;&lt; <span class="keyword">this</span>-&gt;velocity &lt;&lt; std::endl;
+            std::cout &lt;&lt; <span class="string">"Nummernschild:\t\t"</span> &lt;&lt; <span class="keyword">this</span>-&gt;nummernschild &lt;&lt; std::endl;
+        <span class="bracket">}</span>
+<span class="bracket">}</span>;
+
+<span class="comment">//Kindklasse Zug erbt von Fahrzeug</span>
+<span class="keyword">class</span> <span class="class">Auto</span> : <span class="keyword">public</span> <span class="class">Fahrzeug</span>
+<span class="bracket">{</span>
+    <span class="keyword">public:</span>
+        <span class="comment">//Konstruktor -&gt; Der Zug Konstruktor nutzt einfach den von Fahrzeug</span>
+        <span class="function">Zug</span>(std::string name, std::string farbe, <span class="keyword">int</span> baujahr, <span class="keyword">double</span> velocity = <span class="number">0</span>) : <span class="class">Fahrzeug</span>(name, farbe, baujahr, velocity)
+        <span class="bracket">{</span>
+
+        <span class="bracket">}</span>
+
+        <span class="keyword">void</span> <span class="function">printInfo</span>()
+        <span class="bracket">{</span>
+            std::cout &lt;&lt; <span class="string">"----------------------------------------------"</span> &lt;&lt; std::endl;
+            std::cout &lt;&lt; <span class="string">"Fahrzeug:\t\t"</span> &lt;&lt; <span class="keyword">this</span>-&gt;name &lt;&lt; std::endl;
+            std::cout &lt;&lt; <span class="string">"Farbe:\t\t\t"</span> &lt;&lt; <span class="keyword">this</span>-&gt;farbe &lt;&lt; std::endl;
+            std::cout &lt;&lt; <span class="string">"Baujahr:\t\t"</span> &lt;&lt; <span class="keyword">this</span>-&gt;baujahr &lt;&lt; std::endl;
+            std::cout &lt;&lt; <span class="string">"Geschwindigkeit:\t"</span> &lt;&lt; <span class="keyword">this</span>-&gt;velocity &lt;&lt; std::endl;
+        <span class="bracket">}</span>
+<span class="bracket">}</span>;
+
+<span class="class">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="class">Auto</span>* a1 = <span class="keyword">new</span> <span class="class">Auto</span>(<span class="string">"Audi a4"</span>, <span class="string">"schwarz"</span>, <span class="number">2020</span>);
+    <span class="class">Zug</span>* t1 = <span class="keyword">new</span> <span class="class">Zug</span>(<span class="string">"RE 20"</span>, <span class="string">"rot"</span>, <span class="number">2006</span>);
+
+    a1-&gt;<span class="function">setlicensePlate</span>(<span class="string">"HH GT 123"</span>);
+    a1-&gt;<span class="function">printInfo</span>();
+    a1-&gt;<span class="function">accelerate</span>();
+    a1-&gt;<span class="function">accelerate</span>();
+    a1-&gt;<span class="function">accelerate</span>();
+    a1-&gt;<span class="function">printInfo</span>();
+    a1-&gt;<span class="function">slowDown</span>();
+    a1-&gt;<span class="function">slowDown</span>();
+    a1-&gt;<span class="function">slowDown</span>();
+    a1-&gt;<span class="function">printInfo</span>();
+
+    t1-&gt;<span class="function">printInfo</span>();
+
+    <span class="keyword">delete</span> a1;
+    <span class="keyword">delete</span> t1;
+
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+        </section>
+
+        <section class="section" id="abstract">
+            <h1>Abstrakte Klassen und Interfaces</h1>
+            <h2>Abstrakte Klassen</h2>
+            <p>Eine abstrakte Klasse, ist eine Elternklasse, bei der bestimmte Implementierungen und Definitionen weggelassen werden um die genaue Spezifizierung der jeweiligen Kind-Klasse zu überlassen. Sie dient als Entwurf für andere Klassen. Von einer abstrakten Klasse können keine Objekt direkt erzeugt werden. Eine C++ Klasse wird automatisch zu einer abstrakten Klasse, sobald sie mindestens eine sog. virtuelle Funktion enthält. Hier das Beispiel von vorher, nur das die Klasse Fahrzeug abstrakt ist:</p>
+
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+<span class="include">#include</span> <span class="prepr">&lt;string&gt;</span>
+
+<span class="comment">//1. Abstrakte Elternklasse Fahrzeug, kein abstract keyword</span>
+<span class="keyword">class</span> <span class="class">Fahrzeug</span>
+<span class="bracket">{</span>
+    <span class="keyword">protected:</span>
+        std::string name;
+        std::string farbe;
+        <span class="keyword">int</span> baujahr;
+        <span class="keyword">double</span> velocity;
+    <span class="keyword">public:</span>
+        <span class="comment">//Konstruktor für die Fahrzeug Klasse, kann von allen Erben verwendet werden</span>
+        <span class="function">Fahrzeug</span>(std::string name, std::string farbe, <span class="keyword">int</span> baujahr, <span class="keyword">double</span> velocity = <span class="number">0</span>) 
+        <span class="bracket">{</span>
+            <span class="keyword">this</span>-&gt;name = name;
+            <span class="keyword">this</span>-&gt;farbe = farbe;
+            <span class="keyword">this</span>-&gt;baujahr = baujahr;
+            <span class="keyword">this</span>-&gt;velocity = velocity;
+        <span class="bracket">}</span>
+
+        <span class="comment">//Virtueller Destruktor ist zwingend notwendig, wenn man Objekte über "delete" löscht!</span>
+        <span class="keyword">virtual</span> ~<span class="function">Fahrzeug</span>() = <span class="keyword">default</span>;
+
+        <span class="comment">//Rein virtuelle Methoden (pure virtual) -&gt; Machen die Klasse abstrakt</span>
+        <span class="keyword">virtual void</span> <span class="function">accelerate</span>() = <span class="number">0</span>;
+        <span class="keyword">virtual void</span> <span class="function">slowDown</span>() = <span class="number">0</span>;
+<span class="bracket">}</span>;
+
+<span class="comment">//2. Kindklasse Auto erbt von Fahrzeug</span>
+<span class="keyword">class</span> <span class="class">Auto</span> : <span class="keyword">public</span> <span class="class">Fahrzeug</span>
+<span class="bracket">{</span>
+    <span class="keyword">private:</span>
+        std::string nummernschild;
+    <span class="keyword">public:</span>
+        <span class="comment">//Konstruktor -&gt; Der Auto Konstruktor nutzt einfach den Konstruktor von Fahrzeug</span>
+        <span class="function">Auto</span>(std::string name, std::string farbe, <span class="keyword">int</span> baujahr, std::string plate = <span class="string">"Unbekannt"</span>, <span class="keyword">double</span> velocity = <span class="number">0</span>) : <span class="class">Fahrzeug</span>(name, farbe, baujahr, velocity)
+        <span class="bracket">{</span>
+            <span class="keyword">this</span>-&gt;nummernschild = plate;
+        <span class="bracket">}</span>
+
+        <span class="comment">//Eigene Implementierung von accelerate() für das Auto (z.B. beschleunigt um +1.0) wichtig: override-keyword</span>
+        <span class="keyword">void</span> <span class="function">accelerate</span>() <span class="keyword">override</span>
+        <span class="bracket">{</span>
+            <span class="keyword">if</span>(<span class="keyword">this</span>-&gt;velocity &lt; <span class="number">250</span>)
+            <span class="bracket">{</span>
+                velocity = velocity + <span class="number">1.0</span>;
+            <span class="bracket">}</span>
+        <span class="bracket">}</span>
+
+        <span class="comment">//Eigene Implementierung von slowDown() für das Auto (z.B. bremst um -1.0)</span>
+        <span class="keyword">void</span> <span class="function">slowDown</span>() <span class="keyword">override</span>
+        <span class="bracket">{</span>
+            <span class="keyword">if</span>(<span class="keyword">this</span>-&gt;velocity &gt; <span class="number">0</span>)
+            <span class="bracket">{</span>
+                velocity = velocity - <span class="number">1.0</span>;
+                <span class="keyword">if</span>(velocity &lt; <span class="number">0</span>)
+                <span class="bracket">{</span>
+                    velocity = <span class="number">0</span>; <span class="comment">//Verhindert negative Geschwindigkeit</span>
+                <span class="bracket">}</span>
+            <span class="bracket">}</span>
+        <span class="bracket">}</span>
+
+        <span class="keyword">void</span> <span class="function">setlicensePlate</span>(std::string plate)
+        <span class="bracket">{</span>
+            <span class="keyword">if</span>(plate.<span class="function">length</span>() &gt; <span class="number">9</span>)
+            <span class="bracket">{</span>
+                <span class="keyword">this</span>-&gt;nummernschild = <span class="string">"! "</span> + plate;
+            <span class="bracket">}</span>
+            <span class="keyword">else</span>
+            <span class="bracket">{</span>
+                <span class="keyword">this</span>-&gt;nummernschild = plate;
+            <span class="bracket">}</span>
+        <span class="bracket">}</span>
+
+        <span class="keyword">void</span> <span class="function">printInfo</span>()
+        <span class="bracket">{</span>
+            std::cout &lt;&lt; <span class="string">"----------------------------------------------"</span> &lt;&lt; std::endl;
+            std::cout &lt;&lt; <span class="string">"Fahrzeug:\t\t"</span> &lt;&lt; <span class="keyword">this</span>-&gt;name &lt;&lt; std::endl;
+            std::cout &lt;&lt; <span class="string">"Farbe:\t\t\t"</span> &lt;&lt; <span class="keyword">this</span>-&gt;farbe &lt;&lt; std::endl;
+            std::cout &lt;&lt; <span class="string">"Baujahr:\t\t"</span> &lt;&lt; <span class="keyword">this</span>-&gt;baujahr &lt;&lt; std::endl;
+            std::cout &lt;&lt; <span class="string">"Geschwindigkeit:\t"</span> &lt;&lt; <span class="keyword">this</span>-&gt;velocity &lt;&lt; std::endl;
+            std::cout &lt;&lt; <span class="string">"Nummernschild:\t\t"</span> &lt;&lt; <span class="keyword">this</span>-&gt;nummernschild &lt;&lt; std::endl;
+        <span class="bracket">}</span>
+<span class="bracket">}</span>;
+
+<span class="comment">//3. Kindklasse Zug erbt von Fahrzeug</span>
+<span class="keyword">class</span> <span class="class">Zug</span> : <span class="keyword">public</span> <span class="class">Fahrzeug</span>
+<span class="bracket">{</span>
+    <span class="keyword">public:</span>
+        <span class="comment">//Konstruktor -> Der Zug Konstruktor nutzt einfach den von Fahrzeug</span>
+        <span class="function">Zug</span>(std::string name, std::string farbe, <span class="keyword">int</span> baujahr, <span class="keyword">double</span> velocity = <span class="number">0</span>) : <span class="class">Fahrzeug</span>(name, farbe, baujahr, velocity)
+        <span class="bracket">{</span>
+
+        <span class="bracket">}</span>
+
+        <span class="comment">//Eigene Implementierung für den Zug (beschleunigt sehr langsam, z.B. um +0.2)</span>
+        <span class="keyword">void</span> <span class="function">accelerate</span>() <span class="keyword">override</span>
+        <span class="bracket">{</span>
+            <span class="keyword">if</span>(<span class="keyword">this</span>-&gt;velocity &lt; <span class="number">300</span>)
+            <span class="bracket">{</span>
+                velocity = velocity + <span class="number">0.2</span>;
+            <span class="bracket">}</span>
+        <span class="bracket">}</span>
+
+        <span class="comment">//Eigene Implementierung für den Zug (bremst sehr träge, z.B. um -0.1)</span>
+        <span class="keyword">void</span> <span class="function">slowDown</span>() <span class="keyword">override</span>
+        <span class="bracket">{</span>
+            <span class="keyword">if</span>(<span class="keyword">this</span>-&gt;velocity &gt; <span class="number">0</span>)
+            <span class="bracket">{</span>
+                velocity = velocity - <span class="number">0.1</span>;
+                <span class="keyword">if</span>(velocity &lt; <span class="number">0</span>) velocity = <span class="number">0</span>;
+            <span class="bracket">}</span>
+        <span class="bracket">}</span>
+
+        <span class="keyword">void</span> <span class="function">printInfo</span>()
+        <span class="bracket">{</span>
+            std::cout &lt;&lt; <span class="string">"----------------------------------------------"</span> &lt;&lt; std::endl;
+            std::cout &lt;&lt; <span class="string">"Fahrzeug:\t\t"</span> &lt;&lt; <span class="keyword">this</span>-&gt;name &lt;&lt; std::endl;
+            std::cout &lt;&lt; <span class="string">"Farbe:\t\t\t"</span> &lt;&lt; <span class="keyword">this</span>-&gt;farbe &lt;&lt; std::endl;
+            std::cout &lt;&lt; <span class="string">"Baujahr:\t\t"</span> &lt;&lt; <span class="keyword">this</span>-&gt;baujahr &lt;&lt; std::endl;
+            std::cout &lt;&lt; <span class="string">"Geschwindigkeit:\t"</span> &lt;&lt; <span class="keyword">this</span>-&gt;velocity &lt;&lt; std::endl;
+        <span class="bracket">}</span>
+<span class="bracket">}</span>;
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="comment">//Ein Objekt der abstrakten Basisklasse zu erstellen ist jetzt verboten:</span>
+    <span class="comment">//Fahrzeug* f = new Fahrzeug("Muster", "blau", 2020); //erzeugt einen Compiler-Fehler!</span>
+
+    <span class="class">Auto</span>* a1 = <span class="keyword">new</span> <span class="class">Auto</span>(<span class="string">"Audi a4"</span>, <span class="string">"schwarz"</span>, <span class="number">2020</span>);
+    <span class="class">Zug</span>* t1 = <span class="keyword">new</span> <span class="class">Zug</span>(<span class="string">"RE 20"</span>, <span class="string">"rot"</span>, <span class="number">2006</span>);
+
+    a1-&gt;<span class="function">setlicensePlate</span>(<span class="string">"HH GT 123"</span>);
+    a1-&gt;<span class="function">printInfo</span>();
+    a1-&gt;<span class="function">accelerate</span>();
+    a1-&gt;<span class="function">accelerate</span>();
+    a1-&gt;<span class="function">accelerate</span>();
+    a1-&gt;<span class="function">printInfo</span>();
+    a1-&gt;<span class="function">slowDown</span>();
+    a1-&gt;<span class="function">slowDown</span>();
+    a1-&gt;<span class="function">slowDown</span>();
+    a1-&gt;<span class="function">printInfo</span>();
+
+    t1-&gt;<span class="function">printInfo</span>();
+
+    <span class="keyword">delete</span> a1;
+    <span class="keyword">delete</span> t1;
+
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+
+
+
+
         </section>
             
         <section class="section" id="static">
