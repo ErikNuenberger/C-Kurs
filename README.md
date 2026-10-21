@@ -1,6 +1,6 @@
 # C++ Course
 
-This repository is more than just code—it is a modern, radically intuitive learning platform for C++. Designed from the ground up to guide beginners step-by-step, and crafted to help professionals from other languages master the power and paradigms of modern C++ with absolute precision.
+This repository is more than just code — it is a modern, radically intuitive learning platform for C++. Designed from the ground up to guide beginners step-by-step, and crafted to help professionals from other languages master the power and paradigms of modern C++ with absolute precision.
 
 The goal of this project was to create a web interface that is highly accessible, visually appealing, and clearly structured for a learning experience that feels entirely natural.
 
