@@ -882,7 +882,7 @@ g++ main.cpp Spieler.cpp -o main
 <span class="bracket">}</span>;
 
 <span class="comment">//Kindklasse Zug erbt von Fahrzeug</span>
-<span class="keyword">class</span> <span class="class">Auto</span> : <span class="keyword">public</span> <span class="class">Fahrzeug</span>
+<span class="keyword">class</span> <span class="class">Zug</span> : <span class="keyword">public</span> <span class="class">Fahrzeug</span>
 <span class="bracket">{</span>
     <span class="keyword">public:</span>
         <span class="comment">//Konstruktor -&gt; Der Zug Konstruktor nutzt einfach den von Fahrzeug</span>
@@ -931,7 +931,7 @@ g++ main.cpp Spieler.cpp -o main
         <section class="section" id="abstract">
             <h1>Abstrakte Klassen und Interfaces</h1>
             <h2>Abstrakte Klassen</h2>
-            <p>Eine abstrakte Klasse, ist eine Elternklasse, bei der bestimmte Implementierungen und Definitionen weggelassen werden um die genaue Spezifizierung der jeweiligen Kind-Klasse zu überlassen. Sie dient als Entwurf für andere Klassen. Von einer abstrakten Klasse können keine Objekt direkt erzeugt werden. Eine C++ Klasse wird automatisch zu einer abstrakten Klasse, sobald sie mindestens eine sog. virtuelle Funktion enthält. Hier das Beispiel von vorher, nur das die Klasse Fahrzeug abstrakt ist:</p>
+            <p>Eine abstrakte Klasse, ist eine Elternklasse, bei der bestimmte Implementierungen und Definitionen weggelassen werden um die genaue Spezifizierung der jeweiligen Kind-Klasse zu überlassen. Sie dient als Entwurf für andere Klassen. Von einer abstrakten Klasse können keine Objekt direkt erzeugt werden. Eine C++ Klasse wird automatisch zu einer abstrakten Klasse, sobald sie mindestens eine sog. rein virtuelle Funktion enthält. Hier das Beispiel von vorher, nur das die Klasse Fahrzeug abstrakt ist:</p>
 
 
 <pre class="code-block">
@@ -1089,6 +1089,191 @@ g++ main.cpp Spieler.cpp -o main
 </pre>
 
 
+            <h2>Interfaces</h2>
+            <p>Ein Interface (Schnittstelle) ist im Grunde eine vollkommen abstrakte Klasse. Es enthält keinerlei Implementierungen und keine Datenmember (Variablen), sondern beschreibt ausschließlich ein Verhalten. Man kann sich ein Interface wie einen Vertrag vorstellen: Jede Klasse, die dieses Interface implementiert, garantiert, dass sie die im Interface definierten Funktionen anbietet. Es wird kein Objekt von einem Interface erzeugt, das ist auch gar nicht möglich.</p>
+            <p>Interfaces werden für die Entkopplung von Softwarekomponenten und für Polymorphie genutzt:</p>
+            <ul>
+                <li>Standardisierung: Man legt selbst fest, was eine Klasse tun können muss, ohne vorzuschreiben, wie sie es tut.</li>
+                <li>Austauschbarkeit: Wenn Code gegen ein Interface geschrieben ist, kann man die dahinterliegende Klasse jederzeit austauschen (z. B. eine echte Datenbank-Klasse gegen eine Test-Datenbank), ohne den restlichen Code ändern zu müssen.</li>
+                <li>Vielfachvererbung ermöglichen: Da C++ keine native interface-Schnittstelle wie Java oder C# hat, werden Klassen dafür genutzt. Da eine Klasse von mehreren Interfaces erben kann (ohne die typischen Probleme von Mehrfachvererbung, da es keinen Zustand/Variablen gibt), wird so saubere Vielfachvererbung möglich.</li>
+            </ul>
+
+            <p>Da C++ kein eigenes Schlüsselwort interface besitzt, Wird ein Interface als Klasse, die nur rein virtuelle Funktionen und einen virtuellen Destruktor besitzt, erstellt.</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+<span class="include">#include</span> <span class="prepr">&lt;string&gt;</span>
+
+<span class="comment">//1. Das Interface "Steuerbar" (reines Verhalten, keine Variablen, kein Konstruktor)</span>
+<span class="keyword">class</span> <span class="class">Steuerbar</span> 
+<span class="bracket">{</span>
+    <span class="keyword">public:</span>
+        <span class="comment">//Ein virtueller Destruktor ist auch im Interface zwingend notwendig!</span>
+        <span class="keyword">virtual</span> ~<span class="function">Steuerbar</span>() = <span class="keyword">default</span>;
+
+        <span class="comment">//Rein virtuelle Methoden -> Jedes "steuerbare" Objekt muss diese Funktionen anbieten</span>
+        <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="function">accelerate</span>() = <span class="number">0</span>;
+        <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="function">slowDown</span>() = <span class="number">0</span>;
+<span class="bracket">}</span>;
+
+<span class="comment">//2. Kindklasse Auto implementiert das Interface Steuerbar</span>
+<span class="keyword">class</span> <span class="class">Auto</span> : <span class="keyword">public</span> <span class="class">Steuerbar</span>
+<span class="bracket">{</span>
+    <span class="keyword">private:</span>
+        <span class="comment">//Das Interface hat keine Member-Variablen, also bringt die Klasse Auto seine eigenen mit</span>
+        std::string name;
+        std::string farbe;
+        <span class="keyword">int</span> baujahr;
+        <span class="keyword">double</span> velocity;
+        std::string nummernschild;
+        
+    <span class="keyword">public:</span>
+        <span class="comment">//Konstruktor: Initialisiert alle eigenen Variablen direkt</span>
+        <span class="function">Auto</span>(std::string name, std::string farbe, <span class="keyword">int</span> baujahr, std::string plate = <span class="string">"Unbekannt"</span>, <span class="keyword">double</span> velocity = <span class="number">0</span>) 
+        <span class="bracket">{</span>
+            <span class="keyword">this</span>-&gt;name = name;
+            <span class="keyword">this</span>-&gt;farbe = farbe;
+            <span class="keyword">this</span>-&gt;baujahr = baujahr;
+            <span class="keyword">this</span>-&gt;velocity = velocity;
+            <span class="keyword">this</span>-&gt;nummernschild = plate;
+        <span class="bracket">}</span>
+
+        <span class="comment">//Erfüllung des Interface-Vertrags: Eigene Implementierung von accelerate()</span>
+        <span class="keyword">void</span> <span class="function">accelerate</span>() <span class="keyword">override</span>
+        <span class="bracket">{</span>
+            <span class="keyword">if</span>(<span class="keyword">this</span>-&gt;velocity &lt; <span class="number">250</span>)
+            <span class="bracket">{</span>
+                velocity = velocity + <span class="number">1.0</span>;
+            <span class="bracket">}</span>
+        <span class="bracket">}</span>
+
+        <span class="comment">//Erfüllung des Interface-Vertrags: Eigene Implementierung von slowDown()</span>
+        <span class="keyword">void</span> <span class="function">slowDown</span>() <span class="keyword">override</span>
+       <span class="bracket">{</span>
+            <span class="keyword">if</span>(<span class="keyword">this</span>-&gt;velocity &gt; <span class="number">0</span>)
+            <span class="bracket">{</span>
+                velocity = velocity - <span class="number">1.0</span>;
+                <span class="keyword">if</span>(velocity &lt; <span class="number">0</span>)
+                <span class="bracket">{</span>
+                    velocity = <span class="number">0</span>
+                <span class="bracket">}</span>
+            <span class="bracket">}</span>
+        <span class="bracket">}</span>
+
+        <span class="keyword">void</span> <span class="function">setlicensePlate</span>(std::string plate)
+        <span class="bracket">{</span>
+            <span class="keyword">if</span>(plate.<span class="function">length</span>() &gt; <span class="number">9</span>)
+            <span class="bracket">{</span>
+                <span class="keyword">this</span>-&gt;nummernschild = <span class="string">"! "</span> + plate;
+            <span class="bracket">}</span>
+            <span class="keyword">else</span>
+            <span class="bracket">{</span>
+                <span class="keyword">this</span>-&gt;nummernschild = plate;
+            <span class="bracket">}</span>
+        <span class="bracket">}</span>
+
+        <span class="keyword">void</span> <span class="function">printInfo</span>()
+        <span class="bracket">{</span>
+            std::cout &lt;&lt; <span class="string">"----------------------------------------------"</span> &lt;&lt; std::endl;
+            std::cout &lt;&lt; <span class="string">"Auto:\t\t\t"</span> &lt;&lt; <span class="keyword">this</span>-&gt;name &lt;&lt; std::endl;
+            std::cout &lt;&lt; <span class="string">"Farbe:\t\t\t"</span> &lt;&lt; <span class="keyword">this</span>-&gt;farbe &lt;&lt; std::endl;
+            std::cout &lt;&lt; <span class="string">"Baujahr:\t\t"</span> &lt;&lt; <span class="keyword">this</span>-&gt;baujahr &lt;&lt; std::endl;
+            std::cout &lt;&lt; <span class="string">"Geschwindigkeit:\t"</span> &lt;&lt; <span class="keyword">this</span>-&gt;velocity &lt;&lt; std::endl;
+            std::cout &lt;&lt; <span class="string">"Nummernschild:\t\t"</span> &lt;&lt; <span class="keyword">this</span>-&gt;nummernschild &lt;&lt; std::endl;
+        <span class="bracket">}</span>
+<span class="bracket">}</span>;
+
+<span class="comment">//3. Kindklasse Zug implementiert ebenfalls das Interface Steuerbar</span>
+<span class="keyword">class</span> <span class="class">Zug</span> : <span class="keyword">public</span> <span class="class">Steuerbar</span>
+<span class="bracket">{</span>
+    <span class="keyword">private:</span>
+        <span class="comment">//Der Zug hat andere/weniger Variablen als das Auto - völlig unabhängig</span>
+        std::string name;
+        std::string farbe;
+        <span class="keyword">int</span> baujahr;
+        <span class="keyword">double</span> velocity;
+
+    <span class="keyword">public:</span>
+        <span class="comment">//Konstruktor: Initialisiert alle zuggemäßen Variablen</span>
+        <span class="function">Zug</span>(std::string name, std::string farbe, <span class="keyword">int</span> baujahr, <span class="keyword">double</span> velocity = <span class="number">0</span>) 
+        <span class="bracket">{</span>
+            <span class="keyword">this</span>-&gt;name = name;
+            <span class="keyword">this</span>-&gt;farbe = farbe;
+            <span class="keyword">this</span>-&gt;baujahr = baujahr;
+            <span class="keyword">this</span>-&gt;velocity = velocity;
+        <span class="bracket">}</span>
+
+        <span class="comment">//Erfüllung des Interface-Vertrags: Eigene Implementierung für den Zug (+0.2)</span>
+        <span class="keyword">void</span> <span class="function">accelerate</span>() <span class="keyword">override</span>
+        <span class="bracket">{</span>
+            <span class="keyword">if</span>(<span class="keyword">this</span>-&gt;velocity &lt; <span class="number">300</span>)
+            <span class="bracket">{</span>
+                velocity = velocity + <span class="number">0.2</span>;
+            <span class="bracket">}</span>
+        <span class="bracket">}</span>
+
+        <span class="comment">//Erfüllung des Interface-Vertrags: Eigene Implementierung für den Zug (-0.1)</span>
+        <span class="keyword">void</span> <span class="function">slowDown</span>() <span class="keyword">override</span>
+        <span class="bracket">{</span>
+            <span class="keyword">if</span>(<span class="keyword">this</span>-&gt;velocity &gt; <span class="number">0</span>)
+            <span class="bracket">{</span>
+                velocity = velocity - <span class="number">0.1</span>;
+                <span class="keyword">if</span>(velocity &lt; <span class="number">0</span>)
+                <span class="bracket">{</span>
+                    velocity = <span class="number">0</span>
+                <span class="bracket">}</span>
+            <span class="bracket">}</span>
+        <span class="bracket">}</span>
+
+        <span class="keyword">void</span> <span class="function">printInfo</span>()
+        <span class="bracket">{</span>
+            std::cout &lt;&lt; <span class="string">"----------------------------------------------"</span> &lt;&lt; std::endl;
+            std::cout &lt;&lt; <span class="string">"Zug:\t\t\t"</span> &lt;&lt; <span class="keyword">this</span>-&gt;name &lt;&lt; std::endl;
+            std::cout &lt;&lt; <span class="string">"Farbe:\t\t\t"</span> &lt;&lt; <span class="keyword">this</span>-&gt;farbe &lt;&lt; std::endl;
+            std::cout &lt;&lt; <span class="string">"Baujahr:\t\t"</span> &lt;&lt; <span class="keyword">this</span>-&gt;baujahr &lt;&lt; std::endl;
+            std::cout &lt;&lt; <span class="string">"Geschwindigkeit:\t"</span> &lt;&lt; <span class="keyword">this</span>-&gt;velocity &lt;&lt; std::endl;
+        <span class="bracket">}</span>
+<span class="bracket">}</span>;
+
+<span class="comment">//4. Globale Funktion, die die Stärke des Interfaces zeigt (Entkopplung)</span>
+<span class="comment">//Sie akzeptiert ALLES, was das Interface "Steuerbar" benutzt - egal ob Auto oder Zug.</span>
+<span class="keyword">void</span> <span class="function">testModus</span>(<span class="class">Steuerbar</span>* fahrzeug)
+<span class="bracket">{</span>
+    fahrzeug-&gt;<span class="function">accelerate()</span>;
+    fahrzeug-&gt;<span class="function">accelerate()</span>;
+    fahrzeug-&gt;<span class="function">slowDown()</span>;
+<span class="bracket">}</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="comment">//Ein Objekt des Interfaces zu erstellen ist verboten:</span>
+    <span class="comment">//Steuerbar* s = new Steuerbar(); // Erzeugt einen Compiler-Fehler!</span>
+
+    <span class="class">Auto</span>* a1 = <span class="keyword">new</span> <span class="class">Auto</span>(<span class="string">"Audi a4"</span>, <span class="string">"schwarz"</span>, <span class="number">2020</span>);
+    <span class="class">Zug</span>* t1 = <span class="keyword">new</span> <span class="class">Zug</span>(<span class="string">"RE 20"</span>, <span class="string">"rot"</span>, <span class="number">2006</span>);
+
+    a1-&gt;<span class="function">setlicensePlate</span>(<span class="string">"HH GT 123"</span>);
+    a1-&gt;<span class="function">printInfo</span>();
+    
+    <span class="comment">//Nutzung über das Interface</span>
+    <span class="function">testModus</span>(a1); 
+    <span class="function">testModus</span>(t1);
+
+    a1-&gt;<span class="function">printInfo</span>();
+    t1-&gt;<span class="function">printInfo</span>();
+
+    <span class="keyword">delete</span> a1;
+    <span class="keyword">delete</span> t1;
+
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+
+
+
+
+
 
 
 
@@ -1114,7 +1299,7 @@ g++ main.cpp Spieler.cpp -o main
 
     <a href="index.html" class="back-button">&#8592; Zurück</a>
     <footer class="site-footer">
-        Autor: Erik Nürnberger - Datum: 07.09.2026
+        Autor: Erik Nürnberger - Datum: 21.10.2026
     </footer>
 
     <script>

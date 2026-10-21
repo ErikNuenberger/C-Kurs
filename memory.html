@@ -490,11 +490,11 @@
 
                 <h2>std::unique_ptr</h2>
                 <p>Ein unique_ptr besitzt eine Ressurce exklusiv. Es darf niemals ein zweiter Zeiger auf den selben Speicher existieren. Man kann einen unique_ptr nicht kopieren, sondern nur den Besitz mit std::move() an einen anderen unique_ptr übergeben. Dabei wird der alte Zeiger genullt und der neue Zeiger übernimmt die Verantwortung für den Speicher.</p>
-                <p>Diese Zeile initialisiert einen std::unique_ptr<int> direkt über seinen Konstruktor (ohne Zuweisungsoperator). Dabei wird dynamisch ein int mit dem Wert 5 auf dem Heap allokiert. Der Smart Pointer übernimmt die exklusive Eigentümerschaft für diesen Speicherbereich und garantiert, dass dieser automatisch freigegeben wird, sobald der Pointer seinen Gültigkeitsbereich (Scope) verlässt:</p>
+                <p>Diese Zeile initialisiert einen std::unique_ptr&lt;int&gt; direkt über seinen Konstruktor (ohne Zuweisungsoperator). Dabei wird dynamisch ein int mit dem Wert 5 auf dem Heap allokiert. Der Smart Pointer übernimmt die exklusive Eigentümerschaft für diesen Speicherbereich und garantiert, dass dieser automatisch freigegeben wird, sobald der Pointer seinen Gültigkeitsbereich (Scope) verlässt:</p>
 
 <pre class="code-block">
 <span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
-<span class="include">#include</span> <span class="prepr">&lt;memory&gt;</span>
+<span class="include">#include</span> <span class="prepr">&lt;memory&gt;</span> <span class="comment">//Memory Management Bibliothek aus der C++ Standardbibliothek</span>
 
 <span class="keyword">int</span> <span class="function">main</span>()
 <span class="bracket">{</span>
@@ -542,6 +542,14 @@
 <span class="bracket">}</span>
 </pre>
 
+                <p>es gibt Verschiedene Methoden, die man auf unique_ptr anwenden kann:</p>
+                <ul>
+                    <li>get(): Gibt den internen Rohzeiger (raw pointer) zurück.</li>
+                    <li>release(): Gibt den Besitz am Objekt auf, ohne den Speicher zu löschen, und gibt den Rohzeiger zurück.</li>
+                    <li>reset(p): Löscht das aktuell verwaltete Objekt und übernimmt optional einen neuen Zeiger p.</li>
+                    <li>swap(x): Tauscht den Inhalt mit einem anderen unique_ptr x.</li>
+                </ul>
+
                 <p>so kann man unique_ptr verwenden:</p>
 
 <pre class="code-block">
@@ -573,7 +581,7 @@
 <span class="bracket">}</span>
 </pre>
 
-                <p>Wenn man bereits einen normalen int im Code hat und einen unique_ptr darauf verweisen lassen willst, muss man extrem aufpassen. Da ein unique_ptr am Ende seines Lebensdauer versucht, den Speicher mit delete freizugeben, stürzt das Programm ab, wenn der int auf dem Stack liegt (Stack-Variablen dürfen nicht einfach so gelöscht werden). Man muss dem unique_ptr daher einen Custom Deleter (einen leeren Zerstörer) mitgeben:</p>
+                <p>Wenn man bereits einen normalen int im Code hat und einen unique_ptr darauf verweisen lassen will, muss man extrem aufpassen. Da ein unique_ptr am Ende seines Lebensdauer versucht, den Speicher mit delete freizugeben, stürzt das Programm ab, da der normale int auf dem Stack liegt (Stack-Variablen dürfen nicht einfach so gelöscht werden). Man muss dem unique_ptr daher einen Custom Deleter (eine leere Löschfunktion) mitgeben:</p>
 
 <pre class="code-block">
 <span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
@@ -603,7 +611,71 @@
     <span class="keyword">return</span> <span class="number">0</span>;
 <span class="bracket">}</span>
 </pre>
+                <p>Man kann also bei std::unique_ptr einen eigenen Custom Deleter erstellen. In der Praxis (besonders bei der Arbeit mit alten C-Bibliotheken oder Betriebssystem-APIs) sind eigene Deleter extrem wichtig. Viele Legacy-Bibliotheken liefern rohe Zeiger zurück, die nicht mit delete, sondern mit einer speziellen C-Funktion freigegeben werden müssen. Hier ein Beispiel:</p>
 
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+<span class="include">#include</span> <span class="prepr">&lt;memory&gt;</span>
+<span class="include">#include</span> <span class="prepr">&lt;cstdio&gt;</span> <span class="comment">//ist die C++-Version des klassischen C-Headers &lt;stdio.h&gt; aus der C++ Standardbibliothek, für fopen, fclose, fputs</span>
+
+<span class="comment">//eigene Deleter-Funktion, die nur die Datei schließt, aber nichts tut</span>
+<span class="keyword">void</span> <span class="function">closeFile</span>(std::<span class="class">FILE</span>* fp) 
+<span class="bracket">{</span>
+    <span class="keyword">if</span>(fp)
+    <span class="bracket">{</span>
+        std::<span class="function">fclose</span>(fp);
+        std::cout &lt;&lt; <span class="string">"Datei erfolgreich geschlossen!\n"</span>;
+    <span class="bracket">}</span>
+<span class="bracket">}</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="comment">//1. Datei manuell öffnen (zum lesen (read -&gt; r)) (liefert einen nackten C-Pointer)</span>
+    std::<span class="class">FILE</span>* file = std::<span class="function">fopen</span>(<span class="string">"data.csv"</span>, <span class="string">"r"</span>);
+    <span class="keyword">if</span>(file)
+    <span class="bracket">{</span>
+        std::cout &lt;&lt; <span class="string">"Datei geoeffnet.\n"</span>;
+        std::unique_ptr&lt;std::<span class="class">FILE</span>, <span class="keyword">void</span>(*)(std::<span class="class">FILE</span>*)&gt; readCSVFile(file, closeFile);
+            
+       <span class="comment">//Datei nutzen...</span>
+            
+        <span class="comment">//Am Ende dieses Blocks (Scope) löscht sich readCSVFile und ruft closeFile auf, KEIN manuelles closeFile(file) mehr nötig!</span>
+    <span class="bracket">}</span>
+    <span class="keyword">else</span>
+    <span class="bracket">{</span>
+        std::cout &lt;&lt; <span class="string">"Datei konnte nicht geoeffnet werden.\n"</span>;
+    <span class="bracket">}</span>
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+                <p>Dieses Code-Beispiel ist ein perfektes Paradebeispiel für RAII (Resource Acquisition Is Initialization), weil es die Lebensdauer einer Systemressource direkt an die Lebensdauer eines Stack-Objekts koppelt. Wenn ein Fehler auftritt, vergisst man bei rohen Zeigern schnell das fclose(). Der std::unique_ptr übernimmt das automatisch - selbst wenn dazwischen eine Exception geworfen wird. Die etwas modernere Version hierzu sieht so aus:</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+<span class="include">#include</span> <span class="prepr">&lt;memory&gt;</span>
+<span class="include">#include</span> <span class="prepr">&lt;cstdio&gt;</span> <span class="comment">//Für fopen, fclose, fputs</span>
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="comment">//Syntax ab C++11 (unter Verwendung von Funktionszeigern)</span>
+    <span class="comment">//'fclose' als Deleter-Typ und als Argument übergeben</span>
+    std::unique_ptr&lt;<span class="class">FILE</span>, <span class="function">decltype</span>(&<span class="function">fclose</span>)&gt; file_ptr(std::<span class="function">fopen</span>(<span class="">"data.csv"</span>, <span class="string">"w"</span>), std::<span class="function">fclose</span>);
+
+    <span class="keyword">if</span>(!file_ptr)
+    <span class="bracket">{</span>
+        std::cerr &lt;&lt; <span class="string">"Datei konnte nicht geoeffnet werden!\n"</span>;
+        <span class="keyword">return</span> <span class="number">1</span>;
+    <span class="bracket">}</span>
+
+    <span class="comment">//Zugriff auf den rohen Zeiger erfolgt ganz normal ueber .get()</span>
+    std::<span class="function">fputs</span>(<span class="string">"Hallo, Welt\n"</span>, file_ptr.<span class="function">get</span>());
+
+    std::cout &lt;&lt; <span class="string">"Datei erfolgreich beschrieben.\n"</span>;
+    <span class="comment">//Hier verlaesst 'file_ptr' den Scope.</span>
+    <span class="comment">//'fclose' wird AUTOMATISCH aufgerufen, die Ressource ist sicher geschlossen!</span>
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
                 <h2>std::shared_ptr</h2>
                 <p>Ein shared_ptr erlaubt es, dass mehrere Zeiger gleichzeitig auf dieselbe Ressource verweisen. Intern zählt er mit, wie viele shared_ptr gerade auf diesen Speicher zeigen (Referenzzähler). Erst wenn der allerletzte shared_ptr gelöscht wird, wird auch der Speicher freigegeben.</p>
 
@@ -717,7 +789,7 @@
 <span class="bracket">}</span>
 </pre>
 
-                <h2>Smartpointer Methoden</h2>
+                <h2>Smartpointer Methoden (allgemein)</h2>
                 <ul>
                     <li>.get() - liefert den verpackten rohen Zeiger zurück</li>
                     <li>Operator: * - Dereferenzierungs-Operator funktioniert wie .get()</li>
@@ -739,7 +811,7 @@
 
      <a href="index.html" class="back-button">&#8592; Zurück</a>
      <footer class="site-footer">
-        Autor: Erik Nürnberger - Datum: 07.09.2026
+        Autor: Erik Nürnberger - Datum: 21.10.2026
     </footer>
 
     <script>
