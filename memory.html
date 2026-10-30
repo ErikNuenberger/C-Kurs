@@ -659,7 +659,7 @@
 <span class="bracket">{</span>
     <span class="comment">//Syntax ab C++11 (unter Verwendung von Funktionszeigern)</span>
     <span class="comment">//'fclose' als Deleter-Typ und als Argument übergeben</span>
-    std::unique_ptr&lt;<span class="class">FILE</span>, <span class="function">decltype</span>(&<span class="function">fclose</span>)&gt; file_ptr(std::<span class="function">fopen</span>(<span class="">"data.csv"</span>, <span class="string">"w"</span>), std::<span class="function">fclose</span>);
+    std::unique_ptr&lt;<span class="class">FILE</span>, <span class="function">decltype</span>(&<span class="function">fclose</span>)&gt; file_ptr(std::<span class="function">fopen</span>(<span class="string">"data.csv"</span>, <span class="string">"w"</span>), std::<span class="function">fclose</span>());
 
     <span class="keyword">if</span>(!file_ptr)
     <span class="bracket">{</span>

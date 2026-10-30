@@ -78,6 +78,10 @@
                 Static
             </a>
 
+            <a href="#datatype" class="sidebar-item">
+                abstrakte Datentypen (ADT)
+            </a>
+
             <a href="#template" class="sidebar-item">
                 Templates
             </a>
@@ -957,7 +961,7 @@ g++ main.cpp Spieler.cpp -o main
         <span class="bracket">}</span>
 
         <span class="comment">//Virtueller Destruktor ist zwingend notwendig, wenn man Objekte über "delete" löscht!</span>
-        <span class="keyword">virtual</span> ~<span class="function">Fahrzeug</span>() = <span class="keyword">default</span>;
+        <span class="keyword">virtual</span> <span class="function">~Fahrzeug</span>() = <span class="keyword">default</span>;
 
         <span class="comment">//Rein virtuelle Methoden (pure virtual) -&gt; Machen die Klasse abstrakt</span>
         <span class="keyword">virtual void</span> <span class="function">accelerate</span>() = <span class="number">0</span>;
@@ -1109,7 +1113,7 @@ g++ main.cpp Spieler.cpp -o main
 <span class="bracket">{</span>
     <span class="keyword">public:</span>
         <span class="comment">//Ein virtueller Destruktor ist auch im Interface zwingend notwendig!</span>
-        <span class="keyword">virtual</span> ~<span class="function">Steuerbar</span>() = <span class="keyword">default</span>;
+        <span class="keyword">virtual</span> <span class="function">~Steuerbar</span>() = <span class="keyword">default</span>;
 
         <span class="comment">//Rein virtuelle Methoden -> Jedes "steuerbare" Objekt muss diese Funktionen anbieten</span>
         <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="function">accelerate</span>() = <span class="number">0</span>;
@@ -1239,9 +1243,9 @@ g++ main.cpp Spieler.cpp -o main
 <span class="comment">//Sie akzeptiert ALLES, was das Interface "Steuerbar" benutzt - egal ob Auto oder Zug.</span>
 <span class="keyword">void</span> <span class="function">testModus</span>(<span class="class">Steuerbar</span>* fahrzeug)
 <span class="bracket">{</span>
-    fahrzeug-&gt;<span class="function">accelerate()</span>;
-    fahrzeug-&gt;<span class="function">accelerate()</span>;
-    fahrzeug-&gt;<span class="function">slowDown()</span>;
+    fahrzeug-&gt;<span class="function">accelerate</span>();
+    fahrzeug-&gt;<span class="function">accelerate</span>();
+    fahrzeug-&gt;<span class="function">slowDown</span>();
 <span class="bracket">}</span>
 
 <span class="keyword">int</span> <span class="function">main</span>()
@@ -1269,18 +1273,111 @@ g++ main.cpp Spieler.cpp -o main
 <span class="bracket">}</span>
 </pre>
 
-
-
-
-
-
-
-
-
         </section>
             
         <section class="section" id="static">
             <h1>Static</h1>
+            <p>Das Schlüsselwort static wird in C++ auf Attribute und Methoden von Klassen angewendet, um diese vom konkreten Objekt (der Instanz) unabhängig zu machen. Anstatt dass jedes Objekt seine eigene Kopie eines Attributs besitzt, existiert ein statisches Attribut nur ein einziges Mal im Speicher. Alle Objekte dieser Klasse teilen sich dieses gemeinsame Attribut sowie statische Methoden. Ein typischer Anwendungsfall ist beispielsweise ein globaler Zähler für alle existierenden Objekte einer Klasse. Hier mal ein Beispiel: </p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="keyword">class</span> <span class="class">Point</span>
+<span class="bracket">{</span>
+    <span class="keyword">public:</span>
+        <span class="comment">//Deklaration der statischen Variable innerhalb der Klasse</span>
+        <span class="keyword">static</span> <span class="keyword">int</span> amount;
+
+        <span class="comment">//Statische Methode, da sie nur auf die statische Variable zugreift</span>
+        <span class="keyword">static</span> <span class="keyword">int</span> <span class="function">getAmount</span>()
+        <span class="bracket">{</span>
+            <span class="keyword">return</span> amount; 
+        <span class="bracket">}</span>
+
+        <span class="function">Point</span>()
+        <span class="bracket">{</span>
+            <span class="comment">//Erhöht die statische Variable bei jedem Konstruktoraufruf</span>
+            amount++; 
+        <span class="bracket">}</span>
+<span class="bracket">}</span>;
+
+<span class="comment">//WICHTIG: Definition und Initialisierung der statischen Variable außerhalb der Klasse</span>
+<span class="keyword">int</span> <span class="class">Point</span>::amount = <span class="number">0</span>;
+
+<span class="keyword">int</span> <span class="function">main</span>()
+<span class="bracket">{</span>
+    <span class="class">Point</span>* p1 = <span class="keyword">new</span> <span class="class">Point</span>();
+    <span class="class">Point</span>* p2 = <span class="keyword">new</span> <span class="class">Point</span>();
+
+    <span class="comment">//Ausgabe von amount über ein Objekt (gibt 2 aus)</span>
+    std::cout &lt;&lt; <span class="string">"Amount ueber p1: "</span> &lt;&lt; p1-&gt;<span class="function">getAmount</span>() &lt;&lt; std::endl;
+    
+    <span class="comment">//Da getAmount() statisch ist, funktioniert der Aufruf auch direkt über die Klasse:</span>
+    std::cout &lt;&lt; <span class="string">"Amount ueber Klasse: "</span> &lt;&lt; <span class="class">Point</span>::<span class="function">getAmount</span>() &lt;&lt; std::endl;
+
+    <span class="keyword">delete</span> p1;
+    <span class="keyword">delete</span> p2;
+
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+
+        </section>
+
+        <section class="section" id="datatype">
+            <h1>Abstrakte Datentypen (ADT)</h1> 
+            <p>Ein abstrakter Datentyp ist eine logische Einheit aus Daten und den darauf anwendbaren Operationen. Bei einem ADT steht im Vordergrund, was die Daten repräsentieren und welche Wirkung die Operationen haben (Semantik). Wie die Daten im Hintergrund im Speicher organisiert oder wie die Operationen konkret effizient implementiert werden, spielt auf dieser Abstraktionsebene noch keine Rolle. Das wird erst bei der tatsächlichen Umsetzung (dem konkreten Datentyp) wichtig.</p>
+
+            <p>In C++ lassen sich ADTs hervorragend über abstrakte Klassen mit rein virtuellen Funktionen (Schnittstellen/Interfaces) abbilden. Während die C++-Standardbibliothek (STL) bereits fertige Implementierungen für viele ADTs mitbringt, bietet das eigene Implementieren unschätzbare Vorteile: Man verstehst die Algorithmen dahinter und kann den Datentyp exakt an spezifische Anforderungen oder Performance-Bedürfnisse anpassen. Drei der wichtigsten abstrakten Datentypen, sind der Stack, die Queue und das Dictionary.</p>
+
+            <h2>Stack</h2> 
+                <p>Ein Stack (Stapel- oder Kellerspeicher) arbeitet nach dem LIFO-Prinzip (Last-In-Fi. Das bedeutet: Das Element, das zuletzt zum Stack hinzugefügt wurde, muss auch als erstes wieder entnommen werden. Man kann sich den Stack wie einen Stapel Teller vorstellen, von dem man immer den obersten Teller entnimmt und neue Teller nur oben auflegt.</p>
+
+                <h3>Die Operationen des Stacks</h3>
+                <p>Um die Semantik des abstrakten Datentyps Stack zu definieren, werden folgende Kernoperationen festgelegt:</p>
+                <ul>
+                    <li>push(element): Legt ein neues Element oben auf den Stapel.</li>
+                    <li>pop(): Entfernt das oberste Element vom Stapel.</li>
+                    <li>top(): Gibt das oberste Element zurück, ohne es zu entfernen.</li>
+                    <li>isEmpty(): Prüft, ob der Stapel leer ist.</li>
+                    <li>size(): Gibt die Anzahl der aktuell gespeicherten Elemente zurück.</li>
+                </ul> 
+
+                <p>Um das Prinzip der Abstraktion konsequent umzusetzen, arbeitet dieser Stack nicht direkt mit Standard-Datentypen, sondern mit einem abstrakten Datenelement namens Item. Was genau dieses Item ist (in diesem Fall eine einfache Ganzzahl), spielt für die Funktionsweise des Stacks keine Rolle. Daraus ergibt sich die abstrakte Basisklasse als Interface in der Datei stack.hpp:</p> 
+
+<pre class="code-block">
+<span class="include">#ifndef</span> STACK_HPP
+<span class="include">#define</span> STACK_HPP
+
+<span class="comment">//Definition des Datenelements (Das "Wie")</span>
+<span class="comment">//Für dieses Beispiel als Integer definiert, könnte aber jederzeit ausgetauscht werden.</span>
+<span class="keyword">using</span> Item = <span class="keyword">int</span>;
+
+<span class="keyword">class</span> <span class="class">stack</span>
+<span class="bracket">{</span>
+    <span class="keyword">public:</span>
+        <span class="comment">//Ein virtueller Destruktor ist zwingend notwendig für Interfaces</span>
+        <span class="keyword">virtual</span> <span class="function">~stack</span>() = <span class="keyword">default</span>;
+
+        <span class="comment">//Modifizierende Operationen (Das "Was")</span>
+        <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="function">push</span>(Item e) = <span class="number">0</span>;
+        <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="function">pop</span>() = <span class="number">0</span>;
+
+        <span class="comment">//Reine Lese-Operationen (daher const)</span>
+        <span class="keyword">virtual</span> Item <span class="function">top</span>() <span class="keyword">const</span> = <span class="number">0</span>;
+        <span class="keyword">virtual</span> <span class="keyword">bool</span> <span class="function">isEmpty</span>() <span class="keyword">const</span> = <span class="number">0</span>;
+        <span class="keyword">virtual</span> <span class="keyword">int</span> <span class="function">size</span>() <span class="keyword">const</span> = <span class="number">0</span>;
+<span class="bracket">}</span>;
+<span class="include">#endif</span>
+</pre>
+
+
+
+
+
+
+
+
         </section>
 
         <section class="section" id="template">
