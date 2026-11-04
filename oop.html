@@ -1351,7 +1351,7 @@ g++ main.cpp Spieler.cpp -o main
 
 <span class="comment">//Definition des Datenelements (Das "Wie")</span>
 <span class="comment">//Für dieses Beispiel als Integer definiert, könnte aber jederzeit ausgetauscht werden.</span>
-<span class="keyword">using</span> Item = <span class="keyword">int</span>;
+<span class="keyword">using</span> <span class="class">Item</span> = <span class="keyword">int</span>;
 
 <span class="keyword">class</span> <span class="class">stack</span>
 <span class="bracket">{</span>
@@ -1360,22 +1360,187 @@ g++ main.cpp Spieler.cpp -o main
         <span class="keyword">virtual</span> <span class="function">~stack</span>() = <span class="keyword">default</span>;
 
         <span class="comment">//Modifizierende Operationen (Das "Was")</span>
-        <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="function">push</span>(Item e) = <span class="number">0</span>;
+        <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="function">push</span>(<span class="class">Item</span> e) = <span class="number">0</span>;
         <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="function">pop</span>() = <span class="number">0</span>;
 
         <span class="comment">//Reine Lese-Operationen (daher const)</span>
-        <span class="keyword">virtual</span> Item <span class="function">top</span>() <span class="keyword">const</span> = <span class="number">0</span>;
+        <span class="keyword">virtual</span> <span class="class">Item</span> <span class="function">top</span>() <span class="keyword">const</span> = <span class="number">0</span>;
         <span class="keyword">virtual</span> <span class="keyword">bool</span> <span class="function">isEmpty</span>() <span class="keyword">const</span> = <span class="number">0</span>;
         <span class="keyword">virtual</span> <span class="keyword">int</span> <span class="function">size</span>() <span class="keyword">const</span> = <span class="number">0</span>;
 <span class="bracket">}</span>;
 <span class="include">#endif</span>
 </pre>
 
+            <p>Nun soll eine Klasse myStack vom Interface erbben und den konkreten Datentyp für stack implementieren. Hier wird die myStack.hpp-Datei gezeigt:</p>
 
+<pre class="code-block">
+<span class="include">#ifndef</span> MYSTACK_HPP
+<span class="include">#define</span> MYSTACK_HPP
 
+<span class="include">#include</span> <span class="prepr">"stack.hpp"</span>
 
+<span class="keyword">class</span> <span class="class">myStack</span> : <span class="keyword">public</span> <span class="class">stack</span>
+<span class="bracket">{</span>
+    <span class="keyword">private:</span>
+        <span class="class">Item</span>* data; <span class="comment">//Pointer auf das dynamische Array</span>
+        <span class="keyword">int</span> capacity; <span class="comment">//Maximale Kapazität des Arrays</span>
+        <span class="keyword">int</span> currentSize; <span class="comment">//Aktuelle Anzahl der Elemente im Stack</span>
 
+        <span class="keyword">void</span> <span class="function">reserve</span>(<span class="keyword">int</span> newCapacity); <span class="comment">//Hilfsmethode zum Vergrößern des Speichers</span>
 
+    <span class="keyword">public:</span>
+        <span class="function">myStack</span>(); <span class="comment">//Konstruktor</span>
+        <span class="keyword">virtual</span> <span class="function">~myStack</span>() <span class="keyword">override</span>; <span class="comment">//Destruktor (wichtig: override!)</span>
+
+        <span class="comment">//Implementierung der Interface-Methoden</span>
+        <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="function">push</span>(<span class="class">Item</span> e) <span class="keyword">override</span>;
+        <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="function">pop</span>() <span class="keyword">override</span>;
+        
+        <span class="keyword">virtual</span> <span class="class">Item</span> <span class="function">top</span>() <span class="keyword">const</span> <span class="keyword">override</span>;
+        <span class="keyword">virtual</span> <span class="keyword">bool</span> <span class="function">isEmpty</span>() <span class="keyword">const</span> <span class="keyword">override</span>;
+        <span class="keyword">virtual</span> <span class="keyword">int</span> <span class="function">size</span>() <span class="keyword">const</span> <span class="keyword">override</span>;
+<span class="bracket">}</span>;
+<span class="include">#endif</span>
+</pre>
+
+            <p>Die eingentliche Definition der Methoden findet in der myStack.cpp-Datei statt:</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">"myStack.hpp"</span>
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+
+<span class="comment">//Konstruktor: Startet mit einer Standardkapazität von 4 Elementen</span>
+<span class="class">myStack</span>::<span class="function">myStack</span>()
+<span class="bracket">{</span>
+    <span class="keyword">this</span>-&gt;data = <span class="keyword">new</span> <span class="class">Item</span>[<span class="number">4</span>];
+    <span class="keyword">this</span>-&gt;capacity = <span class="number">4</span>;
+    <span class="keyword">this</span>-&gt;currentSize = <span class="number">0</span>;
+<span class="bracket">}</span>
+
+<span class="comment">//Destruktor: Gibt den dynamisch reservierten Speicher wieder frei</span>
+<span class="class">myStack</span>::<span class="function">~myStack</span>() 
+<span class="bracket">{</span>
+    <span class="keyword">delete</span>[] data;
+<span class="bracket">}</span>
+
+<span class="comment">//Hilfsfunktion: Vergrößert das interne Array, wenn es voll ist</span>
+<span class="keyword">void</span> <span class="class">myStack</span>::<span class="function">reserve</span>(<span class="keyword">int</span> newCapacity) 
+<span class="bracket">{</span>
+    <span class="class">Item</span>* newData = <span class="keyword">new</span> <span class="class">Item</span>[newCapacity];
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; currentSize; i++)
+    <span class="bracket">{</span>
+        newData[i] = data[i];
+    <span class="bracket">}</span>
+    <span class="keyword">delete</span>[] data;
+    data = newData;
+    capacity = newCapacity;
+<span class="bracket">}</span>
+
+<span class="comment">//Element oben auf den Stapel legen</span>
+<span class="keyword">void</span> <span class="class">myStack</span>::<span class="function">push</span>(<span class="class">Item</span> e) 
+<span class="bracket">{</span>
+    <span class="keyword">if</span>(currentSize == capacity)
+    <span class="bracket">{</span>
+        <span class="function">reserve</span>(capacity * <span class="number">2</span>); <span class="comment">//Kapazität verdoppeln</span>
+    <span class="bracket">}</span>
+    data[currentSize] = e;
+    currentSize++;
+<span class="bracket">}</span>
+
+<span class="comment">//Oberstes Element entfernen</span>
+<span class="keyword">void</span> <span class="class">myStack</span>::<span class="function">pop</span>() 
+<span class="bracket">{</span>
+    <span class="keyword">if</span>(<span class="function">isEmpty</span>())
+    <span class="bracket">{</span>
+        std::cout &lt;&lt; <span class="string">"Stack-Underflow: Pop auf leerem Stack nicht möglich."</span> &lt;&lt; std::endl;
+    <span class="bracket">}</span>
+    <span class="keyword">else</span>
+    <span class="bracket">{</span>
+        currentSize--;
+    <span class="bracket">}</span>
+<span class="bracket">}</span>
+
+<span class="comment">//Oberstes Element zurückgeben</span>
+<span class="class">Item</span> <span class="class">myStack</span>::<span class="function">top</span>() <span class="keyword">const</span> 
+<span class="bracket">{</span>
+    <span class="keyword">if</span>(<span class="function">isEmpty</span>())
+    <span class="bracket">{</span>
+        std::cout &lt;&lt; <span class="string">"Stack ist leer: Zugriff auf top nicht möglich."</span> &lt;&lt; std::endl;
+        <span class="keyword">return</span> <span class="class">Item</span>();
+    <span class="bracket">}</span>
+    <span class="keyword">else</span>
+    <span class="bracket">{</span>
+        <span class="keyword">return</span> data[currentSize - <span class="number">1</span>];
+    <span class="bracket">}</span>
+<span class="bracket">}</span>
+
+<span class="comment">//Prüfen, ob der Stack leer ist</span>
+<span class="keyword">bool</span> <span class="class">myStack</span>::<span class="function">isEmpty</span>() <span class="keyword">const</span> 
+<span class="bracket">{</span>
+    <span class="keyword">return</span> currentSize == <span class="number">0</span>;
+<span class="bracket">}</span>
+
+<span class="comment">//Aktuelle Anzahl der Elemente zurückgeben</span>
+<span class="keyword">int</span> <span class="class">myStack</span>::<span class="function">size</span>() <span class="keyword">const</span> 
+<span class="bracket">{</span>
+    <span class="keyword">return</span> currentSize;
+<span class="bracket">}</span>
+</pre>
+
+            <p>In der main.cpp-Datei wird nun der Stack verwendet</p>
+
+<pre class="code-block">
+<span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
+<span class="include">#include</span> <span class="prepr">"myStack.hpp"</span>
+
+<span class="keyword">int</span> <span class="function">main</span>() 
+<span class="bracket">{</span>
+    <span class="comment">//Interface stack</span>
+    <span class="class">stack</span>* meinStapel = <span class="keyword">new</span> <span class="function">myStack</span>();
+
+    std::cout &lt;&lt; <span class="string">"--- Stack befuellen ---"</span> &lt;&lt; std::endl;
+    meinStapel-&gt;<span class="function">push</span>(<span class="number">10</span>);
+    meinStapel-&gt;<span class="function">push</span>(<span class="number">10</span>);
+    meinStapel-&gt;<span class="function">push</span>(<span class="number">10</span>);
+
+    std::cout &lt;&lt; <span class="string">"Aktuelle Groesse: "</span> &lt;&lt; meinStapel-&gt;<span class="function">size</span>() &lt;&lt; std::endl; <span class="comment">//Erwartet: 3</span>
+    std::cout &lt;&lt; <span class="string">"Oberstes Element: "</span> &lt;&lt; meinStapel-&gt;<span class="function">top</span>() &lt;&lt; std::endl; <span class="comment">//Erwartet: 30</span>
+
+    std::cout &lt;&lt; <span class="string">"\n--- Elemente nacheinander abbauen (LIFO) ---"</span> &lt;&lt; std::endl;
+    <span class="keyword">while</span>(!meinStapel-&gt;<span class="function">isEmpty</span>())
+    <span class="bracket">{</span>
+        std::cout &lt;&lt; <span class="string">"Entferne: "</span> &lt;&lt; meinStapel-&gt;<span class="function">top</span>() &lt;&lt; std::endl;
+        meinStapel-&gt;<span class="function">pop</span>();
+    <span class="bracket">}</span>
+
+    std::cout &lt;&lt; <span class="string">"Ist der Stack leer?"</span> &lt;&lt; std::endl;
+    <span class="keyword">if</span>(meinStapel-&gt;<span class="function">isEmpty</span>())
+    <span class="bracket">{</span>
+        std::cout &lt;&lt; <span class="string">"ja"</span> &lt;&lt; std::endl;
+    <span class="bracket">}</span>
+    <span class="keyword">else</span>
+    <span class="bracket">{</span>
+        std::cout &lt;&lt; <span class="string">"nein"</span> &lt;&lt; std::endl;
+    <span class="bracket">}</span>
+
+    <span class="comment">//Wichtig: Speicher freigeben!</span>
+    <span class="comment">//Dank des virtuellen Destruktors im Interface wird myStack::~myStack() korrekt aufgerufen.</span>
+    <span class="keyword">delete</span> meinStapel; 
+
+    <span class="keyword">return</span> <span class="number">0</span>;
+<span class="bracket">}</span>
+</pre>
+            <h2>Queue</h2> 
+            <p>Ein weiterer bekannter abstrakter Datentyp ist die Queue (Warteschlange). Bei einer Queue werden die Daten in der Reihenfolge gespeichert, in der sie in die Queue kommen. Das Prinzip nennt man FIFO (First In First Out), also das erste Element, das zur Queue hinzugefügt wird, ist auch das erste Element, das wieder entfernt wird.</p>
+            <h3>Die Operationen der Queue</h3>
+                <p>Um die Semantik des abstrakten Datentyps Queue zu definieren, werden folgende Kernoperationen festgelegt:</p>
+                <ul>
+                    <li>put(element): Füge ein Element der Queue hinzu (am Queueende)</li>
+                    <li>get(): Liefere das vorderste Element der Queue zurück. Queue bleibt unverändert</li>
+                    <li>dequeue(): Vorderstes Element zurückgeben und aus der Queue entfernen.</li>
+                    <li>isEmpty(): Prüft, ob die Queue leer ist.</li>
+                    <li>size(): Gibt die Anzahl der aktuell gespeicherten Elemente zurück.</li>
+                </ul>
 
 
         </section>
@@ -1396,7 +1561,7 @@ g++ main.cpp Spieler.cpp -o main
 
     <a href="index.html" class="back-button">&#8592; Zurück</a>
     <footer class="site-footer">
-        Autor: Erik Nürnberger - Datum: 21.10.2026
+        Autor: Erik Nürnberger - Datum: 04.11.2026
     </footer>
 
     <script>
