@@ -453,12 +453,12 @@ Letter1 = Letter1; <span class="comment">//Letter1 überschreibt sich selbst, da
                 <p>Man sollte globale Variablen nur dann verwenden, wenn man sie wirklich benötigt, ansonsten sollte man Variablen lokal deklarieren.</p>
             
                 <h3>2. Übung</h3>
-                <p>Erstellen Sie eine Variable vom Typ int, mit dem Namen Zahl und weisen sie ihr den Wert 15 zu. Erstellen sie dann eine globale Variable namens Letter, vom Typ char und weisen ihr den Buchstaben 'c' zu. Überschreiben sie den Wert von Zahl mit dem Wert von Letter.</p>
+                <p>Erstellen Sie eine Variable vom Typ int, mit dem Namen Zahl und weisen Sie ihr den Wert 15 zu. Erstellen sie dann eine globale Variable namens Letter, vom Typ char und weisen ihr den Buchstaben 'c' zu. Überschreiben sie den Wert von Zahl mit dem Wert von Letter.</p>
 
 
                 <h2>Uniform Initialization</h2>
                 <p>Uniform Initialization (einheitliche Initialisierung) oder Brace Initialization wurde mit C++11 eingeführt und dient dazu, die historisch chaotischen und fehleranfälligen Wege der Wertevergabe in C++ zu vereinheitlichen.</p>
-                <p>1. Schutz vor Datenverlust (Narrowing Conversions) - Die Klammer-Initialisierung verhindert implizite, unsichere Typkonvertierungen. Wenn Sie versuchen, einen Datentyp mit größerem Wertebereich in einen kleineren zu pressen, bricht der Compiler mit einem Error ab, statt Daten stillschweigend abzuschneiden</p>
+                <p>Schutz vor Datenverlust (Narrowing Conversions) - Die Klammer-Initialisierung verhindert implizite, unsichere Typkonvertierungen. Wenn Sie versuchen, einen Datentyp mit größerem Wertebereich in einen kleineren zu pressen, bricht der Compiler mit einem Error ab, statt Daten stillschweigend abzuschneiden</p>
 
 <pre class="code-block">
 <span class="keyword">int</span> a = <span class="number">5.5</span>; <span class="comment">//C-Style: Kompiliert! Die Nachkommastelle wird abgeschnitten (a wird 5).</span>
