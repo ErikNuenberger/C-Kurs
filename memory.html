@@ -226,6 +226,16 @@
 <span class="bracket">}</span>
 </pre>
 
+            <h3>10. Übung</h3>
+            <p>Variablentausch:</p>
+            <ol>
+                <li>Deklariere in der main-Funktion zwei int-Variablen (zahl1 = 15 und zahl2 = 99).</li>
+                <li>Erstelle zwei Pointer ptr1 und ptr2, die zunächst sicher mit nullptr initialisiert werden.</li>
+                <li>Weise den Pointern anschließend die Speicheradressen von zahl1 und zahl2 zu.</li>
+                <li>Prüfe mit einer if-Abfrage, ob beide Pointer ungleich nullptr sind. Wenn ja, vertausche die Werte von zahl1 und zahl2 ausschließlich über die Dereferenzierung der Pointer.</li>
+                <li>Gib danach beide Variablen sowie deren Speicheradressen auf der Konsole aus, um zu prüfen, ob der Tausch geklappt hat.</li>
+            </ol>
+
             </section>
             
             <section class="section" id="reference">
@@ -312,12 +322,33 @@
 <pre class="code-block">
 <span class="keyword">void</span> <span class="function">berechne</span>()
 <span class="bracket">{</span>
-    <span class="keyword">int*</span> ptr = <span class="keyword">new int</span>(12); <span class="comment">//Speichert einen neuen int im Heap mit dem Wert 12</span>
+    <span class="keyword">int*</span> ptr = <span class="keyword">new int</span>(<span class="number">12</span>); <span class="comment">//Speichert einen neuen int im Heap mit dem Wert 12</span>
     <span class="keyword">delete</span> ptr; <span class="comment">//explizit Löschen</span>
 <span class="bracket">}</span>
 </pre>
 
+                <h3>Übung - Stack</h3>
+                <p>Erstellen Sie ein C++-Programm, das 4 Variablen vom Typ int auf dem Stack anlegt (a = 10, b = 20, c = 30, d = 40).</p>
+                <ol>
+                    <li>Erstellen Sie für jede Variable einen eigenen Pointer (ptr zeigt auf a, ptr2 auf b, ptr3 auf c, ptr4 auf d).</li>
+                    <li>Geben Sie für jede Variable zuerst den Wert und danach (getrennt durch ein Leerzeichen) die Speicheradresse untereinander auf der Konsole aus.</li>
+                    <li>Erstellen Sie eine for-Schleife mit der Zählervariable i, die von 3 bis 0 herunterzählt.</li>
+                    <li>Geben Sie innerhalb der Schleife den Wert über folgende Pointer-Arithmetik aus: std::cout &lt;&lt; *(ptr - i) &lt;&lt; std::endl;</li>
+                </ol>
+                <p>Reflexionsfrage: Analysieren Sie die ausgegebenen Speicheradressen. Warum funktioniert der Zugriff über *(ptr - i) in dieser Reihenfolge?</p>
+                <p>Wichtiger Hinweis: Dieser Code dient nur zur Veranschaulichung des Speicheraufbaus (im Debug-Modus). In der Praxis führt Pointer-Arithmetik über Variablengrenzen hinweg zu Undefined Behavior (undefiniertem Verhalten) und ist nicht Memory-Safe, da der Compiler Variablen im Speicher beliebig anordnen oder wegoptimieren darf.</p>
 
+                <h3>Übung - Heap</h3>
+                <p>Erstellen Sie ein C++-Programm, das 4 dynamische Variablen vom Typ int einzeln auf dem Heap anlegt und ihnen die Werte 10, 20, 30 und 40 zuweist.</p>
+                <ol>
+                    <li>Nutzen Sie dafür 4 Pointer (ptr, ptr2, ptr3, ptr4) und das Schlüsselwort new.</li>
+                    <li>Geben Sie für jede Variable zuerst den Wert (dereferenziert) und danach (getrennt durch ein Leerzeichen) die Speicheradresse untereinander auf der Konsole aus.</li>
+                    <li>Erstellen Sie eine for-Schleife mit der Zählervariable i, die von 0 bis 3 hochzählt.</li>
+                    <li>Versuchen Sie innerhalb der Schleife, die Werte ausgehend vom ersten Pointer über folgende Pointer-Arithmetik auszugeben: std::cout &lt;&lt; *(ptr + i) &lt;&lt; std::endl;</li>
+                    <li>Geben Sie am Ende des Programms den reservierten Speicher wieder sauber mit delete frei.</li>
+                </ol>
+                <p>Reflexionsfrage: Vergleichen Sie die ausgegebenen Speicheradressen mit denen aus der Stack-Übung. Warum liefert die for-Schleife hier nicht die Werte 10, 20, 30, 40, sondern scheinbar zufällige Zahlen (oder stürzt ab)?</p>
+                <p>Wichtiger Hinweis: Auch hier gilt: Pointer-Arithmetik über einzeln allokierte Speicherblöcke hinweg ist Undefined Behavior und nicht Memory-Safe. Wenn Werte auf dem Heap direkt hintereinander liegen sollen, muss ein zusammenhängendes Array (new int[4]) verwendet werden. Hier werden die Werte im Array wieder auf dem Stack abgelegt.</p>
 
 
 
@@ -811,7 +842,7 @@
 
      <a href="index.html" class="back-button">&#8592; Zurück</a>
      <footer class="site-footer">
-        Autor: Erik Nürnberger - Datum: 04.11.2026
+        Autor: Erik Nürnberger - Datum: 14.11.2026
     </footer>
 
     <script>

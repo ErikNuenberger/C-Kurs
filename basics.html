@@ -1344,6 +1344,11 @@ Wert2
 
                 <h3>9. Übung</h3>
                 <p>Erstellen Sie eine Funktion namens printFour(), die eine Zahl (int) als Parameter entgegennimmt und diese vier Mal untereinander ausgibt. Rufen Sie die Funktion in main() zweimal auf, einmal mit dem Wert 5 und einmal mit dem Wert 8.</p>
+                <p>Übungen - Rekursion:</p>
+                <ul>
+                    <li>Schreibe eine rekursive Funktion summe(int n), die alle Zahlen von 1 bis n addiert. Für n = 4 soll das Ergebnis 10 sein (4 + 3 + 2 + 1).</li>
+                    <li>Fakultät: Bei der Berechnung der Fakultät (n!) zerlegt die Funktion das Problem schrittweise in immer kleinere Teilprobleme, bis sie bei 1 ankommt. Die Fakultät einer positiven ganzen Zahl n ist das Produkt aller natürlichen Zahlen von 1 bis n. Beispiel: 4! = 4 * 3 * 2 * 1 = 24. Sonderfall: Die Fakultät von 0 ist mathematisch als 1 definiert.</li>
+                </ul>
                 
 
 
@@ -1417,7 +1422,7 @@ Wert2
         
         std::cout &lt;&lt; <span class="string">"Datei erfolgreich gespeichert!\n"</span>;
     <span class="bracket">}</span>
-    else
+    <span class="keyword">else</span>
     <span class="bracket">{</span>
         std::cout &lt;&lt; <span class="string">"Fehler beim Oeffnen der Datei!\n"</span>;
     <span class="bracket">}</span>
@@ -1460,7 +1465,7 @@ std::ofstream datei(<span class="string">"mein_text.txt"</span>, std::ios::app);
         
         std::cout &lt;&lt; <span class="string">"Datei erfolgreich gelesen!\n"</span>;
     <span class="bracket">}</span>
-    else
+    <span class="keyword">else</span>
     <span class="bracket">{</span>
         std::cout &lt;&lt; <span class="string">"Fehler beim Oeffnen der Datei!\n"</span>;
     <span class="bracket">}</span>
@@ -1516,7 +1521,7 @@ std::ofstream datei(<span class="string">"mein_text.txt"</span>, std::ios::app);
     </div>
     <a href="index.html" class="back-button">&#8592; Zurück</a>
     <footer class="site-footer">
-        Autor: Erik Nürnberger - Datum: 04.11.2026
+        Autor: Erik Nürnberger - Datum: 14.11.2026
     </footer>
 
     <script>
