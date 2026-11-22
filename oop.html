@@ -1328,7 +1328,7 @@ g++ main.cpp Spieler.cpp -o main
             <h1>Abstrakte Datentypen (ADT)</h1> 
             <p>Ein abstrakter Datentyp ist eine logische Einheit aus Daten und den darauf anwendbaren Operationen. Bei einem ADT steht im Vordergrund, was die Daten repräsentieren und welche Wirkung die Operationen haben (Semantik). Wie die Daten im Hintergrund im Speicher organisiert oder wie die Operationen konkret effizient implementiert werden, spielt auf dieser Abstraktionsebene noch keine Rolle. Das wird erst bei der tatsächlichen Umsetzung (dem konkreten Datentyp) wichtig.</p>
 
-            <p>In C++ lassen sich ADTs hervorragend über abstrakte Klassen mit rein virtuellen Funktionen (Schnittstellen/Interfaces) abbilden. Während die C++-Standardbibliothek (STL) bereits fertige Implementierungen für viele ADTs mitbringt, bietet das eigene Implementieren unschätzbare Vorteile: Man verstehst die Algorithmen dahinter und kann den Datentyp exakt an spezifische Anforderungen oder Performance-Bedürfnisse anpassen. Drei der wichtigsten abstrakten Datentypen, sind der Stack, die Queue und das Dictionary.</p>
+            <p>In C++ lassen sich ADTs hervorragend über abstrakte Klassen mit rein virtuellen Funktionen (Schnittstellen/Interfaces) abbilden. Während die C++-Standardbibliothek (STL) bereits fertige Implementierungen für viele ADTs mitbringt, bietet das eigene Implementieren unschätzbare Vorteile: Man verstehst die Algorithmen dahinter und kann den Datentyp exakt an spezifische Anforderungen oder Performance-Bedürfnisse anpassen. Drei der wichtigsten abstrakten Datentypen, sind der Stack, die Queue, die verkettete Liste (linked list) und das Dictionary.</p>
 
             <h2>Stack</h2> 
                 <p>Ein Stack (Stapel- oder Kellerspeicher) arbeitet nach dem LIFO-Prinzip (Last-In-Fi. Das bedeutet: Das Element, das zuletzt zum Stack hinzugefügt wurde, muss auch als erstes wieder entnommen werden. Man kann sich den Stack wie einen Stapel Teller vorstellen, von dem man immer den obersten Teller entnimmt und neue Teller nur oben auflegt.</p>
@@ -1346,18 +1346,18 @@ g++ main.cpp Spieler.cpp -o main
                 <p>Um das Prinzip der Abstraktion konsequent umzusetzen, arbeitet dieser Stack nicht direkt mit Standard-Datentypen, sondern mit einem abstrakten Datenelement namens Item. Was genau dieses Item ist (in diesem Fall eine einfache Ganzzahl), spielt für die Funktionsweise des Stacks keine Rolle. Daraus ergibt sich die abstrakte Basisklasse als Interface in der Datei stack.hpp:</p> 
 
 <pre class="code-block">
-<span class="include">#ifndef</span> STACK_HPP
-<span class="include">#define</span> STACK_HPP
+<span class="include">#ifndef</span> ISTACK_HPP
+<span class="include">#define</span> ISTACK_HPP
 
 <span class="comment">//Definition des Datenelements (Das "Wie")</span>
 <span class="comment">//Für dieses Beispiel als Integer definiert, könnte aber jederzeit ausgetauscht werden.</span>
 <span class="keyword">using</span> <span class="class">Item</span> = <span class="keyword">int</span>;
 
-<span class="keyword">class</span> <span class="class">stack</span>
+<span class="keyword">class</span> <span class="class">IStack</span>
 <span class="bracket">{</span>
     <span class="keyword">public:</span>
         <span class="comment">//Ein virtueller Destruktor ist zwingend notwendig für Interfaces</span>
-        <span class="keyword">virtual</span> <span class="function">~stack</span>() = <span class="keyword">default</span>;
+        <span class="keyword">virtual</span> <span class="function">~IStack</span>() = <span class="keyword">default</span>;
 
         <span class="comment">//Modifizierende Operationen (Das "Was")</span>
         <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="function">push</span>(<span class="class">Item</span> e) = <span class="number">0</span>;
@@ -1371,15 +1371,15 @@ g++ main.cpp Spieler.cpp -o main
 <span class="include">#endif</span>
 </pre>
 
-            <p>Nun soll eine Klasse myStack vom Interface erbben und den konkreten Datentyp für stack implementieren. Hier wird die myStack.hpp-Datei gezeigt:</p>
+            <p>Nun soll eine Klasse CMyStack vom Interface erbben und den konkreten Datentyp für stack implementieren. Hier wird die myStack.hpp-Datei gezeigt:</p>
 
 <pre class="code-block">
-<span class="include">#ifndef</span> MYSTACK_HPP
-<span class="include">#define</span> MYSTACK_HPP
+<span class="include">#ifndef</span> CMYSTACK_HPP
+<span class="include">#define</span> CMYSTACK_HPP
 
 <span class="include">#include</span> <span class="prepr">"stack.hpp"</span>
 
-<span class="keyword">class</span> <span class="class">myStack</span> : <span class="keyword">public</span> <span class="class">stack</span>
+<span class="keyword">class</span> <span class="class">CMyStack</span> : <span class="keyword">public</span> <span class="class">IStack</span>
 <span class="bracket">{</span>
     <span class="keyword">private:</span>
         <span class="class">Item</span>* data; <span class="comment">//Pointer auf das dynamische Array</span>
@@ -1389,8 +1389,8 @@ g++ main.cpp Spieler.cpp -o main
         <span class="keyword">void</span> <span class="function">reserve</span>(<span class="keyword">int</span> newCapacity); <span class="comment">//Hilfsmethode zum Vergrößern des Speichers</span>
 
     <span class="keyword">public:</span>
-        <span class="function">myStack</span>(); <span class="comment">//Konstruktor</span>
-        <span class="keyword">virtual</span> <span class="function">~myStack</span>() <span class="keyword">override</span>; <span class="comment">//Destruktor (wichtig: override!)</span>
+        <span class="function">CMyStack</span>(); <span class="comment">//Konstruktor</span>
+        <span class="keyword">virtual</span> <span class="function">~CMyStack</span>() <span class="keyword">override</span>; <span class="comment">//Destruktor (wichtig: override!)</span>
 
         <span class="comment">//Implementierung der Interface-Methoden</span>
         <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="function">push</span>(<span class="class">Item</span> e) <span class="keyword">override</span>;
@@ -1410,7 +1410,7 @@ g++ main.cpp Spieler.cpp -o main
 <span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
 
 <span class="comment">//Konstruktor: Startet mit einer Standardkapazität von 4 Elementen</span>
-<span class="class">myStack</span>::<span class="function">myStack</span>()
+<span class="class">CMyStack</span>::<span class="function">CMyStack</span>()
 <span class="bracket">{</span>
     <span class="keyword">this</span>-&gt;data = <span class="keyword">new</span> <span class="class">Item</span>[<span class="number">4</span>];
     <span class="keyword">this</span>-&gt;capacity = <span class="number">4</span>;
@@ -1418,13 +1418,13 @@ g++ main.cpp Spieler.cpp -o main
 <span class="bracket">}</span>
 
 <span class="comment">//Destruktor: Gibt den dynamisch reservierten Speicher wieder frei</span>
-<span class="class">myStack</span>::<span class="function">~myStack</span>() 
+<span class="class">CMyStack</span>::<span class="function">~CMyStack</span>() 
 <span class="bracket">{</span>
     <span class="keyword">delete</span>[] data;
 <span class="bracket">}</span>
 
 <span class="comment">//Hilfsfunktion: Vergrößert das interne Array, wenn es voll ist</span>
-<span class="keyword">void</span> <span class="class">myStack</span>::<span class="function">reserve</span>(<span class="keyword">int</span> newCapacity) 
+<span class="keyword">void</span> <span class="class">CMyStack</span>::<span class="function">reserve</span>(<span class="keyword">int</span> newCapacity) 
 <span class="bracket">{</span>
     <span class="class">Item</span>* newData = <span class="keyword">new</span> <span class="class">Item</span>[newCapacity];
     <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; currentSize; i++)
@@ -1437,7 +1437,7 @@ g++ main.cpp Spieler.cpp -o main
 <span class="bracket">}</span>
 
 <span class="comment">//Element oben auf den Stapel legen</span>
-<span class="keyword">void</span> <span class="class">myStack</span>::<span class="function">push</span>(<span class="class">Item</span> e) 
+<span class="keyword">void</span> <span class="class">CMyStack</span>::<span class="function">push</span>(<span class="class">Item</span> e) 
 <span class="bracket">{</span>
     <span class="keyword">if</span>(currentSize == capacity)
     <span class="bracket">{</span>
@@ -1448,7 +1448,7 @@ g++ main.cpp Spieler.cpp -o main
 <span class="bracket">}</span>
 
 <span class="comment">//Oberstes Element entfernen</span>
-<span class="keyword">void</span> <span class="class">myStack</span>::<span class="function">pop</span>() 
+<span class="keyword">void</span> <span class="class">CMyStack</span>::<span class="function">pop</span>() 
 <span class="bracket">{</span>
     <span class="keyword">if</span>(<span class="function">isEmpty</span>())
     <span class="bracket">{</span>
@@ -1461,7 +1461,7 @@ g++ main.cpp Spieler.cpp -o main
 <span class="bracket">}</span>
 
 <span class="comment">//Oberstes Element zurückgeben</span>
-<span class="class">Item</span> <span class="class">myStack</span>::<span class="function">top</span>() <span class="keyword">const</span> 
+<span class="class">Item</span> <span class="class">CMyStack</span>::<span class="function">top</span>() <span class="keyword">const</span> 
 <span class="bracket">{</span>
     <span class="keyword">if</span>(<span class="function">isEmpty</span>())
     <span class="bracket">{</span>
@@ -1475,13 +1475,13 @@ g++ main.cpp Spieler.cpp -o main
 <span class="bracket">}</span>
 
 <span class="comment">//Prüfen, ob der Stack leer ist</span>
-<span class="keyword">bool</span> <span class="class">myStack</span>::<span class="function">isEmpty</span>() <span class="keyword">const</span> 
+<span class="keyword">bool</span> <span class="class">CMyStack</span>::<span class="function">isEmpty</span>() <span class="keyword">const</span> 
 <span class="bracket">{</span>
     <span class="keyword">return</span> currentSize == <span class="number">0</span>;
 <span class="bracket">}</span>
 
 <span class="comment">//Aktuelle Anzahl der Elemente zurückgeben</span>
-<span class="keyword">int</span> <span class="class">myStack</span>::<span class="function">size</span>() <span class="keyword">const</span> 
+<span class="keyword">int</span> <span class="class">CMyStack</span>::<span class="function">size</span>() <span class="keyword">const</span> 
 <span class="bracket">{</span>
     <span class="keyword">return</span> currentSize;
 <span class="bracket">}</span>
@@ -1495,8 +1495,8 @@ g++ main.cpp Spieler.cpp -o main
 
 <span class="keyword">int</span> <span class="function">main</span>() 
 <span class="bracket">{</span>
-    <span class="comment">//Interface stack</span>
-    <span class="class">stack</span>* meinStapel = <span class="keyword">new</span> <span class="class">myStack</span>();
+    <span class="comment">//Interface IStack</span>
+    <span class="class">IStack</span>* meinStapel = <span class="keyword">new</span> <span class="class">CMyStack</span>();
 
     std::cout &lt;&lt; <span class="string">"--- Stack befuellen ---"</span> &lt;&lt; std::endl;
     meinStapel-&gt;<span class="function">push</span>(<span class="number">10</span>);
@@ -1524,7 +1524,7 @@ g++ main.cpp Spieler.cpp -o main
     <span class="bracket">}</span>
 
     <span class="comment">//Wichtig: Speicher freigeben!</span>
-    <span class="comment">//Dank des virtuellen Destruktors im Interface wird myStack::~myStack() korrekt aufgerufen.</span>
+    <span class="comment">//Dank des virtuellen Destruktors im Interface wird CMyStack::~CMyStack() korrekt aufgerufen.</span>
     <span class="keyword">delete</span> meinStapel; 
 
     <span class="keyword">return</span> <span class="number">0</span>;
@@ -1544,15 +1544,15 @@ g++ main.cpp Spieler.cpp -o main
                 <p>hier der Code für das Queue-Interface, in queue.hpp:</p>
 
 <pre class="code-block">
-<span class="include">#ifndef</span> QUEUE_HPP
-<span class="include">#define</span> QUEUE_HPP
+<span class="include">#ifndef</span> IQUEUE_HPP
+<span class="include">#define</span> IQUEUE_HPP
 
 <span class="keyword">using</span> <span class="class">Item</span> = <span class="keyword">int</span>;
 
-<span class="keyword">class</span> <span class="class">queue</span>
+<span class="keyword">class</span> <span class="class">IQueue</span>
 <span class="bracket">{</span>
     <span class="keyword">public:</span>
-        <span class="keyword">virtual</span> <span class="function">~queue</span>() = <span class="keyword">default</span>;
+        <span class="keyword">virtual</span> <span class="function">~IQueue</span>() = <span class="keyword">default</span>;
         <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="function">put</span>(<span class="class">Item</span> e) = <span class="number">0</span>;
         <span class="keyword">virtual</span> <span class="class">Item</span> <span class="function">get</span>() <span class="keyword">const</span> = <span class="number">0</span>;
         <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="function">dequeue</span>() = <span class="number">0</span>;
@@ -1566,12 +1566,12 @@ g++ main.cpp Spieler.cpp -o main
                 <p>die Klasse, die das Interface queue implementiert, ist myQueue.hpp:</p>
 
 <pre class="code-block">
-<span class="include">#ifndef</span> MYQUEUE_HPP
-<span class="include">#define</span> MYQUEUE_HPP
+<span class="include">#ifndef</span> CMYQUEUE_HPP
+<span class="include">#define</span> CMYQUEUE_HPP
 
 <span class="include">#include</span> <span class="prepr">"queue.hpp"</span>
 
-<span class="keyword">class</span> <span class="class">myQueue</span> : <span class="keyword">public</span> <span class="class">queue</span>
+<span class="keyword">class</span> <span class="class">CMyQueue</span> : <span class="keyword">public</span> <span class="class">IQueue</span>
 <span class="bracket">{</span>
     <span class="keyword">private:</span>
         <span class="class">Item</span>* data;
@@ -1579,8 +1579,8 @@ g++ main.cpp Spieler.cpp -o main
         <span class="keyword">int</span> currentSize;
         <span class="keyword">void</span> <span class="function">reserve</span>(<span class="keyword">int</span> newCapacity);
     <span class="keyword">public:</span>
-        <span class="function">myQueue</span>();
-        <span class="keyword">virtual</span> <span class="function">~myQueue</span>() <span class="keyword">override</span>;
+        <span class="function">CMyQueue</span>();
+        <span class="keyword">virtual</span> <span class="function">~CMyQueue</span>() <span class="keyword">override</span>;
         <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="function">put</span>(<span class="class">Item</span> e) <span class="keyword">override</span>;
         <span class="keyword">virtual</span> <span class="class">Item</span> <span class="function">get</span>() <span class="keyword">const</span> <span class="keyword">override</span>;
         <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="function">dequeue</span>() <span class="keyword">override</span>;
@@ -1591,25 +1591,25 @@ g++ main.cpp Spieler.cpp -o main
 <span class="include">#endif</span>
 </pre>
 
-                <p>Die Konkrete implementierung der Methoden von myQueue, findet in myQueue.cpp statt:</p>
+                <p>Die Konkrete implementierung der Methoden von CMyQueue, findet in myQueue.cpp statt:</p>
 
 <pre class="code-block">
 <span class="include">#include</span> <span class="prepr">"myQueue.hpp"</span>
 <span class="include">#include</span> <span class="prepr">&lt;iostream&gt;</span>
 
-<span class="class">myQueue</span>::<span class="function">myQueue</span>()
+<span class="class">CMyQueue</span>::<span class="function">CMyQueue</span>()
 <span class="bracket">{</span>
     <span class="keyword">this</span>-&gt;data = <span class="keyword">new</span> <span class="class">Item</span>[<span class="number">4</span>];
     <span class="keyword">this</span>-&gt;capacity = <span class="number">4</span>;
     <span class="keyword">this</span>-&gt;currentSize = <span class="number">0</span>;
 <span class="bracket">}</span>
 
-<span class="class">myQueue</span>::<span class="function">~myQueue</span>()
+<span class="class">CMyQueue</span>::<span class="function">~CMyQueue</span>()
 <span class="bracket">{</span>
     <span class="keyword">delete</span>[] data;
 <span class="bracket">}</span>
 
-<span class="keyword">void</span> <span class="class">myQueue</span>::<span class="function">reserve</span>(<span class="keyword">int</span> newCapacity) 
+<span class="keyword">void</span> <span class="class">CMyQueue</span>::<span class="function">reserve</span>(<span class="keyword">int</span> newCapacity) 
 <span class="bracket">{</span>
     <span class="class">Item</span>* newData = <span class="keyword">new</span> <span class="class">Item</span>[newCapacity];
     <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; currentSize; i++)
@@ -1621,7 +1621,7 @@ g++ main.cpp Spieler.cpp -o main
     capacity = newCapacity;
 <span class="bracket">}</span>
 
-<span class="keyword">void</span> <span class="class">myQueue</span>::<span class="function">put</span>(<span class="class">Item</span> e) 
+<span class="keyword">void</span> <span class="class">CMyQueue</span>::<span class="function">put</span>(<span class="class">Item</span> e) 
 <span class="bracket">{</span>
     <span class="keyword">if</span>(currentSize == capacity)
     <span class="bracket">{</span>
@@ -1631,7 +1631,7 @@ g++ main.cpp Spieler.cpp -o main
     currentSize++;
 <span class="bracket">}</span>
 
-<span class="class">Item</span> <span class="class">myQueue</span>::<span class="function">get</span>() <span class="keyword">const</span>
+<span class="class">Item</span> <span class="class">CMyQueue</span>::<span class="function">get</span>() <span class="keyword">const</span>
 <span class="bracket">{</span>
     <span class="keyword">if</span>(<span class="function">isEmpty</span>())
     <span class="bracket">{</span>
@@ -1644,12 +1644,12 @@ g++ main.cpp Spieler.cpp -o main
     <span class="bracket">}</span>
 <span class="bracket">}</span>
 
-<span class="keyword">bool</span> <span class="class">myQueue</span>::<span class="function">isEmpty</span>() <span class="keyword">const</span> 
+<span class="keyword">bool</span> <span class="class">CMyQueue</span>::<span class="function">isEmpty</span>() <span class="keyword">const</span> 
 <span class="bracket">{</span>
     <span class="keyword">return</span> currentSize == <span class="number">0</span>;
 <span class="bracket">}</span>
 
-<span class="keyword">void</span> <span class="class">myQueue</span>::<span class="function">dequeue</span>()
+<span class="keyword">void</span> <span class="class">CMyQueue</span>::<span class="function">dequeue</span>()
 <span class="bracket">{</span>
     <span class="keyword">if</span>(<span class="function">isEmpty</span>())
     <span class="bracket">{</span>
@@ -1663,7 +1663,7 @@ g++ main.cpp Spieler.cpp -o main
     currentSize--;
 <span class="bracket">}</span>
 
-<span class="keyword">int</span> <span class="class">myQueue</span>::<span class="function">size</span>() <span class="keyword">const</span> 
+<span class="keyword">int</span> <span class="class">CMyQueue</span>::<span class="function">size</span>() <span class="keyword">const</span> 
 <span class="bracket">{</span>
     <span class="keyword">return</span> currentSize;
 <span class="bracket">}</span>
@@ -1677,7 +1677,7 @@ g++ main.cpp Spieler.cpp -o main
 
 <span class="keyword">int</span> <span class="function">main</span>()
 <span class="bracket">{</span>
-    <span class="class">myQueue</span>* meineQueue = <span class="keyword">new</span> <span class="class">myQueue</span>();
+    <span class="class">CMyQueue</span>* meineQueue = <span class="keyword">new</span> <span class="class">CMyQueue</span>();
     std::cout &lt;&lt; <span class="string">"groessse: "</span> &lt;&lt; meineQueue-><span class="function">size</span>() &lt;&lt; std::endl;
     std::cout &lt;&lt; <span class="string">"----------------\n"</span> &lt;&lt; std::endl;
 
@@ -1724,6 +1724,36 @@ g++ main.cpp Spieler.cpp -o main
     <span class="keyword">return</span> <span class="number">0</span>;
 <span class="bracket">}</span>
 </pre>
+
+<h2>Verkettete Liste (Linked List)</h2>
+<p>Eine verkettete Liste (engl. Linked List) ist eine lineare Datenstruktur, die Elemente in einer dynamischen Reihenfolge speichert. Anders als bei einem Array liegen die Elemente nicht direkt nebeneinander im Arbeitsspeicher, sondern sind über Zeiger (Pointer) miteinander verbunden. Jedes Element bildet zusammen mit dem Zeiger auf das nächste Element eine eigene Einheit, die als Knoten (Node) bezeichnet wird. Man kann sich das wie eine Schnitzeljagd vorstellen, bei der jeder Zettel neben der eigentlichen Information auch den Hinweis auf den Ort des nächsten Zettels enthält.</p>
+
+<h3>Aufbau eines Knotens und der Liste</h3>
+<p>Um die Struktur der verketteten Liste zu verstehen, sind folgende Grundbegriffe wichtig:</p>
+<ul>
+  <li>Node (Knoten): Die kleinste Einheit der Liste. Sie besteht aus den eigentlichen Nutzdaten (Data) und einem Zeiger (Next) auf den nachfolgenden Knoten.</li>
+  <li>Head (Kopf): Ein spezieller Zeiger, der immer auf das allererste Element der Liste verweist und somit den Einstiegspunkt bildet.</li>
+  <li>Null-Zeiger (nullptr): Der Zeiger des letzten Knotens in der Liste verweist auf <code>nullptr</code>, um das Ende der Liste zu markieren.</li>
+</ul>
+
+<h3>Die Operationen der verketteten Liste</h3>
+<p>Um die Semantik des abstrakten Datentyps Liste zu definieren, werden folgende Kernoperationen festgelegt:</p>
+<ul>
+  <li>pushFront(element): Fügt ein neues Element am Anfang der Liste ein.</li>
+  <li>pushBack(element): Hängt ein neues Element an das Ende der Liste an.</li>
+  <li>insert(position, element): Fügt ein neues Element an einer bestimmten Position in die Liste ein.</li>
+  <li>popFront(): Entfernt das erste Element der Liste.</li>
+  <li>remove(element): Sucht nach einem bestimmten Element und entfernt es aus der Liste.</li>
+  <li>find(element): Durchsucht die Liste nach einem Element und gibt es dessen Position zurück.</li>
+  <li>isEmpty(): Prüft, ob die Liste leer ist (also ob der Head auf <code>nullptr</code> zeigt).</li>
+  <li>size(): Gibt die Anzahl der aktuell gespeicherten Elemente zurück.</li>
+</ul>
+
+
+
+
+            <h2>Dictionary</h2>
+            <p></p>
 
 
 
