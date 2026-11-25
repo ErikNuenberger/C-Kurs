@@ -1328,7 +1328,7 @@ g++ main.cpp Spieler.cpp -o main
             <h1>Abstrakte Datentypen (ADT)</h1> 
             <p>Ein abstrakter Datentyp ist eine logische Einheit aus Daten und den darauf anwendbaren Operationen. Bei einem ADT steht im Vordergrund, was die Daten repräsentieren und welche Wirkung die Operationen haben (Semantik). Wie die Daten im Hintergrund im Speicher organisiert oder wie die Operationen konkret effizient implementiert werden, spielt auf dieser Abstraktionsebene noch keine Rolle. Das wird erst bei der tatsächlichen Umsetzung (dem konkreten Datentyp) wichtig.</p>
 
-            <p>In C++ lassen sich ADTs hervorragend über abstrakte Klassen mit rein virtuellen Funktionen (Schnittstellen/Interfaces) abbilden. Während die C++-Standardbibliothek (STL) bereits fertige Implementierungen für viele ADTs mitbringt, bietet das eigene Implementieren unschätzbare Vorteile: Man verstehst die Algorithmen dahinter und kann den Datentyp exakt an spezifische Anforderungen oder Performance-Bedürfnisse anpassen. Drei der wichtigsten abstrakten Datentypen, sind der Stack, die Queue, die verkettete Liste (linked list) und das Dictionary.</p>
+            <p>In C++ lassen sich ADTs hervorragend über abstrakte Klassen mit rein virtuellen Funktionen (Schnittstellen/Interfaces) abbilden. Während die C++-Standardbibliothek (STL) bereits fertige Implementierungen für viele ADTs mitbringt, bietet das eigene Implementieren unschätzbare Vorteile: Man verstehst die Algorithmen dahinter und kann den Datentyp exakt an spezifische Anforderungen oder Performance-Bedürfnisse anpassen. Vier der wichtigsten abstrakten Datentypen, sind der Stack, die Queue, die verkettete Liste (linked list) und das Dictionary.</p>
 
             <h2>Stack</h2> 
                 <p>Ein Stack (Stapel- oder Kellerspeicher) arbeitet nach dem LIFO-Prinzip (Last-In-Fi. Das bedeutet: Das Element, das zuletzt zum Stack hinzugefügt wurde, muss auch als erstes wieder entnommen werden. Man kann sich den Stack wie einen Stapel Teller vorstellen, von dem man immer den obersten Teller entnimmt und neue Teller nur oben auflegt.</p>
@@ -1725,30 +1725,55 @@ g++ main.cpp Spieler.cpp -o main
 <span class="bracket">}</span>
 </pre>
 
-<h2>Verkettete Liste (Linked List)</h2>
-<p>Eine verkettete Liste (engl. Linked List) ist eine lineare Datenstruktur, die Elemente in einer dynamischen Reihenfolge speichert. Anders als bei einem Array liegen die Elemente nicht direkt nebeneinander im Arbeitsspeicher, sondern sind über Zeiger (Pointer) miteinander verbunden. Jedes Element bildet zusammen mit dem Zeiger auf das nächste Element eine eigene Einheit, die als Knoten (Node) bezeichnet wird. Man kann sich das wie eine Schnitzeljagd vorstellen, bei der jeder Zettel neben der eigentlichen Information auch den Hinweis auf den Ort des nächsten Zettels enthält.</p>
+            <h2>Verkettete Liste (Linked List)</h2>
+                <p>Eine verkettete Liste (engl. Linked List) ist eine lineare Datenstruktur, die Elemente in einer dynamischen Reihenfolge speichert. Anders als bei einem Array liegen die Elemente nicht direkt nebeneinander im Arbeitsspeicher, sondern sind über Zeiger (Pointer) miteinander verbunden. Jedes Element bildet zusammen mit dem Zeiger auf das nächste Element eine eigene Einheit, die als Knoten (Node) bezeichnet wird. Man kann sich das wie eine Schnitzeljagd vorstellen, bei der jeder Zettel neben der eigentlichen Information auch den Hinweis auf den Ort des nächsten Zettels enthält.</p>
 
-<h3>Aufbau eines Knotens und der Liste</h3>
-<p>Um die Struktur der verketteten Liste zu verstehen, sind folgende Grundbegriffe wichtig:</p>
-<ul>
-  <li>Node (Knoten): Die kleinste Einheit der Liste. Sie besteht aus den eigentlichen Nutzdaten (Data) und einem Zeiger (Next) auf den nachfolgenden Knoten.</li>
-  <li>Head (Kopf): Ein spezieller Zeiger, der immer auf das allererste Element der Liste verweist und somit den Einstiegspunkt bildet.</li>
-  <li>Null-Zeiger (nullptr): Der Zeiger des letzten Knotens in der Liste verweist auf <code>nullptr</code>, um das Ende der Liste zu markieren.</li>
-</ul>
+                <h3>Aufbau eines Knotens und der Liste</h3>
+                <p>Um die Struktur der verketteten Liste zu verstehen, sind folgende Grundbegriffe wichtig:</p>
+                <ul>
+                    <li>Node (Knoten): Die kleinste Einheit der Liste. Sie besteht aus den eigentlichen Nutzdaten (Data) und einem Zeiger (Next) auf den nachfolgenden Knoten.</li>
+                    <li>Head (Kopf): Ein spezieller Zeiger, der immer auf das allererste Element der Liste verweist und somit den Einstiegspunkt bildet.</li>
+                    <li>Null-Zeiger (nullptr): Der Zeiger des letzten Knotens in der Liste verweist auf <code>nullptr</code>, um das Ende der Liste zu markieren.</li>
+                </ul>
 
-<h3>Die Operationen der verketteten Liste</h3>
-<p>Um die Semantik des abstrakten Datentyps Liste zu definieren, werden folgende Kernoperationen festgelegt:</p>
-<ul>
-  <li>pushFront(element): Fügt ein neues Element am Anfang der Liste ein.</li>
-  <li>pushBack(element): Hängt ein neues Element an das Ende der Liste an.</li>
-  <li>insert(position, element): Fügt ein neues Element an einer bestimmten Position in die Liste ein.</li>
-  <li>popFront(): Entfernt das erste Element der Liste.</li>
-  <li>remove(element): Sucht nach einem bestimmten Element und entfernt es aus der Liste.</li>
-  <li>find(element): Durchsucht die Liste nach einem Element und gibt es dessen Position zurück.</li>
-  <li>isEmpty(): Prüft, ob die Liste leer ist (also ob der Head auf <code>nullptr</code> zeigt).</li>
-  <li>size(): Gibt die Anzahl der aktuell gespeicherten Elemente zurück.</li>
-</ul>
+                <h3>Die Operationen der verketteten Liste</h3>
+                <p>Um die Semantik des abstrakten Datentyps Liste zu definieren, werden folgende Kernoperationen festgelegt:</p>
+                <ul>
+                    <li>pushFront(element): Fügt ein neues Element am Anfang der Liste ein.</li>
+                    <li>pushBack(element): Hängt ein neues Element an das Ende der Liste an.</li>
+                    <li>insert(position, element): Fügt ein neues Element an einer bestimmten Position in die Liste ein.</li>
+                    <li>popFront(): Entfernt das erste Element der Liste.</li>
+                    <li>remove(element): Sucht nach einem bestimmten Element und entfernt es aus der Liste.</li>
+                    <li>find(element): Durchsucht die Liste nach einem Element und gibt es dessen Position zurück.</li>
+                    <li>isEmpty(): Prüft, ob die Liste leer ist (also ob der Head auf <code>nullptr</code> zeigt).</li>
+                    <li>size(): Gibt die Anzahl der aktuell gespeicherten Elemente zurück.</li>
+                </ul>
 
+                <p>Hier ist der C++ Code, des LinkedList interface in der ILinkedList.hpp datei:</p>
+
+<pre class="code-block">
+<span class="include">#ifndef</span> ILINKEDLIST_HPP
+<span class="include">#define</span> ILINKEDLIST_HPP
+
+<span class="keyword">using</span> <span class="class">Item</span> = <span class="keyword">int</span>;
+<span class="keyword">class</span> <span class="class">ILinkedList</span>
+<span class="bracket">{</span>
+    <span class="keyword">public:</span>
+        <span class="keyword">virtual</span> <span class="function">~ILinkedList</span>() = <span class="keyword">default</span>;
+        <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="function">pushFront</span>(<span class="class">Item</span> e) = <span class="number">0</span>;
+        <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="function">pushBack</span>(<span class="class">Item</span> e) = <span class="number">0</span>;
+        <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="function">insert</span>(<span class="keyword">int</span> position, <span class="class">Item</span> e) = <span class="number">0</span>;
+        <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="function">popFront</span>() = <span class="number">0</span>;
+        <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="function">remove</span>(<span class="class">Item</span> e) = <span class="number">0</span>;
+        <span class="keyword">virtual</span> <span class="keyword">int</span> <span class="function">find</span>(<span class="class">Item</span> e) = <span class="number">0</span>;
+        <span class="keyword">virtual</span> <span class="keyword">bool</span> <span class="function">isEmpty</span>() = <span class="number">0</span>;
+        <span class="keyword">virtual</span> <span class="keyword">int</span> <span class="function">size</span>() = <span class="number">0</span>;
+<span class="bracket">}</span>;
+
+<span class="include">#endif</span>
+</pre>
+
+    
 
 
 

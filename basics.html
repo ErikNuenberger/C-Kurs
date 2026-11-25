@@ -811,6 +811,8 @@ std::cin &gt;&gt; number;
                         </tr>
                     </table>
                 </div>
+                <h3>unsigned</h3>
+                <p>Das Schlüsselwort unsigned (vorzeichenlos) sorgt bei ganzzahligen Datentypen wie char dafür, dass alle 8 Bit für den reinen Zahlenwert genutzt werden. Ohne unsigned (also bei signed) wird eines dieser Bits für das Vorzeichen reserviert, wodurch nur noch 7 Bit für den eigentlichen Wert übrig bleiben. Mit unsigned verdoppelt sich somit der maximale positive Wertebereich - im Gegenzug kann die Variable jedoch keine negativen Zahlen mehr speichern (der kleinste mögliche Wert ist 0).</p>
 
 <pre class="code-block">
 <span class="keyword">unsigned char</span> a = <span class="number">0b00000101</span>; <span class="comment">//Dezimal 5</span>
